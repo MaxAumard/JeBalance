@@ -5,9 +5,11 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JeBalance", "JeBalance\JeBalance.csproj", "{FEDCDBD9-EDF1-47DF-8584-F9E83B1A1ECC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JeBalanceAdmin", "JeBalanceAdmin\JeBalanceAdmin.csproj", "{AE63A602-E840-4D30-9F3D-24F0880FFE7C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JeBalanceAdmin", "JeBalanceAdmin\JeBalanceAdmin.csproj", "{AE63A602-E840-4D30-9F3D-24F0880FFE7C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JeBalanceInspect", "JeBalanceInspect\JeBalanceInspect.csproj", "{D7338940-04B7-43B2-8594-85A10DD59BA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JeBalanceInspect", "JeBalanceInspect\JeBalanceInspect.csproj", "{D7338940-04B7-43B2-8594-85A10DD59BA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JeBalanceDenonciation", "JeBalanceDenonciation\JeBalanceDenonciation.csproj", "{441E7909-1456-45ED-ACD8-EE6134F71B1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{D7338940-04B7-43B2-8594-85A10DD59BA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7338940-04B7-43B2-8594-85A10DD59BA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7338940-04B7-43B2-8594-85A10DD59BA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{441E7909-1456-45ED-ACD8-EE6134F71B1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{441E7909-1456-45ED-ACD8-EE6134F71B1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{441E7909-1456-45ED-ACD8-EE6134F71B1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{441E7909-1456-45ED-ACD8-EE6134F71B1D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
