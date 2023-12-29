@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JeBalanceInspect", "JeBalan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JeBalanceDenonciation", "JeBalanceDenonciation\JeBalanceDenonciation.csproj", "{441E7909-1456-45ED-ACD8-EE6134F71B1D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JeBalance.Domain", "JeBalance.Domain\JeBalance.Domain.csproj", "{3A6BCAD8-779C-4839-826B-10E8B65BF9D6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{441E7909-1456-45ED-ACD8-EE6134F71B1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{441E7909-1456-45ED-ACD8-EE6134F71B1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{441E7909-1456-45ED-ACD8-EE6134F71B1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A6BCAD8-779C-4839-826B-10E8B65BF9D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A6BCAD8-779C-4839-826B-10E8B65BF9D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A6BCAD8-779C-4839-826B-10E8B65BF9D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A6BCAD8-779C-4839-826B-10E8B65BF9D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
