@@ -23,6 +23,6 @@ namespace JeBalanceDenonciation.Controllers
         [JsonPropertyName("pays")]
         public string Pays { get; set; } = null!;
 
-        public Reponse Reponse { get; set; } = null!;
+        public Reponse? Reponse { get; set; } = null!;
     }
 }
