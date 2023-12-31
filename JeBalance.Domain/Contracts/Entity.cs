@@ -2,7 +2,7 @@ namespace JeBalance.Domain.Contracts;
 
 public abstract class Entity
 {
-    public int Id { get; }
+    public string Id { get; }
 
-    public Entity(int id) => Id = id;
+    public Entity(string id) => Id = id;
 }
