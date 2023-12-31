@@ -18,11 +18,11 @@ namespace JeBalance.Domain.Models
         public Name Pays { get; }
         public Response? Response { get; }
 
-        public Denonciation() : base(0)
+        public Denonciation() : base(Guid.NewGuid().ToString())
         {
         }
 
-        public Denonciation(string informant, string suspect, DateTimeOffset date, Crime crime, Name pays, Response response) : base(0)
+        public Denonciation(string id, string informant, string suspect, DateTimeOffset date, Crime crime, Name pays, Response response) : base(id)
         {
             Informant = informant;
             Suspect = suspect;
@@ -32,7 +32,8 @@ namespace JeBalance.Domain.Models
             Response = response;
         }
 
-        public Denonciation(string informant, string suspect, DateTimeOffset date, Crime crime, string pays, Response response) : this(
+        public Denonciation(string id, string informant, string suspect, DateTimeOffset date, Crime crime, string pays, Response response) : this(
+            id,
             informant,
             suspect,
             date,
@@ -41,7 +42,7 @@ namespace JeBalance.Domain.Models
             response)
         { }
 
-        public Denonciation(string informant, string suspect, DateTimeOffset date, Crime crime, Name pays) : base(0)
+        public Denonciation(string id, string informant, string suspect, DateTimeOffset date, Crime crime, Name pays) : base(id)
         {
             Informant = informant;
             Suspect = suspect;
@@ -51,7 +52,8 @@ namespace JeBalance.Domain.Models
             Response = null;
         }
 
-        public Denonciation(string informant, string suspect, DateTimeOffset date, Crime crime, string pays) : this(
+        public Denonciation(string id, string informant, string suspect, DateTimeOffset date, Crime crime, string pays) : this(
+            id,
             informant,
             suspect,
             date,
