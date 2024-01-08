@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using JeBalance.Domain.Contracts;
+﻿using JeBalance.Domain.Contracts;
 using JeBalance.Domain.ValueObjects;
 
 namespace JeBalance.Domain.Models
