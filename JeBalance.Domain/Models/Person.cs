@@ -11,24 +11,27 @@ namespace JeBalance.Domain.Models
         public Address Address { get; }
         public bool IsBanned { get; }
 
+        public bool IsVIP { get; }
         public Person() : base(Guid.NewGuid().ToString())
         {
         }
 
-        public Person(string id, Name firstName, Name lastName, Address address, bool isBanned) : base(id)
+        public Person(string id, Name firstName, Name lastName, Address address, bool isBanned, bool isVIP) : base(id)
         {
             FirstName = firstName;
             LastName = lastName;
             Address = address;
             IsBanned = isBanned;
+            IsVIP = isVIP;
         }
 
-        public Person(string id, string firstName, string lastName, Address address, bool isBanned) : this(
+        public Person(string id, string firstName, string lastName, Address address, bool isBanned, bool isVIP) : this(
             id,
             new Name(firstName),
             new Name(lastName),
             address,
-            isBanned
+            isBanned,
+            isVIP
             ) 
         { }
 
@@ -37,6 +40,7 @@ namespace JeBalance.Domain.Models
             new Name(firstName),
             new Name(lastName),
             address,
+            false,
             false
             )
         { }
