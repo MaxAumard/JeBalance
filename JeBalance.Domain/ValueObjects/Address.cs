@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace JeBalance.Domain.ValueObjects
+﻿namespace JeBalance.Domain.ValueObjects
 {
     public class Address
     {
         public int  Number { get; }
         public Name StreetName { get; }
-        public int PostalCode { get; }
+        public PostalCode PostalCode { get; }
         public Name City { get; }
 
         public Address()
         {
         }
-        public Address(int number, Name streetName, int postalCode, Name city)
+        public Address(int number, Name streetName, PostalCode postalCode, Name city)
         {
             Number = number;
             StreetName = streetName;
@@ -27,7 +21,7 @@ namespace JeBalance.Domain.ValueObjects
         public Address(int number, string streetName, int postalCode, string city) : this (
             number,
             new Name(streetName),
-            postalCode,
+            new PostalCode(postalCode),
             new Name(city))
         { }
 
