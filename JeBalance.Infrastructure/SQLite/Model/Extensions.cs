@@ -36,9 +36,7 @@ public static class Extensions
     }
     public static string ToSQL(this Address address)
     {
-        string _address = " ";
-        _address = address.Number + "/" + address.StreetName + "/" + address.PostalCode + "/" + address.City;
-        return _address;
+        return address.Number + ";" + address.StreetName + ";" + address.PostalCode + ";" + address.City;
     }
 
 }
