@@ -5,7 +5,7 @@ namespace JeBalance.Domain.Repositories
 {
     public interface IPersonRepository : Repository<Person>
     {
-        Task<int> SetIsBanned(string id, bool isBanned);
-        Task<int> SetIsVIP(string id, bool isVIP);
+        Task<string> SetIsBanned(string id, bool isBanned);
+        Task<string> SetIsVIP(string id, bool isVIP);
     }
 }
