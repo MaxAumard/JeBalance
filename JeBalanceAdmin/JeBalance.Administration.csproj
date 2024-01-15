@@ -15,8 +15,4 @@
     <ProjectReference Include="..\JeBalance.Domain\JeBalance.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>

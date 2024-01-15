@@ -5,7 +5,7 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JeBalance", "JeBalance\JeBalance.csproj", "{FEDCDBD9-EDF1-47DF-8584-F9E83B1A1ECC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JeBalanceAdmin", "JeBalanceAdmin\JeBalanceAdmin.csproj", "{AE63A602-E840-4D30-9F3D-24F0880FFE7C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JeBalance.Administration", "JeBalanceAdmin\JeBalance.Administration.csproj", "{AE63A602-E840-4D30-9F3D-24F0880FFE7C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JeBalanceInspect", "JeBalanceInspect\JeBalanceInspect.csproj", "{D7338940-04B7-43B2-8594-85A10DD59BA4}"
 EndProject
