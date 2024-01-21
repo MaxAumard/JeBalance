@@ -5,6 +5,7 @@ namespace JeBalance.Infrastructure.SQLite.Model;
 
 public static class Extensions
 {
+    //partie pour les personnes
     public static Person ToDomain(this PersonneSQL person)
     {
         return new Person(
@@ -39,4 +40,30 @@ public static class Extensions
         return address.Number + ";" + address.StreetName + ";" + address.PostalCode + ";" + address.City;
     }
 
+    //partie pour les denonciations
+    public static Denonciation ToDomain(this DenonciationSQL denonciation)
+    {
+        return new Denonciation(
+            denonciation.Id,
+            denonciation.Informant,
+            denonciation.Suspect,
+            denonciation.Date,
+            denonciation.Crime,
+            denonciation.Pays,
+            denonciation.Response);
+    }
+
+    public static DenonciationSQL ToSQL(this Denonciation denonciation)
+    {
+        return new DenonciationSQL
+        {
+            Id = denonciation.Id,
+            Informant = denonciation.Informant,
+            Suspect = denonciation.Suspect,
+            Date = denonciation.Date,
+            Crime = denonciation.Crime,
+            Pays = denonciation.Pays.Value,
+            //Response = denonciation.Response
+        };
+    }
 }

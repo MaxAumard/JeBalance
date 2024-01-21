@@ -1,6 +1,6 @@
 ﻿using JeBalance.Infrastructure.SQLite.Model;
 using Microsoft.EntityFrameworkCore;
-using ParkNGo.Infrastructure.SQLServer.Configurations;
+using JeBlance.Infrastructure.SQLServer.Configurations;
 //dotnet ef migrations add initial --context DatabaseContext
 namespace JeBalance.Infrastructure.SQLite
 {
@@ -9,6 +9,7 @@ namespace JeBalance.Infrastructure.SQLite
         public const string DEFAULT_SCHEMA = "app";
 
         public DbSet<PersonneSQL> Personnes { get; set; }
+        public DbSet<DenonciationSQL> Denonciations { get; set; }
 
         public DatabaseContext()
         {
