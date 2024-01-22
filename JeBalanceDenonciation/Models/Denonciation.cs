@@ -16,9 +16,9 @@ namespace JeBalanceDenonciation.Models
 
         public string Pays { get; }
 
-        public Reponse Reponse { get; set; }
+        public Reponse? Reponse { get; set; }
 
-        public Denonciation(string id, string informateur, string suspect, DateTimeOffset date, Delit delit, string pays, Reponse reponse)
+        public Denonciation(string id, string informateur, string suspect, DateTimeOffset date, Delit delit, string pays, Reponse? reponse)
         {
             Id = id;
             Informateur = informateur;
@@ -37,7 +37,6 @@ namespace JeBalanceDenonciation.Models
             Suspect = suspect;
             Delit = delit;
             Pays = pays;
-            Reponse = new Reponse();
         }
     }
 }

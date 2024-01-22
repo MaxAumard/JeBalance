@@ -7,15 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JeBalance", "JeBalance\JeBa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JeBalance.Administration", "JeBalanceAdmin\JeBalance.Administration.csproj", "{AE63A602-E840-4D30-9F3D-24F0880FFE7C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JeBalanceInspect", "JeBalanceInspect\JeBalanceInspect.csproj", "{D7338940-04B7-43B2-8594-85A10DD59BA4}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JeBalanceDenonciation", "JeBalanceDenonciation\JeBalanceDenonciation.csproj", "{441E7909-1456-45ED-ACD8-EE6134F71B1D}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JeBalance.Domain", "JeBalance.Domain\JeBalance.Domain.csproj", "{3A6BCAD8-779C-4839-826B-10E8B65BF9D6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JeBalance.Infrastructure", "JeBalance.Infrastructure\JeBalance.Infrastructure.csproj", "{F7997F57-FDE5-4202-A580-9A6CE3940EB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JeBalance.Infrastructure.Tests", "JeBalance.Infrastructure.Tests\JeBalance.Infrastructure.Tests.csproj", "{83531C14-843A-4AA3-9A70-74C3D0F43DFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JeBalance.Infrastructure.Tests", "JeBalance.Infrastructure.Tests\JeBalance.Infrastructure.Tests.csproj", "{83531C14-843A-4AA3-9A70-74C3D0F43DFB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JeBalance.Inspection", "JeBalance.Denonciation\JeBalance.Inspection.csproj", "{E9F91FA3-F45C-4D1A-BE98-6EC268FD2F9C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,14 +29,6 @@ Global
 		{AE63A602-E840-4D30-9F3D-24F0880FFE7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE63A602-E840-4D30-9F3D-24F0880FFE7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE63A602-E840-4D30-9F3D-24F0880FFE7C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D7338940-04B7-43B2-8594-85A10DD59BA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D7338940-04B7-43B2-8594-85A10DD59BA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D7338940-04B7-43B2-8594-85A10DD59BA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D7338940-04B7-43B2-8594-85A10DD59BA4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{441E7909-1456-45ED-ACD8-EE6134F71B1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{441E7909-1456-45ED-ACD8-EE6134F71B1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{441E7909-1456-45ED-ACD8-EE6134F71B1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{441E7909-1456-45ED-ACD8-EE6134F71B1D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3A6BCAD8-779C-4839-826B-10E8B65BF9D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3A6BCAD8-779C-4839-826B-10E8B65BF9D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A6BCAD8-779C-4839-826B-10E8B65BF9D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -51,6 +41,10 @@ Global
 		{83531C14-843A-4AA3-9A70-74C3D0F43DFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83531C14-843A-4AA3-9A70-74C3D0F43DFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83531C14-843A-4AA3-9A70-74C3D0F43DFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9F91FA3-F45C-4D1A-BE98-6EC268FD2F9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9F91FA3-F45C-4D1A-BE98-6EC268FD2F9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9F91FA3-F45C-4D1A-BE98-6EC268FD2F9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9F91FA3-F45C-4D1A-BE98-6EC268FD2F9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
