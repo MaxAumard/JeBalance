@@ -12,7 +12,10 @@ public static class Extensions
             person.Id,
             person.LastName,
             person.FirstName,
-            Extensions.ToDomain(person.Address));
+            Extensions.ToDomain(person.Address),
+            person.IsBanned,
+            person.IsVIP)
+            ;
     }
     public static PersonneSQL ToSQL(this Person person)
     {
@@ -22,12 +25,14 @@ public static class Extensions
             LastName = person.FirstName.Value,
             FirstName = person.LastName.Value,
             Address = person.Address.ToSQL(),
+            IsBanned = person.IsBanned,
+            IsVIP = person.IsVIP
         };
     }
 
     public static Address ToDomain(this String address)
     {
-        string[] composantes = address.Split("/");
+        string[] composantes = address.Split(";");
         
         return new Address(
             int.Parse(composantes[0]),
@@ -37,7 +42,7 @@ public static class Extensions
     }
     public static string ToSQL(this Address address)
     {
-        return address.Number + ";" + address.StreetName + ";" + address.PostalCode + ";" + address.City;
+        return address.Number + ";" + address.StreetName.Value + ";" + address.PostalCode.Value + ";" + address.City.Value;
     }
 
     //partie pour les denonciations

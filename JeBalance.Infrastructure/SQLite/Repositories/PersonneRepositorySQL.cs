@@ -50,6 +50,7 @@ public class PersonneRepositorySQL
         personToUpdate.LastName = person.LastName.Value;
         personToUpdate.Address = person.Address.ToSQL();
         personToUpdate.IsBanned = person.IsBanned;
+        personToUpdate.IsVIP = person.IsVIP;
 
         _context.Personnes.Update(personToUpdate);
         
@@ -57,7 +58,31 @@ public class PersonneRepositorySQL
         return id;
     }
 
+    //Query VIP
+    public async Task<IEnumerable<Person>> GetAllVIP()
+    {
+        var persons = await _context.Personnes.Where(person => person.IsVIP == true).ToListAsync();
+        return persons.Select(person => person.ToDomain());
+    }
 
+    public async Task<IEnumerable<Person>> GetAllNotVIP()
+    {
+        var persons = await _context.Personnes.Where(person => person.IsVIP == false).ToListAsync();
+        return persons.Select(person => person.ToDomain());
+    }
+
+    //Query Banned
+    public async Task<IEnumerable<Person>> GetAllBanned()
+    {
+        var persons = await _context.Personnes.Where(person => person.IsBanned == true).ToListAsync();
+        return persons.Select(person => person.ToDomain());
+    }
+
+    public async Task<IEnumerable<Person>> GetAllNotBanned()
+    {
+        var persons = await _context.Personnes.Where(person => person.IsBanned == false).ToListAsync();
+        return persons.Select(person => person.ToDomain());
+    }
 
 
 }

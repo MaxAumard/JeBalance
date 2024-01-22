@@ -26,5 +26,7 @@ internal class PersonneConfiguration : IEntityTypeConfiguration<PersonneSQL>
         builder.Property(person => person.IsBanned)
             .IsRequired();
 
+        builder.Property(person => person.IsVIP)
+            .IsRequired();
     }
 }
