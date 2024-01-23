@@ -6,135 +6,135 @@
 
 ## Concept
 
-Face au problème de l'évasion fiscale et de la dissimulation de revenus, les pouvoirs publics souhaitent développer un réseau de dénonciation citoyenne.
+Face au problÃ¨me de l'Ã©vasion fiscale et de la dissimulation de revenus, les pouvoirs publics souhaitent dÃ©velopper un rÃ©seau de dÃ©nonciation citoyenne.
 
-Pour inciter les citoyens à participer, l'administration fiscale est prête à rémunérer chaque dénonciateur en fonction du montant récupéré grâce à la dénonciation.
+Pour inciter les citoyens Ã  participer, l'administration fiscale est prÃªte Ã  rÃ©munÃ©rer chaque dÃ©nonciateur en fonction du montant rÃ©cupÃ©rÃ© grÃ¢ce Ã  la dÃ©nonciation.
 
-Un nouveau site internet, **jebalance.gouv.fr**, doit permettre à chaque citoyen de dénoncer facilement les cas d'évasion fiscale et de récolter sa part de l'argent récupéré.
+Un nouveau site internet, **jebalance.gouv.fr**, doit permettre Ã  chaque citoyen de dÃ©noncer facilement les cas d'Ã©vasion fiscale et de rÃ©colter sa part de l'argent rÃ©cupÃ©rÃ©.
 
-Cependant, certains *VIP* au dessus de tout soupçon ne doivent pas être la cible de contrôles fiscaux. Le système doit bien évidemment ignorer les dénonciations *calomnieuses* dont elles pourraient faire l'objet.
+Cependant, certains *VIP* au dessus de tout soupÃ§on ne doivent pas Ãªtre la cible de contrÃ´les fiscaux. Le systÃ¨me doit bien Ã©videmment ignorer les dÃ©nonciations *calomnieuses* dont elles pourraient faire l'objet.
 
-Votre société a remporté l'appel d'offre des pouvoirs publics et vous êtes chargés de **concevoir** et **développer** l'application.
+Votre sociÃ©tÃ© a remportÃ© l'appel d'offre des pouvoirs publics et vous Ãªtes chargÃ©s de **concevoir** et **dÃ©velopper** l'application.
 
 ## Objectifs
 
-jebalance.gouv.fr comportera trois points d'entrée :
+jebalance.gouv.fr comportera trois points d'entrÃ©e :
 * Une interface Web publique sans authentification
-  * Création des dénonciations
-  * Consultation du statut de la dénonciation
-* Une API interne sécurisée réservée à l'inspection fiscale
-  * Collecte de la liste des dénonciations non traitées
-  * Réponse aux dénonciations
-* Une API secrète sécurisée réservée aux administrateurs de l'application
+  * CrÃ©ation des dÃ©nonciations
+  * Consultation du statut de la dÃ©nonciation
+* Une API interne sÃ©curisÃ©e rÃ©servÃ©e Ã  l'inspection fiscale
+  * Collecte de la liste des dÃ©nonciations non traitÃ©es
+  * RÃ©ponse aux dÃ©nonciations
+* Une API secrÃ¨te sÃ©curisÃ©e rÃ©servÃ©e aux administrateurs de l'application
   * Administration de la liste des VIP
 
 ## Contraintes techniques
 
 L'appel d'offre comporte les contraintes techniques suivantes :
-- L'application doit être écrite en C# et doit s'appuyer sur le framework .NET 6 ou supérieur
-- L'application doit être modulaire afin de pouvoir adapter pour chaque composant :
-  - Le niveau de sécurité
-  - Les ressources matérielles (CPU, bande passante, mémoire...)
-  - La fréquence des mises à jour
-- Le code métier doit respecter les principes de l'approche **DDD**
-- L'architecture technique de chaque composant doit être maitenable et testable
-- Les API doivent être des Web Services respectant l'approche **REST**
-- L'accès aux API sécurisées doit nécessiter un **JWT** signé par l'algorithme **HMACSHA256**
-- La base de données utilisée doit être **SQLite**
-- L'accès à la base doit se faire à traver l'ORM **Entity Framework**
+- L'application doit Ãªtre Ã©crite en C# et doit s'appuyer sur le framework .NET 6 ou supÃ©rieur
+- L'application doit Ãªtre modulaire afin de pouvoir adapter pour chaque composant :
+  - Le niveau de sÃ©curitÃ©
+  - Les ressources matÃ©rielles (CPU, bande passante, mÃ©moire...)
+  - La frÃ©quence des mises Ã  jour
+- Le code mÃ©tier doit respecter les principes de l'approche **DDD**
+- L'architecture technique de chaque composant doit Ãªtre maitenable et testable
+- Les API doivent Ãªtre des Web Services respectant l'approche **REST**
+- L'accÃ¨s aux API sÃ©curisÃ©es doit nÃ©cessiter un **JWT** signÃ© par l'algorithme **HMACSHA256**
+- La base de donnÃ©es utilisÃ©e doit Ãªtre **SQLite**
+- L'accÃ¨s Ã  la base doit se faire Ã  traver l'ORM **Entity Framework**
 
-## Vocabulaire commun (en français)
+## Vocabulaire commun (en franÃ§ais)
 
 **JeBalance** : l'application dans son ensemble.
 
-**Personne** : individu identifié de manière unique par les élements suivants :
-- Un **Prénom**
+**Personne** : individu identifiÃ© de maniÃ¨re unique par les Ã©lements suivants :
+- Un **PrÃ©nom**
 - Un **Nom**
-- Une **Adresse** composée de 
-  - Un **Numéro (de voie)**
+- Une **Adresse** composÃ©e de 
+  - Un **NumÃ©ro (de voie)**
   - Un **Nom de voie**
   - Un **Code postal**
   - Un **Nom de commune**
 
-**Dénonciation** : déclaration créée par un *Informateur* non authentifié accusant un *Suspect* de dissimulation de revenus ou d'évasion fiscale.
+**DÃ©nonciation** : dÃ©claration crÃ©Ã©e par un *Informateur* non authentifiÃ© accusant un *Suspect* de dissimulation de revenus ou d'Ã©vasion fiscale.
 
-**Identifiant de dénonciation** : chaîne de caractères qui identifie de manière unique une dénonciation et grâce à laquelle un *Informateur* peut consulter sa *Dénonciation* et la possible *Réponse* associée.
+**Identifiant de dÃ©nonciation** : chaÃ®ne de caractÃ¨res qui identifie de maniÃ¨re unique une dÃ©nonciation et grÃ¢ce Ã  laquelle un *Informateur* peut consulter sa *DÃ©nonciation* et la possible *RÃ©ponse* associÃ©e.
 
-**Informateur** : *Personne* correspondant à un utilisateur non authentifié mais identifié, créateur d'au moins une *Dénonciation*.
+**Informateur** : *Personne* correspondant Ã  un utilisateur non authentifiÃ© mais identifiÃ©, crÃ©ateur d'au moins une *DÃ©nonciation*.
   
-**Suspect** : *Personne* accusée par une *Dénonciation* de *Dissimulation de revenus* ou d'*Evasion fiscale*.
+**Suspect** : *Personne* accusÃ©e par une *DÃ©nonciation* de *Dissimulation de revenus* ou d'*Evasion fiscale*.
 
-**Délit** : attribut d'une *Dénonciation* indiqué par l'*Informateur* qui lors de sa création. Les valeurs possibles sont :
+**DÃ©lit** : attribut d'une *DÃ©nonciation* indiquÃ© par l'*Informateur* qui lors de sa crÃ©ation. Les valeurs possibles sont :
 * **DissimulationDeRevenus**
 * **EvasionFiscale**
 
-**Pays d'évasion** : attribut obligatoire d'une *Dénonciation* de type *EvasionFiscale* indiquant dans quel pays le *Suspect* a dissimulé son argent.
+**Pays d'Ã©vasion** : attribut obligatoire d'une *DÃ©nonciation* de type *EvasionFiscale* indiquant dans quel pays le *Suspect* a dissimulÃ© son argent.
 
-**Administration fiscale** : entité capable de consulter la liste des *Dénonciations* sans réponse et de créer des *Réponses* à travers l'API dédiée.
+**Administration fiscale** : entitÃ© capable de consulter la liste des *DÃ©nonciations* sans rÃ©ponse et de crÃ©er des *RÃ©ponses* Ã  travers l'API dÃ©diÃ©e.
 
-**Réponse (à une Dénonciation)** : retour unique et facultatif effectué sur une *Dénonciation* par l'*Administration fiscale*.
+**RÃ©ponse (Ã  une DÃ©nonciation)** : retour unique et facultatif effectuÃ© sur une *DÃ©nonciation* par l'*Administration fiscale*.
 
-**Type (de Réponse)** : caractérise une *Réponse* donnée par l'*Administration fiscale*. Les types possibles sont :
+**Type (de RÃ©ponse)** : caractÃ©rise une *RÃ©ponse* donnÃ©e par l'*Administration fiscale*. Les types possibles sont :
 * *Confirmation*
 * *Rejet*
 
-**Dénonciation non traitée** : *Dénonciation* qui ne possède pas de *Réponse*.
+**DÃ©nonciation non traitÃ©e** : *DÃ©nonciation* qui ne possÃ¨de pas de *RÃ©ponse*.
 
-**Retribution** : attribut obligatoire d'une *Réponse* de type *Confirmation* qui indique le montant en euro versé par l'*Administration fiscale* à l'*Informateur* de la *Dénonciation* confirmée.
+**Retribution** : attribut obligatoire d'une *RÃ©ponse* de type *Confirmation* qui indique le montant en euro versÃ© par l'*Administration fiscale* Ã  l'*Informateur* de la *DÃ©nonciation* confirmÃ©e.
 
-**Calomniateur** : *Personne* qui n'est plus autorisée à créer de nouvelles dénonciations en tant qu'*Informateur*.
+**Calomniateur** : *Personne* qui n'est plus autorisÃ©e Ã  crÃ©er de nouvelles dÃ©nonciations en tant qu'*Informateur*.
 
-**VIP** : *Personne* dont qui ne peut pas apparaître en tant que *Suspect* dans la liste des *Dénonciations* retournées à l'*Administration fiscale*.
+**VIP** : *Personne* dont qui ne peut pas apparaÃ®tre en tant que *Suspect* dans la liste des *DÃ©nonciations* retournÃ©es Ã  l'*Administration fiscale*.
 
-**Administrateur** : utilisateur spécial pouvant administrer la liste des *VIP*.
+**Administrateur** : utilisateur spÃ©cial pouvant administrer la liste des *VIP*.
 
-## Règles de gestion
+## RÃ¨gles de gestion
 
-Le cahier des charges fourni par les pouvoirs publics comporte les règles listées ci-dessous.
+Le cahier des charges fourni par les pouvoirs publics comporte les rÃ¨gles listÃ©es ci-dessous.
 
-### Création d'une dénonciation
+### CrÃ©ation d'une dÃ©nonciation
 
-- Les utilisateur doivent passer par l'interface Web sans authentification pour créer les *Dénonciations*.
-- A la fin de la création de la *Dénonciation*, on indique à l'utilisateur l'*Identifiant de la dénonciation*.
-- L'*Identifiant de la dénonciation* doit être opaque et non prédictif.
+- Les utilisateur doivent passer par l'interface Web sans authentification pour crÃ©er les *DÃ©nonciations*.
+- A la fin de la crÃ©ation de la *DÃ©nonciation*, on indique Ã  l'utilisateur l'*Identifiant de la dÃ©nonciation*.
+- L'*Identifiant de la dÃ©nonciation* doit Ãªtre opaque et non prÃ©dictif.
 
-### Suivi d'une dénonciation
+### Suivi d'une dÃ©nonciation
 
-- Un utilisateur peut consulter une *Dénonciation* en utilisant l'*Identifiant de dénonciation* sur l'interface Web sans authentification.
-- La consultation d'une *Dénonciation* doit restituer les élements suivants :
-  - L'horodatage de la *Dénonciation*
+- Un utilisateur peut consulter une *DÃ©nonciation* en utilisant l'*Identifiant de dÃ©nonciation* sur l'interface Web sans authentification.
+- La consultation d'une *DÃ©nonciation* doit restituer les Ã©lements suivants :
+  - L'horodatage de la *DÃ©nonciation*
   - Les informations identifiant l'*Informateur*
   - Les informations identifiant le *Suspect*
-  - Le *Délit*
-  - Si applicable, le *Pays d'évasion*
-  - Si applicable la *Réponse* :
-    - L'horodatage de la *Réponse*
-    - Le *Type de Réponse*
-    - Si applicable, le montant de la *Rétribution*
+  - Le *DÃ©lit*
+  - Si applicable, le *Pays d'Ã©vasion*
+  - Si applicable la *RÃ©ponse* :
+    - L'horodatage de la *RÃ©ponse*
+    - Le *Type de RÃ©ponse*
+    - Si applicable, le montant de la *RÃ©tribution*
 
-### Consultation des dénonciations non traitées
+### Consultation des dÃ©nonciations non traitÃ©es
 
-- Seule l'*Administration fiscale* peut consulter la liste des *Dénonciations non traitées*.
-- L'*Administration fiscale* peut consulter la liste des *Dénonciations non traitées* en utilisant l'API REST sécurisée dédiée.
-- La liste des *Dénonciations* sans *Réponse* doit être paginée.
-- La liste des *Dénonciations* sans *Réponse* doit comporter l'horodatage de sa création, l'*Informateur*, le *Suspect*, le *Délit* et le *Pays d'évasion* si applicable.
-- La liste des *Dénonciations non traitées* doit être triée par ordre d'horodatage création.
-- Les *Dénonciations* dont le *Suspect* est un *VIP* ne doivent pas être restituées dans la liste.
+- Seule l'*Administration fiscale* peut consulter la liste des *DÃ©nonciations non traitÃ©es*.
+- L'*Administration fiscale* peut consulter la liste des *DÃ©nonciations non traitÃ©es* en utilisant l'API REST sÃ©curisÃ©e dÃ©diÃ©e.
+- La liste des *DÃ©nonciations* sans *RÃ©ponse* doit Ãªtre paginÃ©e.
+- La liste des *DÃ©nonciations* sans *RÃ©ponse* doit comporter l'horodatage de sa crÃ©ation, l'*Informateur*, le *Suspect*, le *DÃ©lit* et le *Pays d'Ã©vasion* si applicable.
+- La liste des *DÃ©nonciations non traitÃ©es* doit Ãªtre triÃ©e par ordre d'horodatage crÃ©ation.
+- Les *DÃ©nonciations* dont le *Suspect* est un *VIP* ne doivent pas Ãªtre restituÃ©es dans la liste.
 
-### Répondre à une dénonciation
+### RÃ©pondre Ã  une dÃ©nonciation
 
-- Seule l'*Administration fiscale* peut créer des *Réponses* sur les *Dénonciations*.
-- L'*Administration fiscale* peut créer une *Réponse* sur une *Dénonciations* en utilisant l'API REST sécurisée dédiée.
-- Il n'est pas possible de répondre à une *Dénonciation* qui possède déjà une *Réponse*.
+- Seule l'*Administration fiscale* peut crÃ©er des *RÃ©ponses* sur les *DÃ©nonciations*.
+- L'*Administration fiscale* peut crÃ©er une *RÃ©ponse* sur une *DÃ©nonciations* en utilisant l'API REST sÃ©curisÃ©e dÃ©diÃ©e.
+- Il n'est pas possible de rÃ©pondre Ã  une *DÃ©nonciation* qui possÃ¨de dÃ©jÃ  une *RÃ©ponse*.
 
 ### Administration de la liste des VIP
 
 - Seuls les *Administrateurs* peuvent modifier la liste des *VIP*.
-- Les *Administrateurs* peuvent consulter la liste des *VIP* en utilisant l'API sécurisée dédiée.
-- Les *Administrateurs* peuvent ajouter ou supprimer des *Personnes* à la liste des *VIP* en utilisant l'API sécurisée dédiée.
+- Les *Administrateurs* peuvent consulter la liste des *VIP* en utilisant l'API sÃ©curisÃ©e dÃ©diÃ©e.
+- Les *Administrateurs* peuvent ajouter ou supprimer des *Personnes* Ã  la liste des *VIP* en utilisant l'API sÃ©curisÃ©e dÃ©diÃ©e.
 
 ### Traitement des calomniateurs
 
-- Il n'est pas possible de créer une *Dénonciation* avec un *Informateur* appartenant à la liste des *Calomniateurs*. Si un utilisateur tente de créer une telle *Dénonciation*, l'application lui restitue une message d'erreur lui indiquant qu'il n'est plus autorisé à créer des *Dénonciations*.
-- Tout *Informateur* ayant créé au moins 3 *Dénonciations* ayant reçu une *Réponse* de type *Rejet* est automatiquement ajouté à la liste des *Calomniateurs*.
-- Tout *Informateur* ayant créé au moins une *Dénonciation* dont le *Suspect* faisait partie de la liste des *VIP* au moment de sa création est automatiquement ajouté à la liste des *Calomniateurs*.
+- Il n'est pas possible de crÃ©er une *DÃ©nonciation* avec un *Informateur* appartenant Ã  la liste des *Calomniateurs*. Si un utilisateur tente de crÃ©er une telle *DÃ©nonciation*, l'application lui restitue une message d'erreur lui indiquant qu'il n'est plus autorisÃ© Ã  crÃ©er des *DÃ©nonciations*.
+- Tout *Informateur* ayant crÃ©Ã© au moins 3 *DÃ©nonciations* ayant reÃ§u une *RÃ©ponse* de type *Rejet* est automatiquement ajoutÃ© Ã  la liste des *Calomniateurs*.
+- Tout *Informateur* ayant crÃ©Ã© au moins une *DÃ©nonciation* dont le *Suspect* faisait partie de la liste des *VIP* au moment de sa crÃ©ation est automatiquement ajoutÃ© Ã  la liste des *Calomniateurs*.
