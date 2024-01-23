@@ -10,8 +10,8 @@ namespace JeBalance.Denonciations
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddMediatR(cf => cf.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly));
-            services.AddSingleton<IDenonciationRepository, DenonciationRepository>();
-            services.AddSingleton<IPersonRepository, PersonRepository >();
+            //services.AddSingleton<IDenonciationRepository, DenonciationRepository>();
+            //services.AddSingleton<IPersonRepository, PersonRepository >();
 
             return services;
         }

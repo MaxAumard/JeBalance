@@ -6,7 +6,7 @@ using JeBalance.Infrastructure.SQLite;
 
 namespace JeBlance.Infrastructure.SQLServer.Configurations;
 
-internal class PersonneConfiguration : IEntityTypeConfiguration<PersonneSQL>
+internal class PersonConfiguration : IEntityTypeConfiguration<PersonneSQL>
 {
     public void Configure(EntityTypeBuilder<PersonneSQL> builder)
     {

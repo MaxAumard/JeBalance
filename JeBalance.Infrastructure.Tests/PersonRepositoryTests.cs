@@ -13,10 +13,10 @@ using Xunit;
 
 public class PersonRepositoryTests : RepositoryTest
 {
-    private readonly PersonneRepositorySQL _repository;
+    private readonly PersonRepositorySQL _repository;
     public PersonRepositoryTests() : base()
     {
-        _repository = new PersonneRepositorySQL(Context);
+        _repository = new PersonRepositorySQL(Context);
     }
 
     [Fact]

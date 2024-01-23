@@ -26,7 +26,7 @@ internal class DenonciationConfiguration : IEntityTypeConfiguration<Denonciation
         builder.Property(denonciation => denonciation.Crime)
             .IsRequired();
 
-        builder.Property(denonciation => denonciation.Pays)
+        builder.Property(denonciation => denonciation.Country)
             .IsRequired();
 
         builder.Property(denonciation => denonciation.Response)

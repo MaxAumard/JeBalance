@@ -39,10 +39,10 @@ public class DenonciationRepositoryTests : RepositoryTest
     [Fact]
     public async Task ShouldUpdate()
     {
-        var denonciation = new Denonciation("12", "12", "12", DateTimeOffset.Now, Crime.DissimulationDeRevenus, "212");
+        var denonciation = new Denonciation("12", "12", "12", DateTimeOffset.Now, Crime.DissimulationDeRevenus, "122");
         await _repository.Create(denonciation);
-        var denonciationToUpdate = new Denonciation("12", "12", "12", DateTimeOffset.Now, Crime.DissimulationDeRevenus, "122");
-        var result = await _repository.Update(denonciation.Id, denonciationToUpdate);
+        var result = await _repository.Update(denonciation.Id, denonciation);
         Assert.Equal(denonciation.Id, result);
     }
+    
 }

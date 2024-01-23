@@ -22,18 +22,16 @@ namespace JeBalance.Infrastructure.SQLite
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new PersonneConfiguration());
+            modelBuilder.ApplyConfiguration(new PersonConfiguration());
+            modelBuilder.ApplyConfiguration(new DenonciationConfiguration());
             base.OnModelCreating(modelBuilder);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.EnableSensitiveDataLogging();
             if (!optionsBuilder.IsConfigured)
             {
-                // Utilisation d'un chemin relatif
-                string databasePath = Path.Combine(Directory.GetCurrentDirectory(), "JeBalanceDb.db");
-                optionsBuilder.UseSqlite($"Data Source={databasePath}");
+                optionsBuilder.UseSqlite("Data Source=JeBalance.db");
             }
         }
     }

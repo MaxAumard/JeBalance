@@ -2,16 +2,22 @@
 using JeBalance.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using JeBalance.Domain.Contracts;
+using JeBalance.Domain.Repositories;
 
 namespace JeBalance.Infrastructure.SQLite.Repositories;
 
-public class PersonneRepositorySQL
+public class PersonRepositorySQL : IPersonRepository
 {
     private readonly DatabaseContext _context;
 
-    public PersonneRepositorySQL(DatabaseContext databaseContext)
+    public PersonRepositorySQL(DatabaseContext databaseContext)
     {
         _context = databaseContext;
+    }
+
+    public Task<int> Count(Specification<Person> specification)
+    {
+        throw new NotImplementedException();
     }
 
     public async Task<string> Create(Person Personne)
@@ -41,6 +47,31 @@ public class PersonneRepositorySQL
         }
     }
 
+    public Task<(IEnumerable<Person> Results, int Total)> Find(int limit, int offset, Specification<Person> specification)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Person> GetOne(string id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<bool> HasAny(Specification<Person> specification)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> SetIsBanned(string id, bool isBanned)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> SetIsVIP(string id, bool isVIP)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<String> Update(String id, Person person)
     {
         
@@ -56,32 +87,6 @@ public class PersonneRepositorySQL
         
         await _context.SaveChangesAsync();
         return id;
-    }
-
-    //Query VIP
-    public async Task<IEnumerable<Person>> GetAllVIP()
-    {
-        var persons = await _context.Personnes.Where(person => person.IsVIP == true).ToListAsync();
-        return persons.Select(person => person.ToDomain());
-    }
-
-    public async Task<IEnumerable<Person>> GetAllNotVIP()
-    {
-        var persons = await _context.Personnes.Where(person => person.IsVIP == false).ToListAsync();
-        return persons.Select(person => person.ToDomain());
-    }
-
-    //Query Banned
-    public async Task<IEnumerable<Person>> GetAllBanned()
-    {
-        var persons = await _context.Personnes.Where(person => person.IsBanned == true).ToListAsync();
-        return persons.Select(person => person.ToDomain());
-    }
-
-    public async Task<IEnumerable<Person>> GetAllNotBanned()
-    {
-        var persons = await _context.Personnes.Where(person => person.IsBanned == false).ToListAsync();
-        return persons.Select(person => person.ToDomain());
     }
 
 

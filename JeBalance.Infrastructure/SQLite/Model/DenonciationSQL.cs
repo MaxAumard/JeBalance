@@ -17,8 +17,8 @@ public class DenonciationSQL : Denonciation
     public DateTimeOffset Date { get; set; }
     [Column("Crime")]
     public Crime Crime { get; set; }
-    [Column("Pays")]
-    public string Pays { get; set; }
-    //[Column("Response")]
-    //public Response? Response { get; set; }
+    [Column("Country")]
+    public string Country { get; set; }
+    [Column("Response")]
+    public string Response { get; set; }
 }

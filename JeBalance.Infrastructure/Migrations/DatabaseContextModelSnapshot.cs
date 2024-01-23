@@ -23,6 +23,11 @@ namespace JeBalance.Infrastructure.Migrations
                         .HasColumnType("TEXT")
                         .HasColumnName("Id");
 
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Country");
+
                     b.Property<int>("Crime")
                         .HasColumnType("INTEGER")
                         .HasColumnName("Crime");
@@ -36,10 +41,10 @@ namespace JeBalance.Infrastructure.Migrations
                         .HasColumnType("TEXT")
                         .HasColumnName("Informant");
 
-                    b.Property<string>("Pays")
+                    b.Property<string>("Response")
                         .IsRequired()
                         .HasColumnType("TEXT")
-                        .HasColumnName("Pays");
+                        .HasColumnName("Response");
 
                     b.Property<string>("Suspect")
                         .IsRequired()
@@ -48,7 +53,7 @@ namespace JeBalance.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Denonciation");
+                    b.ToTable("Denonciation", "app");
                 });
 
             modelBuilder.Entity("JeBalance.Infrastructure.SQLite.Model.PersonneSQL", b =>
