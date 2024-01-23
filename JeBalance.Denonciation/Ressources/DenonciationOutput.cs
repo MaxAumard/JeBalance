@@ -3,7 +3,7 @@ using JeBalance.Domain.Models;
 
 namespace JeBalance.Inspection.Ressources
 {
-    public class DenonciationDto
+    public class DenonciationOutput
     {
         [JsonPropertyName("id")]
         public string Id { get; set; } = null!;
@@ -26,11 +26,11 @@ namespace JeBalance.Inspection.Ressources
         [JsonPropertyName("response")]
         public Response? Response { get; set; } = null!;
 
-        public DenonciationDto()
+        public DenonciationOutput()
         {
         }
 
-        public DenonciationDto(Denonciation source)
+        public DenonciationOutput(Denonciation source)
         {
             Id = source.Id;
             Informant = source.Informant;

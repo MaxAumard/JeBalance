@@ -23,14 +23,14 @@ namespace JeBalance.Inspection.Controllers
         {
             var query = new GetOneDenonciationQuery(id);
             var denonciation = await _mediator.Send(query);
-            return Ok(new DenonciationDto(denonciation));
+            return Ok(new DenonciationOutput(denonciation));
         }
 
         [HttpPost]
         [Route("denonciations")]
-        public async Task<IActionResult> CreateDenonciation([FromBody] DenonciationDtoInput dto)
+        public async Task<IActionResult> CreateDenonciation([FromBody] DenonciationInput input)
         {
-            var command = new CreateDenonciationCommand(dto.InformantId, dto.SuspectId, dto.Crime, dto.Country);
+            var command = new CreateDenonciationCommand(input.InformantId, input.SuspectId, input.Crime, input.Country);
             var id = await _mediator.Send(command);
             return Ok(id);
         }
