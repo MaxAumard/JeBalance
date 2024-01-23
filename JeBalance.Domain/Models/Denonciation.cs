@@ -9,50 +9,50 @@ namespace JeBalance.Domain.Models
         public string Suspect { get; }
         public DateTimeOffset Date { get; }
         public Crime Crime { get; }
-        public Name Pays { get; }
-        public Response? Response { get; }
+        public Name Country { get; }
+        public Response? Response { get; set; }
 
         public Denonciation() : base(Guid.NewGuid().ToString())
         {
         }
 
-        public Denonciation(string id, string informant, string suspect, DateTimeOffset date, Crime crime, Name pays, Response response) : base(id)
+        public Denonciation(string id, string informant, string suspect, DateTimeOffset date, Crime crime, Name country, Response response) : base(id)
         {
             Informant = informant;
             Suspect = suspect;
             Date = date;
             Crime = crime;
-            Pays = pays;
+            Country = country;
             Response = response;
         }
 
-        public Denonciation(string id, string informant, string suspect, DateTimeOffset date, Crime crime, string pays, Response response) : this(
+        public Denonciation(string id, string informant, string suspect, DateTimeOffset date, Crime crime, string country, Response response) : this(
             id,
             informant,
             suspect,
             date,
             crime,
-            new Name(pays),
+            new Name(country),
             response)
         { }
 
-        public Denonciation(string id, string informant, string suspect, DateTimeOffset date, Crime crime, Name pays) : base(id)
+        public Denonciation(string id, string informant, string suspect, DateTimeOffset date, Crime crime, Name country) : base(id)
         {
             Informant = informant;
             Suspect = suspect;
             Date = date;
             Crime = crime;
-            Pays = pays;
+            Country = country;
             Response = null;
         }
 
-        public Denonciation(string id, string informant, string suspect, DateTimeOffset date, Crime crime, string pays) : this(
+        public Denonciation(string id, string informant, string suspect, DateTimeOffset date, Crime crime, string country) : this(
             id,
             informant,
             suspect,
             date,
             crime,
-            new Name(pays))
+            new Name(country))
         { }
     }
 }

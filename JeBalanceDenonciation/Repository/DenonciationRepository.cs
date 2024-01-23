@@ -11,9 +11,9 @@ namespace JeBalanceDenonciation.Repository
             string guid1 = Guid.NewGuid().ToString();
             string guid2 = Guid.NewGuid().ToString();
             string guid3 = Guid.NewGuid().ToString();
-            _donnees.Add(new Denonciation(Guid.NewGuid().ToString() , guid1, guid2, DateTimeOffset.UtcNow, Delit.EvasionFiscale, "France", new Reponse()));
-            _donnees.Add(new Denonciation(Guid.NewGuid().ToString(), guid1, guid3, DateTimeOffset.UtcNow, Delit.DissimulationDeRevenus, "Suisse", new Reponse()));
-            _donnees.Add(new Denonciation(Guid.NewGuid().ToString(), guid3, guid2, DateTimeOffset.UtcNow, Delit.EvasionFiscale, "France", new Reponse()));
+            _donnees.Add(new Denonciation(Guid.NewGuid().ToString() , guid1, guid2, DateTimeOffset.UtcNow, Delit.EvasionFiscale, "France", null));
+            _donnees.Add(new Denonciation(Guid.NewGuid().ToString(), guid1, guid3, DateTimeOffset.UtcNow, Delit.DissimulationDeRevenus, "Suisse", null));
+            _donnees.Add(new Denonciation(Guid.NewGuid().ToString(), guid3, guid2, DateTimeOffset.UtcNow, Delit.EvasionFiscale, "France", null));
         }
 
         public IReadOnlyCollection<Denonciation> GetAll()

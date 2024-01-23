@@ -5,6 +5,6 @@ namespace JeBalance.Domain.Repositories
 {
     public interface IDenonciationRepository : Repository<Denonciation>
     {
-
+        Task<string> SetResponse(string id, Response response);
     }
 }
