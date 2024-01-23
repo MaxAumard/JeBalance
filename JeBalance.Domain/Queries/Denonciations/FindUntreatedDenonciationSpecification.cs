@@ -1,11 +1,10 @@
-﻿using JeBalance.Domain.Contracts;
+﻿using System.Linq.Expressions;
+using JeBalance.Domain.Contracts;
 using JeBalance.Domain.Models;
-using System.Linq.Expressions;
-
 
 namespace JeBalance.Domain.Queries.Denonciations
 {
-    public class FindUntreatedDenonciations : Specification<Denonciation>
+    public class FindUntreatedDenonciationSpecification: Specification<Denonciation>
     {
         public override Expression<Func<Denonciation, bool>> ToExpression()
         {

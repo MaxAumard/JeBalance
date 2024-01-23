@@ -10,7 +10,7 @@ namespace JeBalance.Domain.Models
         public DateTimeOffset Date { get; }
         public Crime Crime { get; }
         public Name Country { get; }
-        public Response? Response { get; }
+        public Response? Response { get; set; }
 
         public Denonciation() : base(Guid.NewGuid().ToString())
         {

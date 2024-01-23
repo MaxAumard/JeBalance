@@ -3,7 +3,7 @@ using JeBalance.Domain.Models;
 
 namespace JeBalance.Inspection.Ressources
 {
-    public class DenonciationDtoInput
+    public class DenonciationInput
     {
         [JsonPropertyName("informant")]
         public string InformantId { get; set; } = null!;

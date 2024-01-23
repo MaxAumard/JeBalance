@@ -27,9 +27,9 @@ namespace JeBalance.Denonciations
             string guid1 = Guid.NewGuid().ToString();
             string guid2 = Guid.NewGuid().ToString();
             string guid3 = Guid.NewGuid().ToString();
-            _donnees.Add(new Denonciation("01", guid1, guid2, DateTimeOffset.UtcNow, Crime.EvasionFiscale, "France", new Response()));
-            _donnees.Add(new Denonciation(Guid.NewGuid().ToString(), guid1, guid3, DateTimeOffset.UtcNow, Crime.DissimulationDeRevenus, "Suisse", new Response()));
-            _donnees.Add(new Denonciation(Guid.NewGuid().ToString(), guid3, guid2, DateTimeOffset.UtcNow, Crime.EvasionFiscale, "France", new Response()));
+            _donnees.Add(new Denonciation("01", guid1, guid2, DateTimeOffset.UtcNow, Crime.EvasionFiscale, "France", null));
+            _donnees.Add(new Denonciation(Guid.NewGuid().ToString(), guid1, guid3, DateTimeOffset.UtcNow, Crime.DissimulationDeRevenus, "Suisse", null));
+            _donnees.Add(new Denonciation(Guid.NewGuid().ToString(), guid3, guid2, DateTimeOffset.UtcNow, Crime.EvasionFiscale, "France", null));
         }
 
         public IReadOnlyCollection<Denonciation> GetAll()
@@ -40,7 +40,10 @@ namespace JeBalance.Denonciations
 
         public Task<(IEnumerable<Denonciation> Results, int Total)> Find(int limit, int offset, Specification<Denonciation> specification)
         {
-            throw new NotImplementedException();
+            IEnumerable<Denonciation> result = _donnees.Where(specification.IsSatisfiedBy);
+            int total = result.Count();
+            result = result.Skip(offset).Take(limit);
+            return Task.FromResult((result, total));
         }
 
         public Task<int> Count(Specification<Denonciation> specification)
@@ -74,8 +77,21 @@ namespace JeBalance.Denonciations
             throw new NotImplementedException();
         }
 
+        public Task<string> SetResponse(string id, Response response)
+        {
+            Denonciation denonciationToUpdate = _donnees.FirstOrDefault(d => d.Id == id);
 
+            if (denonciationToUpdate != null)
+            {
+                denonciationToUpdate.Response = response;
 
+                return Task.FromResult(id);
+            }
+            else
+            {
+                return Task.FromResult("Not Found"); ;
+            }
+        }
     }
     public class PersonRepository : IPersonRepository
     {
