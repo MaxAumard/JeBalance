@@ -29,10 +29,7 @@ namespace JeBalance.Infrastructure.SQLite
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlite("Data Source=JeBalance.db");
-            }
+            if (!optionsBuilder.IsConfigured) optionsBuilder.UseSqlite("Data Source=C:\\Users\\jerem\\source\\repos\\JeBalance\\JeBalance.Infrastructure\\LocalDatabase.db");
         }
     }
 }
