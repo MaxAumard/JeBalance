@@ -67,56 +67,7 @@ public class AuthenticateController : ControllerBase
 
         return Unauthorized();
     }
-
-    [HttpPost]
-    [Route("register")]
-    public async Task<IActionResult> Register([FromBody] RegisterModel model)
-    {
-        var userExists = await _userManager.FindByNameAsync(model.Username);
-        if (userExists != null)
-            return StatusCode(StatusCodes.Status500InternalServerError,
-                new Response { Status = "Error", Message = "User already exists!" });
-
-        ApplicationUser user = new()
-        {
-            SecurityStamp = Guid.NewGuid().ToString(),
-            UserName = model.Username,
-        };
-        var result = await _userManager.CreateAsync(user, model.Password);
-        if (!result.Succeeded)
-            return StatusCode(StatusCodes.Status500InternalServerError,
-                new Response
-                    { Status = "Error", Message = "User creation failed! Please check user details and try again." });
-
-
-        if (!await _roleManager.RoleExistsAsync(UserRoles.User))
-            await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
-
-        if (await _roleManager.RoleExistsAsync(UserRoles.User))
-        {
-            await _userManager.AddToRoleAsync(user, UserRoles.User);
-        }
-        try
-        {
-            var command = new CreatePersonCommand(
-                firstName: model.Firstname,
-                lastName: model.Lastname,
-                number: model.Number,
-                streetName: model.StreetName,
-                postalCode: model.PostalCode,
-                city: model.City
-            );
-            var personId = await _mediator.Send(command);
-            user.AssociatedPersonId = personId;
-            await _userManager.UpdateAsync(user);
-
-            return Ok(new Response { Status = "Success", Message = "User and Person created successfully!" });
-        }
-        catch (Exception)
-        {
-            return Ok(new Response { Status = "Success", Message = "User created successfully but without the Person" });
-        }
-    }
+    
 
     [HttpPost]
     [Route("register-admin")]
@@ -168,7 +119,7 @@ public class AuthenticateController : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError,
                 new Response
                     { Status = "Error", Message = "User creation failed! Please check user details and try again." });
- 
+
         if (!await _roleManager.RoleExistsAsync(UserRoles.Inspector))
             await _roleManager.CreateAsync(new IdentityRole(UserRoles.Inspector));
 
