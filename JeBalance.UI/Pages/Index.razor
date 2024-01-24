@@ -1,0 +1,15 @@
+@page "/"
+
+<PageTitle>Denonciation</PageTitle>
+
+<AuthorizeView>
+    <Authorized>
+        <h1>Bonjour @context.User.Identity.Name ! <br/> Bienvenue sur Je Balance</h1>
+    </Authorized>
+    <NotAuthorized>
+        <h1>Bienvenue sur Je Balance</h1>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+}

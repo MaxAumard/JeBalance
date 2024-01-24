@@ -1,6 +1,7 @@
 ﻿using JeBalance.Infrastructure.SQLite.Model;
 using Microsoft.EntityFrameworkCore;
 using JeBlance.Infrastructure.SQLServer.Configurations;
+
 //dotnet ef migrations add initial --context DatabaseContext
 namespace JeBalance.Infrastructure.SQLite
 {
@@ -29,7 +30,7 @@ namespace JeBalance.Infrastructure.SQLite
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured) optionsBuilder.UseSqlite("Data Source=C:\\Users\\jerem\\source\\repos\\JeBalance\\JeBalance.Infrastructure\\LocalDatabase.db");
+            optionsBuilder.UseSqlite($"Data Source=../JeBalance.Infrastructure/LocalDatabase.db");
         }
     }
 }

@@ -1,0 +1,51 @@
+@page "/access-denunciation"
+@using JeBalance.Inspection.Ressources
+@inject DenonciationService DenonciationService
+
+<h2>Accéder à une dénonciation</h2>
+<EditForm Model="@searchModel" OnValidSubmit="@GetDenonciation">
+    <div class="form-group">
+        <InputText @bind-Value="searchModel.DenonciationId" class="form-control" placeholder="Entrez l'ID (UUID)" />
+        <button type="submit" class="btn btn-primary">Rechercher</button>
+    </div>
+</EditForm>
+@if (isLoading)
+{
+    <p><em>Chargement...</em></p>
+}
+else if (denonciationDetails != null)
+{
+    <pre>@denonciationDetails.Id</pre>
+    <pre>@denonciationDetails.Date</pre>
+    <pre>@denonciationDetails.Suspect</pre>
+    <pre>@denonciationDetails.Crime</pre>
+}
+
+@code {
+    private SearchModel searchModel = new SearchModel();
+    private bool isLoading = false;
+    private DenonciationOutput denonciationDetails;
+
+    private async Task GetDenonciation()
+    {
+        isLoading = true;
+        try
+        {
+            denonciationDetails = await DenonciationService.GetDenonciationAsync(searchModel.DenonciationId);
+            
+        }
+        catch (Exception ex)
+        {
+            denonciationDetails = null; // Consider handling the error more explicitly
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private class SearchModel
+    {
+        public string DenonciationId { get; set; }
+    }
+}

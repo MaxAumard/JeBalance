@@ -1,0 +1,51 @@
+@page "/login"
+@using Authentication
+@inject UserAccountService userAccountService
+@inject IJSRuntime js
+@inject AuthenticationStateProvider authStateProvider
+@inject NavigationManager navManager
+
+<div class="row">
+    <div class="col-lg-4 offset-lg-4 pt-4 pb-4 border">
+        <div class="mb-3 text-center">
+            <h3>Connexion</h3>
+        </div>
+        <div class="mb-3">
+            <label>Pseudo</label>
+            <input @bind="model.UserName" class="form-control" placeholder="Pseudo"/>
+        </div>
+        <div class="mb-3">
+            <label>Mot de passe</label>
+            <input @bind="model.Password" type="password" class="form-control" placeholder="Mot de passe"/>
+        </div>
+        <div class="mb-3 d-grid gap-2">
+            <button @onclick="Authenticate" class="btn btn-primary">Connexion</button>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    private class Model
+    {
+        public string UserName { get; set; }
+        public string Password { get; set; }
+    }
+
+    private Model model = new Model();
+
+    private async Task Authenticate()
+    {
+        var userSession = await userAccountService.LoginAsync(model.UserName, model.Password);
+        if (userSession == null)
+        {
+            await js.InvokeVoidAsync("alert", "Connexion échouée, vérifier le pseudo et le mot de passe");
+            return;
+        }
+
+        var customASP = (CustomAuthenticationStateProvider)authStateProvider;
+        await customASP.UpdateAuthenticationState(userSession);
+        navManager.NavigateTo("/", true);
+    }
+
+}

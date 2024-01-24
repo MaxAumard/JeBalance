@@ -54,7 +54,8 @@ public class DenonciationRepositorySQL : IDenonciationRepository
 
     public Task<Denonciation> GetOne(string id)
     {
-        throw new NotImplementedException();
+        var denonciation = _context.Denonciations.FirstOrDefault(denonciation => denonciation.Id == id);
+        return Task.FromResult(denonciation.ToDomain());
     }
 
     public Task<bool> HasAny(Specification<Denonciation> specification)
