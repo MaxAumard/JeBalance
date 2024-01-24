@@ -4,9 +4,9 @@ using JeBalance.Domain.ValueObjects;
 using JeBalance.Infrastructure.SQLite.Model;
 using JeBalance.Infrastructure.SQLite;
 
-namespace ParkNGo.Infrastructure.SQLServer.Configurations;
+namespace JeBlance.Infrastructure.SQLServer.Configurations;
 
-internal class PersonneConfiguration : IEntityTypeConfiguration<PersonneSQL>
+internal class PersonConfiguration : IEntityTypeConfiguration<PersonneSQL>
 {
     public void Configure(EntityTypeBuilder<PersonneSQL> builder)
     {
@@ -21,6 +21,12 @@ internal class PersonneConfiguration : IEntityTypeConfiguration<PersonneSQL>
             .IsRequired();
 
         builder.Property(person => person.Address)
+            .IsRequired();
+
+        builder.Property(person => person.IsBanned)
+            .IsRequired();
+
+        builder.Property(person => person.IsVIP)
             .IsRequired();
     }
 }

@@ -3,16 +3,25 @@ using JeBalance.Denonciations;
 using JeBalance.Domain;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using JeBalance.Infrastructure.SQLite;
+using Microsoft.EntityFrameworkCore;
+using JeBalance.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
-builder.Services.AddControllers();
+// For Entity 
+builder.Services.AddDbContext<DatabaseContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("localdb")),
+    contextLifetime: ServiceLifetime.Scoped,
+    optionsLifetime: ServiceLifetime.Transient);
+
+builder.Services.AddApplication();
 builder.Services.AddDomain();
+builder.Services.AddInfrastructure();
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddApplication();
-
 
 // Adding Authentication
 builder.Services.AddAuthentication(options =>
@@ -44,6 +53,8 @@ app.UseSwaggerUI();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+
 
 app.MapControllers();
 
