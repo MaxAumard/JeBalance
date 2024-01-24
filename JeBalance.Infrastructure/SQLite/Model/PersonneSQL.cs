@@ -14,4 +14,8 @@ public class PersonneSQL : Person
     public string LastName { get; set; }
     [Column("Address")]
     public string Address { get; set; }
+    [Column("IsBanned")]
+    public bool IsBanned { get; set; }
+    [Column("IsVIP")]
+    public bool IsVIP { get; set; }
 }
