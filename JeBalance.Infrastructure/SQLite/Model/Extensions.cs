@@ -78,14 +78,15 @@ public static class Extensions
     {
         if (response == null)
             return "";
-
         return response.Date + ";" + response.Retribution + ";" + response.ResponseType;
     }
 
-    public static Response ToDomainResponse(this String response)
+    public static Response? ToDomainResponse(this String response)
     {
+        if (response == "")
+            return null;
         string[] composantes = response.Split(";");
-
+        
         return new Response(
             DateTimeOffset.Parse(composantes[0]),
             int.Parse(composantes[1]),

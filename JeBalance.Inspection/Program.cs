@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // For Entity 
 builder.Services.AddDbContext<DatabaseContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("localdb")),
+        options.UseSqlite(builder.Configuration.GetConnectionString("localdb")),
     contextLifetime: ServiceLifetime.Scoped,
     optionsLifetime: ServiceLifetime.Transient);
 
@@ -53,8 +53,6 @@ app.UseSwaggerUI();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
-
 
 app.MapControllers();
 
