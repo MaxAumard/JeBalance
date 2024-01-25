@@ -3,6 +3,7 @@ using JeBalance.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using JeBalance.Domain.Contracts;
 using JeBalance.Domain.Repositories;
+using JeBalance.Domain.ValueObjects;
 
 namespace JeBalance.Infrastructure.SQLite.Repositories;
 
@@ -48,6 +49,11 @@ public class PersonRepositorySQL : IPersonRepository
     }
 
     public Task<(IEnumerable<Person> Results, int Total)> Find(int limit, int offset, Specification<Person> specification)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string> FindOrCreate(string firstName, string lastName, Address address)
     {
         throw new NotImplementedException();
     }
