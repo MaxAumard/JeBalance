@@ -4,6 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using JeBalance.Domain.Contracts;
 using JeBalance.Domain.Repositories;
 using JeBalance.Domain.ValueObjects;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Net;
+using System.Linq;
 
 namespace JeBalance.Infrastructure.SQLite.Repositories;
 
@@ -18,7 +22,7 @@ public class PersonRepositorySQL : IPersonRepository
 
     public Task<int> Count(Specification<Person> specification)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(_context.Personnes.Count());
     }
 
     public async Task<string> Create(Person Personne)
@@ -50,17 +54,55 @@ public class PersonRepositorySQL : IPersonRepository
 
     public Task<(IEnumerable<Person> Results, int Total)> Find(int limit, int offset, Specification<Person> specification)
     {
-        throw new NotImplementedException();
+        IEnumerable<Person> result = _context.Personnes.Where(specification.IsSatisfiedBy);
+        int total = result.Count();
+        result = result.Skip(offset).Take(limit);
+        return Task.FromResult((result, total));
     }
 
     public Task<string> FindOrCreate(string firstName, string lastName, Address address)
     {
-        throw new NotImplementedException();
+        Person? existingPerson = _context.Personnes.FirstOrDefault(p => p.FirstName == firstName && p.LastName == lastName && p.Address.Equals(address));
+
+        if (existingPerson != null)
+        {
+            return Task.FromResult(existingPerson.Id);
+        }
+        else
+        {
+            Person newPerson = new Person(Guid.NewGuid().ToString(), firstName, lastName, address);
+            return Create(newPerson);
+        }
+
+    }
+
+    public Task<(IEnumerable<Person> Results, int Total)> GetAllBanned(int limit, int offset, bool isBanned)
+    {
+        IEnumerable<Person> result = _context.Personnes.Where(p => p.IsBanned == isBanned);
+        int total = result.Count();
+        result = result.Skip(offset).Take(limit);
+        return Task.FromResult((result, total));
+    }
+
+    public Task<(IEnumerable<Person> Results, int Total)> GetAllVip(int limit, int offset, bool isVip)
+    {
+        IEnumerable<Person> result = _context.Personnes.Where(p => p.IsVIP == isVip);
+        int total = result.Count();
+        result = result.Skip(offset).Take(limit);
+        return Task.FromResult((result, total));
     }
 
     public Task<Person> GetOne(string id)
     {
-        throw new NotImplementedException();
+        Person? existingPerson = _context.Personnes.FirstOrDefault(p => p.Id == id);
+        return existingPerson == null ? throw new KeyNotFoundException() : Task.FromResult(existingPerson);
+
+    }
+
+    public Task<string> GetPerson(Specification<Person> specification)
+    {
+        Person? person = _context.Personnes.FirstOrDefault(specification.IsSatisfiedBy);
+        return person == null ? Task.FromResult("") : Task.FromResult(person.Id);
     }
 
     public Task<bool> HasAny(Specification<Person> specification)
@@ -70,12 +112,19 @@ public class PersonRepositorySQL : IPersonRepository
 
     public Task<string> SetIsBanned(string id, bool isBanned)
     {
-        throw new NotImplementedException();
+        PersonneSQL personToUpdate = _context.Personnes.First(person => person.Id == id);   
+        personToUpdate.IsBanned = isBanned;
+        _context.Personnes.Update(personToUpdate);
+        return Task.FromResult(id);
     }
 
     public Task<string> SetIsVIP(string id, bool isVIP)
     {
-        throw new NotImplementedException();
+        PersonneSQL personToUpdate = _context.Personnes.First(person => person.Id == id);
+        personToUpdate.IsVIP = isVIP;
+        _context.Personnes.Update(personToUpdate);
+        return Task.FromResult(id);
+
     }
 
     public async Task<String> Update(String id, Person person)
