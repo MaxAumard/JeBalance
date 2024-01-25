@@ -49,13 +49,17 @@ public class DenonciationRepositorySQL : IDenonciationRepository
 
     public Task<(IEnumerable<Denonciation> Results, int Total)> Find(int limit, int offset, Specification<Denonciation> specification)
     {
-        throw new NotImplementedException();
+        IEnumerable<Denonciation> result = _context.Denonciations.Where(specification.IsSatisfiedBy);
+        int total = result.Count();
+        result = result.Skip(offset).Take(limit);
+        return Task.FromResult((result, total));
     }
 
     public Task<Denonciation> GetOne(string id)
     {
         var denonciation = _context.Denonciations.FirstOrDefault(denonciation => denonciation.Id == id);
-        return Task.FromResult(denonciation.ToDomain());
+        return denonciation == null ?  throw new KeyNotFoundException() : Task.FromResult(denonciation.ToDomain());
+
     }
 
     public Task<bool> HasAny(Specification<Denonciation> specification)
@@ -65,27 +69,22 @@ public class DenonciationRepositorySQL : IDenonciationRepository
 
     public Task<string> SetResponse(string id, Response response)
     {
+        Denonciation? denonciationToUpdate = _context.Denonciations.FirstOrDefault(d => d.Id == id);
+
+        if (denonciationToUpdate != null)
+        {
+            denonciationToUpdate.Response = response;
+
+            return Task.FromResult(id);
+        }
+        else
+        {
+            return Task.FromResult("Not Found"); ;
+        }
+    }
+
+    public Task<string> Update(string id, Denonciation T)
+    {
         throw new NotImplementedException();
     }
-
-    public async Task<string> Update(string id, Denonciation denonciation)
-    {
-        
-        var denonciationToUpdate = _context.Denonciations.First(denonciation => denonciation.Id == id);
-        denonciationToUpdate.Informant = denonciation.Informant;
-        denonciationToUpdate.Suspect = denonciation.Suspect;
-        denonciationToUpdate.Date = denonciation.Date;
-        denonciationToUpdate.Crime = denonciation.Crime;
-        denonciationToUpdate.Country = denonciation.Country.Value;
-        //denonciationToUpdate.Response = denonciation.Response;
-
-        _context.Denonciations.Update(denonciationToUpdate);
-        
-        await _context.SaveChangesAsync();
-        return id;
-    }
-
-
-
-
 }
