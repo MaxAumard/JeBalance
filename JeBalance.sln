@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JeBalance", "JeBalance\JeBalance.csproj", "{FEDCDBD9-EDF1-47DF-8584-F9E83B1A1ECC}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JeBalance.Administration", "JeBalanceAdmin\JeBalance.Administration.csproj", "{AE63A602-E840-4D30-9F3D-24F0880FFE7C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JeBalance.Admin", "JeBalanceAdmin\JeBalance.Admin.csproj", "{AE63A602-E840-4D30-9F3D-24F0880FFE7C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JeBalance.Domain", "JeBalance.Domain\JeBalance.Domain.csproj", "{3A6BCAD8-779C-4839-826B-10E8B65BF9D6}"
 EndProject
@@ -13,7 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JeBalance.Infrastructure", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JeBalance.Infrastructure.Tests", "JeBalance.Infrastructure.Tests\JeBalance.Infrastructure.Tests.csproj", "{83531C14-843A-4AA3-9A70-74C3D0F43DFB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JeBalance.Inspection", "JeBalance.Denonciation\JeBalance.Inspection.csproj", "{E9F91FA3-F45C-4D1A-BE98-6EC268FD2F9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JeBalance.Inspection", "JeBalance.Inspection\JeBalance.Inspection.csproj", "{E9F91FA3-F45C-4D1A-BE98-6EC268FD2F9C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JeBalance.Auth", "JeBalance.Auth\JeBalance.Auth.csproj", "{63888A24-91F1-4A61-8A22-58753329F276}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JeBalance.UI", "JeBalance.UI\JeBalance.UI.csproj", "{133CEFE5-8386-40F8-9288-BF44B836D619}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +23,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FEDCDBD9-EDF1-47DF-8584-F9E83B1A1ECC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FEDCDBD9-EDF1-47DF-8584-F9E83B1A1ECC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FEDCDBD9-EDF1-47DF-8584-F9E83B1A1ECC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FEDCDBD9-EDF1-47DF-8584-F9E83B1A1ECC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AE63A602-E840-4D30-9F3D-24F0880FFE7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AE63A602-E840-4D30-9F3D-24F0880FFE7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE63A602-E840-4D30-9F3D-24F0880FFE7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,6 +43,12 @@ Global
 		{E9F91FA3-F45C-4D1A-BE98-6EC268FD2F9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9F91FA3-F45C-4D1A-BE98-6EC268FD2F9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9F91FA3-F45C-4D1A-BE98-6EC268FD2F9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63888A24-91F1-4A61-8A22-58753329F276}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63888A24-91F1-4A61-8A22-58753329F276}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{133CEFE5-8386-40F8-9288-BF44B836D619}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{133CEFE5-8386-40F8-9288-BF44B836D619}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{133CEFE5-8386-40F8-9288-BF44B836D619}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{133CEFE5-8386-40F8-9288-BF44B836D619}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
