@@ -3,6 +3,7 @@ using JeBalance.Domain.Commands.Denonciations;
 using JeBalance.Domain.Queries.Denonciations;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using JeBalance.Domain.Queries.Persons;
 
 namespace JeBalance.Inspection.Controllers
 {
@@ -21,19 +22,28 @@ namespace JeBalance.Inspection.Controllers
         [Route("denonciations/{id}")]
         public async Task<IActionResult> GetDenonciation([FromRoute] string id)
         {
-            var query = new GetOneDenonciationQuery(id);
-            var denonciation = await _mediator.Send(query);
-            return Ok(new DenonciationOutput(denonciation));
+            var denonciation = await _mediator.Send(new GetDenonciationByIdQuery(id));
+            var informant = await _mediator.Send(new GetPersonByIdQuery(denonciation.Informant));
+            var suspect = await _mediator.Send(new GetPersonByIdQuery(denonciation.Suspect));
+            return Ok(new DenonciationOutput(denonciation, informant, suspect));
         }
-
+        
         [HttpPost]
         [Route("denonciations")]
         public async Task<IActionResult> CreateDenonciation([FromBody] DenonciationInput input)
         {
-            var command = new CreateDenonciationCommand(input.InformantId, input.SuspectId, input.Crime, input.Country);
+            var command = new CreateDenonciationCommand(
+                input.InformantDatas.FirstName,
+                input.InformantDatas.LastName,
+                input.InformantDatas.Address.ConvertToDomain(),
+                input.SuspectDatas.FirstName,
+                input.SuspectDatas.LastName,
+                input.SuspectDatas.Address.ConvertToDomain(),
+                input.Crime,
+                input.Country);
             var id = await _mediator.Send(command);
             return Ok(id);
         }
-
+            
     }
 }

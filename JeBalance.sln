@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JeBalance.Inspection", "JeB
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JeBalance.Auth", "JeBalance.Auth\JeBalance.Auth.csproj", "{63888A24-91F1-4A61-8A22-58753329F276}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JeBalance.UI", "JeBalance.UI\JeBalance.UI.csproj", "{133CEFE5-8386-40F8-9288-BF44B836D619}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JeBalance.UI", "JeBalance.UI\JeBalance.UI.csproj", "{133CEFE5-8386-40F8-9288-BF44B836D619}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +45,8 @@ Global
 		{E9F91FA3-F45C-4D1A-BE98-6EC268FD2F9C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{63888A24-91F1-4A61-8A22-58753329F276}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{63888A24-91F1-4A61-8A22-58753329F276}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63888A24-91F1-4A61-8A22-58753329F276}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63888A24-91F1-4A61-8A22-58753329F276}.Release|Any CPU.Build.0 = Release|Any CPU
 		{133CEFE5-8386-40F8-9288-BF44B836D619}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{133CEFE5-8386-40F8-9288-BF44B836D619}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{133CEFE5-8386-40F8-9288-BF44B836D619}.Release|Any CPU.ActiveCfg = Release|Any CPU
