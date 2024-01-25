@@ -3,11 +3,11 @@ using MediatR;
 
 namespace JeBalance.Domain.Queries.Denonciations
 {
-    public class GetOneDenonciationQuery : IRequest<Denonciation>
+    public class GetDenonciationByIdQuery : IRequest<Denonciation>
     {
         public string Id { get; }
 
-        public GetOneDenonciationQuery(string id)
+        public GetDenonciationByIdQuery(string id)
         {
             Id = id;
         }

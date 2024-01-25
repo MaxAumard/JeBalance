@@ -1,7 +1,7 @@
 ﻿using JeBalance.Domain.Contracts;
 using JeBalance.Domain.Models;
 using JeBalance.Domain.Repositories;
-using System.Xml.Linq;
+using JeBalance.Domain.ValueObjects;
 
 namespace JeBalance.Denonciations
 {
@@ -24,12 +24,9 @@ namespace JeBalance.Denonciations
 
         public DenonciationRepository()
         {
-            string guid1 = Guid.NewGuid().ToString();
-            string guid2 = Guid.NewGuid().ToString();
-            string guid3 = Guid.NewGuid().ToString();
-            _donnees.Add(new Denonciation("01", guid1, guid2, DateTimeOffset.UtcNow, Crime.EvasionFiscale, "France", null));
-            _donnees.Add(new Denonciation(Guid.NewGuid().ToString(), guid1, guid3, DateTimeOffset.UtcNow, Crime.DissimulationDeRevenus, "Suisse", null));
-            _donnees.Add(new Denonciation(Guid.NewGuid().ToString(), guid3, guid2, DateTimeOffset.UtcNow, Crime.EvasionFiscale, "France", null));
+            //_donnees.Add(new Denonciation("01", "01", "02", DateTimeOffset.UtcNow, Crime.EvasionFiscale, "France", new Response(DateTimeOffset.UtcNow, 10, ResponseType.DissimulationDeRevenus)));
+            //_donnees.Add(new Denonciation(Guid.NewGuid().ToString(), "02", "03", DateTimeOffset.UtcNow, Crime.DissimulationDeRevenus, "Suisse", null));
+            //_donnees.Add(new Denonciation(Guid.NewGuid().ToString(), "03", "02", DateTimeOffset.UtcNow, Crime.EvasionFiscale, "France", null));
         }
 
         public IReadOnlyCollection<Denonciation> GetAll()
@@ -95,6 +92,14 @@ namespace JeBalance.Denonciations
     }
     public class PersonRepository : IPersonRepository
     {
+        private readonly List<Person> _donnees = new();
+
+        public PersonRepository() {
+            //Person person1 = new Person("01", "Max", "Aumard", new Address(8, "Rue des miracles", 9999, "Paris"));
+            //Person person2 = new Person("02", "Guillaume", "Pastres", new Address(7, "Rue des Frères Lumière", 68350, "Brunstatt"));
+            //Person person3 = new Person("03", "Jeremy", "Da Sylva", new Address(1, "quelque part", 77777, "Strasbourg"));
+        }
+
         public Task<int> Count(Specification<Person> specification)
         {
             throw new NotImplementedException();
@@ -115,9 +120,25 @@ namespace JeBalance.Denonciations
             throw new NotImplementedException();
         }
 
+        public Task<string> FindOrCreate(string firstName, string lastName, Address address)
+        {
+            Person? existingPerson = _donnees.Find(p => p.FirstName == firstName && p.LastName == lastName && p.Address.Equals(address));
+
+            if (existingPerson != null)
+            {
+                return Task.FromResult(existingPerson.Id);
+            }
+            else
+            {
+                Person newPerson = new Person(Guid.NewGuid().ToString(),firstName, lastName, address);
+                _donnees.Add(newPerson);
+                return Task.FromResult(newPerson.Id);
+            }
+        }
+
         public Task<Person> GetOne(string id)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(_donnees.FirstOrDefault(e => e.Id == id) ?? new Person());
         }
 
         public Task<bool> HasAny(Specification<Person> specification)

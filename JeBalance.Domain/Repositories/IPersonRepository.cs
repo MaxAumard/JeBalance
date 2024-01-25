@@ -1,5 +1,6 @@
 ﻿using JeBalance.Domain.Contracts;
 using JeBalance.Domain.Models;
+using JeBalance.Domain.ValueObjects;
 
 namespace JeBalance.Domain.Repositories
 {
@@ -7,5 +8,6 @@ namespace JeBalance.Domain.Repositories
     {
         Task<string> SetIsBanned(string id, bool isBanned);
         Task<string> SetIsVIP(string id, bool isVIP);
+        Task<string> FindOrCreate(string firstName, string lastName, Address address);
     }
 }

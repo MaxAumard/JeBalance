@@ -27,4 +27,7 @@ public class PostalCode : SimpleValueObject<int>
         if (value.ToString().Length != LENGHT) new ApplicationException($"PostalCode should have a lenght of {LENGHT}");
         return value;
     }
+
+    public static implicit operator int(PostalCode postalCode) => postalCode.Value;
+    public static implicit operator PostalCode(int value) => new(value);
 }

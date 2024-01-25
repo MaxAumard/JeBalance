@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using JeBalance.Domain.Repositories;
+﻿using JeBalance.Domain.Repositories;
 using MediatR;
 
 namespace JeBalance.Domain.Commands.Denonciations

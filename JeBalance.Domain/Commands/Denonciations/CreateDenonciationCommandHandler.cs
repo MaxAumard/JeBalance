@@ -1,17 +1,25 @@
-﻿using JeBalance.Domain.Repositories;
+﻿using JeBalance.Domain.Models;
+using JeBalance.Domain.Repositories;
 using MediatR;
 
 namespace JeBalance.Domain.Commands.Denonciations
 {
     public class CreateDenonciationCommandHandler : IRequestHandler<CreateDenonciationCommand, string>
     {
-        private readonly IDenonciationRepository _repository;
+        private readonly IDenonciationRepository _denonciationRepository;
+        private readonly IPersonRepository _personRepository;
 
-        public CreateDenonciationCommandHandler(IDenonciationRepository repository) => _repository = repository;
+        public CreateDenonciationCommandHandler(IDenonciationRepository denonciationRepository, IPersonRepository personRepository) {
+            _denonciationRepository = denonciationRepository;
+            _personRepository = personRepository;
+        } 
 
-        public Task<string> Handle(CreateDenonciationCommand command, CancellationToken cancellationToken)
+        public async Task<string> Handle(CreateDenonciationCommand command, CancellationToken cancellationToken)
         {
-            return _repository.Create(command.Denonciation);
+            var informantId = await _personRepository.FindOrCreate(command.InformantFirstName, command.InformantLasttName, command.InformantAddress);
+            var suspectId = await _personRepository.FindOrCreate(command.SuspectFirstName, command.SuspectLasttName, command.SuspectAddress);
+            Denonciation denonciation = new Denonciation(command.Id, informantId, suspectId, command.Date, command.Crime, command.Country);
+            return await _denonciationRepository.Create(denonciation);
         }
     }
 }

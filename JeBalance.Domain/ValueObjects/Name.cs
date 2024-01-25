@@ -13,11 +13,11 @@ public class Name : SimpleValueObject<string>
 
     public override string Validate(string value)
     {
+        if(value == null) throw new ApplicationException("Name cannot be null");
+
         var trimmedValue = value.Trim();
 
-        if(string.IsNullOrEmpty(trimmedValue)) throw new ApplicationException("Name cannot be empty");
-        
-        if(trimmedValue.Length < MIN_LENGTH) throw new ApplicationException($"Name cannot be less than {MIN_LENGTH} character(s)");
+        if (!string.IsNullOrEmpty(trimmedValue) && trimmedValue.Length < MIN_LENGTH) throw new ApplicationException($"Name cannot be less than {MIN_LENGTH} character(s)");
 
         if(trimmedValue.Length > MAX_LENGTH) throw new ApplicationException($"Name cannot be more than {MAX_LENGTH} characters");
 

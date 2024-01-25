@@ -6,13 +6,13 @@ namespace JeBalance.Inspection.Ressources
     public class DenonciationOutput
     {
         [JsonPropertyName("id")]
-        public string Id { get; set; } = null!;
+        public string Id { get; set; }
 
         [JsonPropertyName("informant")]
-        public string Informant { get; set; } = null!;
+        public PersonOutput Informant { get; set; } 
 
         [JsonPropertyName("suspect")]
-        public string Suspect { get; set; } = null!;
+        public PersonOutput Suspect { get; set; } 
 
         [JsonPropertyName("date")]
         public DateTimeOffset Date { get; set; }
@@ -21,20 +21,20 @@ namespace JeBalance.Inspection.Ressources
         public Crime Crime { get; set; }
 
         [JsonPropertyName("country")]
-        public string Country { get; set; } = null!;
+        public string Country { get; set; }
 
         [JsonPropertyName("response")]
-        public Response? Response { get; set; } = null!;
+        public Response? Response { get; set; }
 
         public DenonciationOutput()
         {
         }
 
-        public DenonciationOutput(Denonciation source)
+        public DenonciationOutput(Denonciation source, Person informant, Person suspect)
         {
             Id = source.Id;
-            Informant = source.Informant;
-            Suspect = source.Suspect;
+            Informant = new PersonOutput(informant);
+            Suspect = new PersonOutput(suspect);
             Date = source.Date;
             Crime = source.Crime;
             Country = source.Country;
