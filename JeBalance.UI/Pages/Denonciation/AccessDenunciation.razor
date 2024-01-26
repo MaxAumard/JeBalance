@@ -1,24 +1,66 @@
 @page "/access-denunciation"
 @using JeBalance.Inspection.Ressources
-@inject DenonciationService DenonciationService
+@using JeBalance.Domain.Models
+@inject DenonciationOutputService DenonciationOutputService
 
-<h2>Accéder à une dénonciation</h2>
-<EditForm Model="@searchModel" OnValidSubmit="@GetDenonciation">
+<h2 class="text-center mb-4">Accéder à une dénonciation</h2>
+<EditForm Model="@searchModel" OnValidSubmit="@GetDenonciation" class="mb-3">
     <div class="form-group">
-        <InputText @bind-Value="searchModel.DenonciationId" class="form-control" placeholder="Entrez l'ID (UUID)" />
-        <button type="submit" class="btn btn-primary">Rechercher</button>
+        <InputText @bind-Value="searchModel.DenonciationId" class="form-control" placeholder="Entrez l'ID (UUID)"/>
+        <button type="submit" class="btn btn-primary mt-2">Rechercher</button>
     </div>
 </EditForm>
+
 @if (isLoading)
 {
-    <p><em>Chargement...</em></p>
+    <p class="text-center">
+        <em>Chargement...</em>
+    </p>
 }
 else if (denonciationDetails != null)
 {
-    <pre>@denonciationDetails.Id</pre>
-    <pre>@denonciationDetails.Date</pre>
-    <pre>@denonciationDetails.Suspect</pre>
-    <pre>@denonciationDetails.Crime</pre>
+    <div class="card mx-auto" style="max-width: 800px;">
+        <div class="card-body">
+            <h3 class="card-title">Détails de la Dénonciation</h3>
+            <p class="card-text">
+                <strong>Horodatage: </strong>@denonciationDetails.Date
+            </p>
+            <h4>Informateur</h4>
+            <p>@denonciationDetails.Informant.FirstName @denonciationDetails.Informant.LastName</p>
+            <p>Adresse: @denonciationDetails.Informant.Address.Number, @denonciationDetails.Informant.Address.StreetName, @denonciationDetails.Informant.Address.PostalCode, @denonciationDetails.Informant.Address.City</p>
+
+            <h4>Suspect</h4>
+            <p>@denonciationDetails.Suspect.FirstName @denonciationDetails.Suspect.LastName</p>
+            <p>Adresse: @denonciationDetails.Suspect.Address.Number, @denonciationDetails.Suspect.Address.StreetName, @denonciationDetails.Suspect.Address.PostalCode, @denonciationDetails.Suspect.Address.City</p>
+
+            <p>
+                <strong>Délit: </strong>@denonciationDetails.Crime
+            </p>
+            @if (denonciationDetails.Crime == Crime.EvasionFiscale)
+            {
+                <p>
+                    <strong>Pays d'évasion: </strong>@denonciationDetails.Country
+                </p>
+            }
+
+            @if (denonciationDetails.Response != null)
+            {
+                <div>
+                    <h4>Réponse</h4>
+                    <p>
+                        <strong>Horodatage de réponse: </strong> @denonciationDetails.Response.Date
+                    </p>
+                    <p>
+                        <strong>Type de réponse: </strong>@denonciationDetails.Response.ResponseType
+                    </p>
+                    @if (denonciationDetails.Crime == Crime.EvasionFiscale)
+                    {
+                        <p> <strong>Rétribution:</strong> @denonciationDetails.Response.Retribution</p>
+                    }
+                </div>
+            }
+        </div>
+    </div>
 }
 
 @code {
@@ -31,12 +73,11 @@ else if (denonciationDetails != null)
         isLoading = true;
         try
         {
-            denonciationDetails = await DenonciationService.GetDenonciationAsync(searchModel.DenonciationId);
-            
+            denonciationDetails = await DenonciationOutputService.GetDenonciationAsync(searchModel.DenonciationId);
         }
         catch (Exception ex)
         {
-            denonciationDetails = null; // Consider handling the error more explicitly
+            denonciationDetails = null;
         }
         finally
         {
@@ -48,4 +89,5 @@ else if (denonciationDetails != null)
     {
         public string DenonciationId { get; set; }
     }
+
 }

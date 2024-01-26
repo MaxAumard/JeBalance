@@ -129,8 +129,6 @@ public class PersonRepositorySQL : IPersonRepository
 
     public async Task<String> Update(String id, Person person)
     {
-        
-
         var personToUpdate = _context.Personnes.First(person => person.Id == id);
         personToUpdate.FirstName = person.FirstName.Value;
         personToUpdate.LastName = person.LastName.Value;
@@ -139,10 +137,8 @@ public class PersonRepositorySQL : IPersonRepository
         personToUpdate.IsVIP = person.IsVIP;
 
         _context.Personnes.Update(personToUpdate);
-        
+
         await _context.SaveChangesAsync();
         return id;
     }
-
-
 }

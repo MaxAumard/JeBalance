@@ -7,6 +7,8 @@ namespace JeBalance.Domain.Queries.Persons
     public class FindPersonsByVIPSpecification : Specification<Person>
     {
         private readonly bool _isVIP;
+        public (int Limit, int Offset) Pagination { get; }
+
 
         public FindPersonsByVIPSpecification(bool isVIP)
         {

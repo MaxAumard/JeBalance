@@ -146,6 +146,16 @@ namespace JeBalance.Denonciations
             throw new NotImplementedException();
         }
 
+        public Task<IEnumerable<Person>> GetPersons(int limit, int offset, bool isVIP)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<(IEnumerable<Person> Results, int Total)> FindVIPPersons(int limit, int offset, bool isVIP)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<string> SetIsBanned(string id, bool isBanned)
         {
             throw new NotImplementedException();

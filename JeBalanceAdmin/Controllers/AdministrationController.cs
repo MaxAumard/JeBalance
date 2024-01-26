@@ -21,8 +21,7 @@ namespace JeBalanceAdmin.Controllers
         [HttpGet("vip")]
         public async Task<IActionResult> GetVip() 
         {
-            return Ok();
-            var query = new GetVIPPersonsQuery(100, 0, true);
+            var query = new FindVIPPersonsQuery(0, 100 ,true);
             var vipPersons = await _mediator.Send(query);
             return Ok(vipPersons);
         }
@@ -31,7 +30,7 @@ namespace JeBalanceAdmin.Controllers
         [Route("non-vip")]
         public async Task<IActionResult> GetNonVip()
         {
-            var query = new GetVIPPersonsQuery(100, 0, false);
+            var query = new FindVIPPersonsQuery(0, 100,false);
             var nonVipPersons = await _mediator.Send(query);
             return Ok(nonVipPersons);
         }
