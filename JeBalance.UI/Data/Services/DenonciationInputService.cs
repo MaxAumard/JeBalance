@@ -1,29 +1,22 @@
-using JeBalance.Domain.Models;
 using JeBalance.Inspection.Ressources;
 using JeBalance.UI.Authentication;
-using JeBalance.UI.Data.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 
+namespace JeBalance.UI.Data.Services;
 
-public class DenonciationService : ServiceBase<DenonciationOutput>
+public class DenonciationInputService : ServiceBase<DenonciationInput>
 {
     private const string Controller = "denonciations";
 
-    public DenonciationService(
+    public DenonciationInputService(
         IHttpClientFactory clientFactory,
         AuthenticationStateProvider authStateProvider)
         : base(clientFactory, (CustomAuthenticationStateProvider)authStateProvider, Controller)
     {
     }
-
-    public async Task<DenonciationOutput> GetDenonciationAsync(string id)
-    {
-        var request = await MakeGetOneRequest(id);
-        var denonciation = await SendGetOneRequest(request);
-        return denonciation;
-    }
-
-    public async Task<string> AddDenonciationAsync(DenonciationOutput denonciation)
+    
+    
+    public async Task<string> AddDenonciationAsync(DenonciationInput denonciation)
     {
         var request = await MakeAddRequest(denonciation);
         var id = await SendAddRequest(request);

@@ -18,6 +18,7 @@ namespace JeBalance.Inspection.Ressources
         [JsonPropertyName("country")]
         public string Country { get; set; }
     }
+    
 
     public static class Extension {
 

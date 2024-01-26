@@ -48,15 +48,18 @@ public class PersonRepositorySQL : IPersonRepository
         }
     }
 
-    public Task<(IEnumerable<Person> Results, int Total)> Find(int limit, int offset, Specification<Person> specification)
+    public Task<(IEnumerable<Person> Results, int Total)> Find(int limit, int offset,
+        Specification<Person> specification)
     {
-        throw new NotImplementedException();
+        var persons = _context.Personnes.Skip(offset).Take(limit).ToList();
+        return Task.FromResult((persons.Select(person => person.ToDomain()).Where(specification.IsSatisfiedBy), persons.Count));
     }
 
     public Task<string> FindOrCreate(string firstName, string lastName, Address address)
     {
         throw new NotImplementedException();
     }
+
 
     public Task<Person> GetOne(string id)
     {
@@ -70,18 +73,24 @@ public class PersonRepositorySQL : IPersonRepository
 
     public Task<string> SetIsBanned(string id, bool isBanned)
     {
-        throw new NotImplementedException();
+        var personToUpdate = _context.Personnes.First(person => person.Id == id);
+        personToUpdate.IsBanned = isBanned;
+        _context.Personnes.Update(personToUpdate);
+        _context.SaveChanges();
+        return Task.FromResult(id);
     }
 
     public Task<string> SetIsVIP(string id, bool isVIP)
     {
-        throw new NotImplementedException();
+        var personToUpdate = _context.Personnes.First(person => person.Id == id);
+        personToUpdate.IsVIP = isVIP;
+        _context.Personnes.Update(personToUpdate);
+        _context.SaveChanges();
+        return Task.FromResult(id);
     }
 
     public async Task<String> Update(String id, Person person)
     {
-        
-
         var personToUpdate = _context.Personnes.First(person => person.Id == id);
         personToUpdate.FirstName = person.FirstName.Value;
         personToUpdate.LastName = person.LastName.Value;
@@ -90,10 +99,8 @@ public class PersonRepositorySQL : IPersonRepository
         personToUpdate.IsVIP = person.IsVIP;
 
         _context.Personnes.Update(personToUpdate);
-        
+
         await _context.SaveChangesAsync();
         return id;
     }
-
-
 }

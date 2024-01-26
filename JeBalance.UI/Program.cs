@@ -1,5 +1,6 @@
 using Blazored.Modal;
 using JeBalance.UI.Authentication;
+using JeBalance.UI.Data.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 
@@ -14,7 +15,8 @@ builder.Services.AddHttpClient();
 builder.Services.AddScoped<ProtectedSessionStorage>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 builder.Services.AddSingleton<UserAccountService>();
-builder.Services.AddScoped<DenonciationService>();
+builder.Services.AddScoped<DenonciationOutputService>();
+builder.Services.AddScoped<DenonciationInputService>();
 
 
 

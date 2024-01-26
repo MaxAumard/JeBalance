@@ -3,7 +3,6 @@ using System.Text;
 using System.Text.Json;
 using JeBalance.UI.Authentication;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.EntityFrameworkCore.Query;
 
 namespace JeBalance.UI.Data.Services;
 
@@ -200,7 +199,6 @@ public class ServiceBase<SourceType>
         {
             var client = _clientFactory.CreateClient();
             var response = await client.SendAsync(request);
-            
             if (!response.IsSuccessStatusCode) return default(SourceType);
             
             using var responseStream = await response.Content.ReadAsStreamAsync();

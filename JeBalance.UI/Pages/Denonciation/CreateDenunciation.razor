@@ -1,0 +1,69 @@
+@page "/add-denunciation"
+@using JeBalance.Inspection.Ressources
+@using JeBalance.Domain.Models
+@using JeBalance.UI.Data.Services
+@inject DenonciationInputService DenonciationInputService
+
+<h2>Ajouter une dénonciation</h2>
+<EditForm Model="@denonciation" OnValidSubmit="@HandleValidSubmit">
+    <!-- Informant Fields -->
+    <h3>Informations sur l'informateur</h3>
+    <InputText @bind-Value="denonciation.InformantDatas.FirstName" placeholder="Prénom de l'informateur" />
+    <InputText @bind-Value="denonciation.InformantDatas.LastName" placeholder="Nom de l'informateur" />
+    <!-- Informant Address Fields -->
+    <InputNumber @bind-Value="denonciation.InformantDatas.Address.Number" placeholder="Numéro de rue" />
+    <InputText @bind-Value="denonciation.InformantDatas.Address.StreetName" placeholder="Nom de rue" />
+    <InputNumber @bind-Value="denonciation.InformantDatas.Address.PostalCode" placeholder="Code Postal" />
+    <InputText @bind-Value="denonciation.InformantDatas.Address.City" placeholder="Ville" />
+
+    <!-- Suspect Fields -->
+    <h3>Informations sur le suspect</h3>
+    <InputText @bind-Value="denonciation.SuspectDatas.FirstName" placeholder="Prénom du suspect" />
+    <InputText @bind-Value="denonciation.SuspectDatas.LastName" placeholder="Nom du suspect" />
+    <!-- Suspect Address Fields -->
+    <InputNumber @bind-Value="denonciation.SuspectDatas.Address.Number" placeholder="Numéro de rue" />
+    <InputText @bind-Value="denonciation.SuspectDatas.Address.StreetName" placeholder="Nom de rue" />
+    <InputNumber @bind-Value="denonciation.SuspectDatas.Address.PostalCode" placeholder="Code Postal" />
+    <InputText @bind-Value="denonciation.SuspectDatas.Address.City" placeholder="Ville" />
+
+    <!-- Denonciation Fields -->
+    <h3>Informations sur la dénonciation</h3>
+    <InputSelect @bind-Value="denonciation.Crime" placeholder="Type de dénonciation">
+        <option value="0">Choisir un type</option>
+        @foreach (var type in Enum.GetValues(typeof(Crime)).Cast<Crime>().Skip(1))
+        {
+            <option value="@type">@type</option>
+        }
+    </InputSelect>
+    <InputText @bind-Value="denonciation.Country" placeholder="Pays (si applicable)" />
+
+    <button type="submit" class="btn btn-primary">Soumettre</button>
+</EditForm>
+
+@if (!string.IsNullOrEmpty(result))
+{
+    <p>La dénonciation a été ajoutée avec succès.</p>
+    <p>identifiant de la dénonciation : @result</p> 
+}
+
+@code {
+    private DenonciationInput denonciation = new DenonciationInput 
+    {
+        InformantDatas = new PersonInput { Address = new AddressInput() },
+        SuspectDatas = new PersonInput { Address = new AddressInput() }
+    };
+    private string result;
+    
+    private async Task HandleValidSubmit()
+    {
+        result = await DenonciationInputService.AddDenonciationAsync(denonciation);
+        if (!string.IsNullOrEmpty(result))
+        {
+            denonciation = new DenonciationInput 
+            {
+                InformantDatas = new PersonInput { Address = new AddressInput() },
+                SuspectDatas = new PersonInput { Address = new AddressInput() }
+            };
+        }
+    }
+}

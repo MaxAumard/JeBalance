@@ -1,5 +1,10 @@
 ﻿using System.Text;
+using JeBalance.Administration;
+using JeBalance.Domain;
+using JeBalance.Infrastructure;
+using JeBalance.Infrastructure.SQLite;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +15,18 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDomain();
+builder.Services.AddInfrastructure();
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddApplication();
 
+
+builder.Services.AddDbContext<DatabaseContext>(options =>
+        options.UseSqlite(builder.Configuration.GetConnectionString("localdb")),
+    contextLifetime: ServiceLifetime.Scoped,
+    optionsLifetime: ServiceLifetime.Transient);
 
 // Adding Authentication
 builder.Services.AddAuthentication(options =>

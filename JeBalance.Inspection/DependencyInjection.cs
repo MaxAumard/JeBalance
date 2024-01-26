@@ -10,8 +10,8 @@ namespace JeBalance.Denonciations
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddMediatR(cf => cf.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly));
-            //services.AddSingleton<IDenonciationRepository, DenonciationRepository>();
-            //services.AddSingleton<IPersonRepository, PersonRepository >();
+            services.AddSingleton<IDenonciationRepository, DenonciationRepository>();
+            services.AddSingleton<IPersonRepository, PersonRepository >();
 
             return services;
         }
@@ -142,6 +142,16 @@ namespace JeBalance.Denonciations
         }
 
         public Task<bool> HasAny(Specification<Person> specification)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Person>> GetPersons(int limit, int offset, bool isVIP)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<(IEnumerable<Person> Results, int Total)> FindVIPPersons(int limit, int offset, bool isVIP)
         {
             throw new NotImplementedException();
         }
