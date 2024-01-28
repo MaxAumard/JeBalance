@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="940dd3b6-703e-4564-a19f-2b4d5ca14f11" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../JeBalance.UI/Data/Services/DenonciationInputService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../JeBalance.UI/Pages/Denonciation/CreateDenunciation.razor" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../JeBalanceAdmin/DependencyInjection.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JeBalance.Auth/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/../JeBalance.Auth/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JeBalance.Domain/Models/Response.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../JeBalance.Domain/Models/Response.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JeBalance.Domain/Models/ResponseType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../JeBalance.Domain/Models/ResponseType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JeBalance.Domain/Queries/Persons/FindPersonsByVIPSpecification.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../JeBalance.Domain/Queries/Persons/FindPersonsByVIPSpecification.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JeBalance.Domain/Queries/Persons/GetVIPPersonsQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../JeBalance.Domain/Queries/Persons/FindVIPPersonsQuery.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JeBalance.Domain/Queries/Persons/GetVIPPersonsQueryHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../JeBalance.Domain/Queries/Persons/FindVIPPersonsQueryHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LocalDatabase.db" beforeDir="false" afterPath="$PROJECT_DIR$/LocalDatabase.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SQLite/Repositories/PersonRepositorySQL.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SQLite/Repositories/PersonRepositorySQL.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JeBalance.Inspection/DependencyInjection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../JeBalance.Inspection/DependencyInjection.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JeBalance.Inspection/Ressources/AddressOutput.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../JeBalance.Inspection/Ressources/AddressOutput.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JeBalance.Inspection/Ressources/DenonciationInput.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../JeBalance.Inspection/Ressources/DenonciationInput.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JeBalance.UI/Data/Services/DenonciationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../JeBalance.UI/Data/Services/DenonciationOutputService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JeBalance.UI/Data/Services/ServiceBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../JeBalance.UI/Data/Services/ServiceBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JeBalance.UI/Pages/Denonciation/AccessDenunciation.razor" beforeDir="false" afterPath="$PROJECT_DIR$/../JeBalance.UI/Pages/Denonciation/AccessDenunciation.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JeBalance.UI/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../JeBalance.UI/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JeBalance.UI/Shared/NavMenu.razor" beforeDir="false" afterPath="$PROJECT_DIR$/../JeBalance.UI/Shared/NavMenu.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JeBalanceAdmin/Controllers/AdministrationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../JeBalanceAdmin/Controllers/AdministrationController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JeBalanceAdmin/JeBalance.Admin.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../JeBalanceAdmin/JeBalance.Admin.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JeBalanceAdmin/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../JeBalanceAdmin/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JeBalanceAdmin/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/../JeBalanceAdmin/appsettings.json" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2bTCmSvCTomLq4aPSUIxHTHL8h3" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/pastr/source/repos/MaxAumard/JeBalance/JeBalance.Infrastructure&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="940dd3b6-703e-4564-a19f-2b4d5ca14f11" name="Changes" comment="" />
+      <created>1706229840485</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1706229840485</updated>
+      <workItem from="1706229841458" duration="1315000" />
+      <workItem from="1706398716997" duration="1286000" />
+      <workItem from="1706450811813" duration="2860000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
