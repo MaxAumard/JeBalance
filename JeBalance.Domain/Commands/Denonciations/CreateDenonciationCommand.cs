@@ -8,10 +8,10 @@ namespace JeBalance.Domain.Commands.Denonciations
     {
         public string Id { get; }
         public string InformantFirstName { get; }
-        public string InformantLasttName { get; }
+        public string InformantLastName { get; }
         public Address InformantAddress { get; }
         public string SuspectFirstName { get; }
-        public string SuspectLasttName { get; }
+        public string SuspectLastName { get; }
         public Address SuspectAddress { get; }
         public DateTimeOffset Date { get; }
         public Crime Crime { get;}
@@ -21,10 +21,10 @@ namespace JeBalance.Domain.Commands.Denonciations
         {
             Id = Guid.NewGuid().ToString();
             InformantFirstName = informantFirstName;
-            InformantLasttName = informantLastName;
+            InformantLastName = informantLastName;
             InformantAddress = informantAddress;
             SuspectFirstName = suspectFirstName;
-            SuspectLasttName = suspectLastName;
+            SuspectLastName = suspectLastName;
             SuspectAddress = suspectAddress;
             Date = DateTimeOffset.UtcNow;
             Crime = crime;

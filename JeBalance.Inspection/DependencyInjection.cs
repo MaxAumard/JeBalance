@@ -94,12 +94,6 @@ namespace JeBalance.Denonciations
     {
         private readonly List<Person> _donnees = new();
 
-        public PersonRepository() {
-            //Person person1 = new Person("01", "Max", "Aumard", new Address(8, "Rue des miracles", 9999, "Paris"));
-            //Person person2 = new Person("02", "Guillaume", "Pastres", new Address(7, "Rue des Frères Lumière", 68350, "Brunstatt"));
-            //Person person3 = new Person("03", "Jeremy", "Da Sylva", new Address(1, "quelque part", 77777, "Strasbourg"));
-        }
-
         public Task<int> Count(Specification<Person> specification)
         {
             throw new NotImplementedException();
@@ -118,22 +112,6 @@ namespace JeBalance.Denonciations
         public Task<(IEnumerable<Person> Results, int Total)> Find(int limit, int offset, Specification<Person> specification)
         {
             throw new NotImplementedException();
-        }
-
-        public Task<string> FindOrCreate(string firstName, string lastName, Address address)
-        {
-            Person? existingPerson = _donnees.Find(p => p.FirstName == firstName && p.LastName == lastName && p.Address.Equals(address));
-
-            if (existingPerson != null)
-            {
-                return Task.FromResult(existingPerson.Id);
-            }
-            else
-            {
-                Person newPerson = new Person(Guid.NewGuid().ToString(),firstName, lastName, address);
-                _donnees.Add(newPerson);
-                return Task.FromResult(newPerson.Id);
-            }
         }
 
         public Task<Person> GetOne(string id)
@@ -167,6 +145,11 @@ namespace JeBalance.Denonciations
         }
 
         public Task<string> Update(string id, Person T)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<string> GetPerson(Specification<Person> specification)
         {
             throw new NotImplementedException();
         }

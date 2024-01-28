@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Net;
 using System.Linq;
+using ParkNGo.Infrastructure.SQLServer.Repositories;
 
 namespace JeBalance.Infrastructure.SQLite.Repositories;
 
@@ -22,7 +23,9 @@ public class PersonRepositorySQL : IPersonRepository
 
     public Task<int> Count(Specification<Person> specification)
     {
-        return Task.FromResult(_context.Personnes.Count());
+        return Task.FromResult(_context.Personnes
+            .Apply(specification.ToSQLExpression<Person, PersonneSQL>())
+            .Count());
     }
 
     public async Task<string> Create(Person Personne)
@@ -54,55 +57,48 @@ public class PersonRepositorySQL : IPersonRepository
 
     public Task<(IEnumerable<Person> Results, int Total)> Find(int limit, int offset, Specification<Person> specification)
     {
+        var results = _context.Personnes
+            .Apply(specification.ToSQLExpression<Person, PersonneSQL>())
+            .Skip(offset)
+            .Take(limit)
+            .AsEnumerable()
+            .Select(driver => driver.ToDomain());
+
+        return Task.FromResult((results, _context.Personnes.Count()));
+        /*
         IEnumerable<Person> result = _context.Personnes.Where(specification.IsSatisfiedBy);
         int total = result.Count();
         result = result.Skip(offset).Take(limit);
         return Task.FromResult((result, total));
+        */
     }
 
-    public Task<string> FindOrCreate(string firstName, string lastName, Address address)
+    public async Task<Person> GetOne(string id)
     {
-        Person? existingPerson = _context.Personnes.FirstOrDefault(p => p.FirstName == firstName && p.LastName == lastName && p.Address.Equals(address));
-
-        if (existingPerson != null)
+        var person = await _context.Personnes.FirstOrDefaultAsync(person => person.Id == id);
+        if (person.IsNullOrDefault())
         {
-            return Task.FromResult(existingPerson.Id);
+            return null;
         }
-        else
-        {
-            Person newPerson = new Person(Guid.NewGuid().ToString(), firstName, lastName, address);
-            return Create(newPerson);
-        }
-
+        return person.ToDomain();
     }
 
-    public Task<(IEnumerable<Person> Results, int Total)> GetAllBanned(int limit, int offset, bool isBanned)
+    public async Task<string> GetPerson(Specification<Person> specification)
     {
-        IEnumerable<Person> result = _context.Personnes.Where(p => p.IsBanned == isBanned);
-        int total = result.Count();
-        result = result.Skip(offset).Take(limit);
-        return Task.FromResult((result, total));
-    }
+        var query = _context.Personnes.AsQueryable();
+        var person = query
+            .Apply(specification.ToSQLExpression<Person, PersonneSQL>())
+            .FirstOrDefaultAsync()
+            .Result
+            ;
 
-    public Task<(IEnumerable<Person> Results, int Total)> GetAllVip(int limit, int offset, bool isVip)
-    {
-        IEnumerable<Person> result = _context.Personnes.Where(p => p.IsVIP == isVip);
-        int total = result.Count();
-        result = result.Skip(offset).Take(limit);
-        return Task.FromResult((result, total));
-    }
 
-    public Task<Person> GetOne(string id)
-    {
-        Person? existingPerson = _context.Personnes.FirstOrDefault(p => p.Id == id);
-        return existingPerson == null ? throw new KeyNotFoundException() : Task.FromResult(existingPerson);
+        return person.IsNullOrDefault() ? "" : person.Id;
 
-    }
-
-    public Task<string> GetPerson(Specification<Person> specification)
-    {
+        /*
         Person? person = _context.Personnes.FirstOrDefault(specification.IsSatisfiedBy);
         return person == null ? Task.FromResult("") : Task.FromResult(person.Id);
+        */
     }
 
     public Task<bool> HasAny(Specification<Person> specification)

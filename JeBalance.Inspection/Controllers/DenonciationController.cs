@@ -4,6 +4,7 @@ using JeBalance.Domain.Queries.Denonciations;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using JeBalance.Domain.Queries.Persons;
+using JeBalance.Domain.Exceptions;
 
 namespace JeBalance.Inspection.Controllers
 {
@@ -22,10 +23,22 @@ namespace JeBalance.Inspection.Controllers
         [Route("denonciations/{id}")]
         public async Task<IActionResult> GetDenonciation([FromRoute] string id)
         {
-            var denonciation = await _mediator.Send(new GetDenonciationByIdQuery(id));
-            var informant = await _mediator.Send(new GetPersonByIdQuery(denonciation.Informant));
-            var suspect = await _mediator.Send(new GetPersonByIdQuery(denonciation.Suspect));
-            return Ok(new DenonciationOutput(denonciation, informant, suspect));
+            try
+            {
+                var denonciation = await _mediator.Send(new GetDenonciationByIdQuery(id));
+                var informant = await _mediator.Send(new GetPersonByIdQuery(denonciation.Informant));
+                var suspect = await _mediator.Send(new GetPersonByIdQuery(denonciation.Suspect));
+                return Ok(new DenonciationOutput(denonciation, informant, suspect));
+
+            }
+            catch (DenonciationNotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (PersonNotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
         }
         
         [HttpPost]
