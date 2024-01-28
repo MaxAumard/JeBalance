@@ -3,6 +3,7 @@ using JeBalance.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using JeBalance.Domain.Contracts;
 using JeBalance.Domain.Repositories;
+using ParkNGo.Infrastructure.SQLServer.Repositories;
 
 namespace JeBalance.Infrastructure.SQLite.Repositories;
 
@@ -49,38 +50,50 @@ public class DenonciationRepositorySQL : IDenonciationRepository
 
     public Task<(IEnumerable<Denonciation> Results, int Total)> Find(int limit, int offset, Specification<Denonciation> specification)
     {
+        var results = _context.Denonciations
+            .Apply(specification.ToSQLExpression<Denonciation, DenonciationSQL>())
+            .Skip(offset)
+            .Take(limit)
+            .AsEnumerable()
+            .Select(driver => driver.ToDomain());
+
+        return Task.FromResult((results, _context.Denonciations.Count()));
+
+        /*
         IEnumerable<Denonciation> result = _context.Denonciations.Where(specification.IsSatisfiedBy);
         int total = result.Count();
         result = result.Skip(offset).Take(limit);
         return Task.FromResult((result, total));
+        */
     }
 
-    public Task<Denonciation> GetOne(string id)
+    public async Task<Denonciation> GetOne(string id)
     {
-        var denonciation = _context.Denonciations.FirstOrDefault(denonciation => denonciation.Id == id);
-        return denonciation == null ?  throw new KeyNotFoundException() : Task.FromResult(denonciation.ToDomain());
-
+        var denonciation = await _context.Denonciations.FirstOrDefaultAsync(denonciation => denonciation.Id == id);
+        if (denonciation.IsNullOrDefault())
+        {
+            return null;
+        }
+        return denonciation.ToDomain();
     }
 
     public Task<bool> HasAny(Specification<Denonciation> specification)
     {
-        throw new NotImplementedException();
+        return _context.Denonciations
+            .Apply(specification.ToSQLExpression<Denonciation, DenonciationSQL>())
+            .AnyAsync();
     }
 
-    public Task<string> SetResponse(string id, Response response)
+    public async Task<string> SetResponse(string id, Response response)
     {
-        Denonciation? denonciationToUpdate = _context.Denonciations.FirstOrDefault(d => d.Id == id);
-
-        if (denonciationToUpdate != null)
+        Denonciation? denonciation = await _context.Denonciations.FirstOrDefaultAsync(denonciation => denonciation.Id == id);
+        if (denonciation.IsNullOrDefault())
         {
-            denonciationToUpdate.Response = response;
-
-            return Task.FromResult(id);
+            return null;
         }
-        else
-        {
-            return Task.FromResult("Not Found"); ;
-        }
+        denonciation.Response = response;
+        await _context.SaveChangesAsync();
+        return id;
     }
 
     public Task<string> Update(string id, Denonciation T)

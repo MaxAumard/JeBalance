@@ -1,4 +1,5 @@
 ﻿using JeBalance.Domain.Commands.Denonciations;
+using JeBalance.Domain.Exceptions;
 using JeBalance.Domain.Models;
 using JeBalance.Domain.Queries.Denonciations;
 using JeBalance.Domain.Queries.Persons;
@@ -24,25 +25,47 @@ namespace JeBalance.Inspection.Controllers
         [HttpGet("denonciations")]
         public async Task<IActionResult> UntreatedDenonciations([FromQuery] FindUntreatedDenonciationDtoInput input)
         {
-            var command = new FindUntreatedDenonciationQuery(input.Limit, input.Offset);
-            var response = await _mediator.Send(command);
-            var output = new PaginationOutput<DenonciationOutput>(response.Results.Select(denonciation => GetDenonciationOutput(denonciation).Result) , response.Total);
-            return Ok(output);
+            try
+            {
+                var command = new FindUntreatedDenonciationQuery(input.Limit, input.Offset);
+                var response = await _mediator.Send(command);
+                var output = new PaginationOutput<DenonciationOutput>(response.Results.Select(denonciation => GetDenonciationOutput(denonciation).Result), response.Total);
+                return Ok(output);
+
+            }
+            catch (DenonciationNotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
         }
 
         private async Task<DenonciationOutput> GetDenonciationOutput(Denonciation denonciation)
         {
-            var informant = await _mediator.Send(new GetPersonByIdQuery(denonciation.Informant));
-            var suspect = await _mediator.Send(new GetPersonByIdQuery(denonciation.Suspect));
-            return new DenonciationOutput(denonciation, informant, suspect);
+            try
+            {
+                var informant = await _mediator.Send(new GetPersonByIdQuery(denonciation.Informant));
+                var suspect = await _mediator.Send(new GetPersonByIdQuery(denonciation.Suspect));
+                return new DenonciationOutput(denonciation, informant, suspect);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [HttpPut("denonciations/{id}")]
-        public async Task<IActionResult> UntreatedDenonciations([FromRoute] string id, [FromBody] ResponseInput input)
+        public async Task<IActionResult> RespondDeconciation([FromRoute] string id, [FromBody] ResponseInput input)
         {
-            var command = new RespondCommand(id, input.Retribution, input.ResponseType);
-            var result = await _mediator.Send(command);
-            return Ok(result);
+            try
+            {
+                var command = new RespondCommand(id, input.Retribution, input.ResponseType);
+                var result = await _mediator.Send(command);
+                return Ok(result);
+            }
+            catch (DenonciationNotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using JeBalance.Domain.Models;
+﻿using JeBalance.Domain.Exceptions;
+using JeBalance.Domain.Models;
 using JeBalance.Domain.Repositories;
 using MediatR;
 
@@ -13,6 +14,9 @@ namespace JeBalance.Domain.Queries.Persons
             _repository = repository;
         }
 
-        public Task<Person> Handle(GetPersonByIdQuery query, CancellationToken cancellationToken) => _repository.GetOne(query.Id);
+        public async Task<Person> Handle(GetPersonByIdQuery query, CancellationToken cancellationToken)
+        {
+            return await _repository.GetOne(query.Id) ?? throw new PersonNotFoundException(query.Id);
+        }
     }
 }

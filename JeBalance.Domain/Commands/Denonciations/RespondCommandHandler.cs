@@ -1,4 +1,5 @@
-﻿using JeBalance.Domain.Repositories;
+﻿using JeBalance.Domain.Exceptions;
+using JeBalance.Domain.Repositories;
 using MediatR;
 
 namespace JeBalance.Domain.Commands.Denonciations
@@ -8,9 +9,9 @@ namespace JeBalance.Domain.Commands.Denonciations
         private readonly IDenonciationRepository _repository;
         public RespondCommandHandler(IDenonciationRepository repository) => _repository = repository;
 
-        public Task<string> Handle(RespondCommand command, CancellationToken cancellationToken)
+        public async Task<string> Handle(RespondCommand command, CancellationToken cancellationToken)
         {
-            return _repository.SetResponse(command.Id, command.Response);
+            return await _repository.SetResponse(command.Id, command.Response) ?? throw new DenonciationNotFoundException(command.Id);
         }
     }
 }
