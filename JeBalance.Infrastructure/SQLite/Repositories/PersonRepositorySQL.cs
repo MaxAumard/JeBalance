@@ -55,7 +55,7 @@ public class PersonRepositorySQL : IPersonRepository
         }
     }
 
-    public Task<(IEnumerable<Person> Results, int Total)> Find(int limit, int offset, Specification<Person> specification)
+    public async Task<(IEnumerable<Person> Results, int Total)> Find(int limit, int offset, Specification<Person> specification)
     {
         var results = _context.Personnes
             .Apply(specification.ToSQLExpression<Person, PersonneSQL>())
@@ -64,13 +64,7 @@ public class PersonRepositorySQL : IPersonRepository
             .AsEnumerable()
             .Select(driver => driver.ToDomain());
 
-        return Task.FromResult((results, _context.Personnes.Count()));
-        /*
-        IEnumerable<Person> result = _context.Personnes.Where(specification.IsSatisfiedBy);
-        int total = result.Count();
-        result = result.Skip(offset).Take(limit);
-        return Task.FromResult((result, total));
-        */
+        return (results, _context.Personnes.Count());
     }
 
     public async Task<Person> GetOne(string id)
@@ -85,20 +79,13 @@ public class PersonRepositorySQL : IPersonRepository
 
     public async Task<string> GetPerson(Specification<Person> specification)
     {
-        var query = _context.Personnes.AsQueryable();
-        var person = query
+        var person = _context.Personnes
             .Apply(specification.ToSQLExpression<Person, PersonneSQL>())
-            .FirstOrDefaultAsync()
-            .Result
-            ;
+            .Select(driver => driver.ToDomain())
+            .FirstOrDefault();
 
 
         return person.IsNullOrDefault() ? "" : person.Id;
-
-        /*
-        Person? person = _context.Personnes.FirstOrDefault(specification.IsSatisfiedBy);
-        return person == null ? Task.FromResult("") : Task.FromResult(person.Id);
-        */
     }
 
     public Task<bool> HasAny(Specification<Person> specification)
@@ -106,20 +93,20 @@ public class PersonRepositorySQL : IPersonRepository
         throw new NotImplementedException();
     }
 
-    public Task<string> SetIsBanned(string id, bool isBanned)
+    public async Task<string> SetIsBanned(string id, bool isBanned)
     {
         PersonneSQL personToUpdate = _context.Personnes.First(person => person.Id == id);   
         personToUpdate.IsBanned = isBanned;
-        _context.Personnes.Update(personToUpdate);
-        return Task.FromResult(id);
+         _context.Personnes.Update(personToUpdate);
+        return id;
     }
 
-    public Task<string> SetIsVIP(string id, bool isVIP)
+    public async Task<string> SetIsVIP(string id, bool isVIP)
     {
         PersonneSQL personToUpdate = _context.Personnes.First(person => person.Id == id);
         personToUpdate.IsVIP = isVIP;
         _context.Personnes.Update(personToUpdate);
-        return Task.FromResult(id);
+        return id;
 
     }
 

@@ -1,6 +1,7 @@
 ﻿using JeBalance.Domain.Models;
 using JeBalance.Domain.ValueObjects;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace JeBalance.Infrastructure.SQLite.Model;
 
@@ -8,17 +9,19 @@ namespace JeBalance.Infrastructure.SQLite.Model;
 public class DenonciationSQL : Denonciation
 {
     [Column("Id")]
-    public string Id { get; set; }
+    public new string Id { get; set; } = string.Empty;
     [Column("Informant")]
-    public string Informant { get; set; }
+    public new string Informant { get; set; } = string.Empty;
     [Column("Suspect")]
-    public string Suspect { get; set; }
+    public new string Suspect { get; set; } = string.Empty;
     [Column("Date")]
-    public DateTimeOffset Date { get; set; }
+    public new DateTimeOffset Date { get; set; }
     [Column("Crime")]
-    public Crime Crime { get; set; }
+    public new Crime Crime { get; set; }
     [Column("Country")]
-    public string Country { get; set; }
+    public new string Country { get; set; } = string.Empty;
+    [AllowNull]
     [Column("Response")]
-    public string Response { get; set; }
+    public new string? Response { get; set; }
+
 }

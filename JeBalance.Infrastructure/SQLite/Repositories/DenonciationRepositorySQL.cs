@@ -48,28 +48,21 @@ public class DenonciationRepositorySQL : IDenonciationRepository
         }
     }
 
-    public Task<(IEnumerable<Denonciation> Results, int Total)> Find(int limit, int offset, Specification<Denonciation> specification)
+    public async Task<(IEnumerable<Denonciation> Results, int Total)> Find(int limit, int offset, Specification<Denonciation> specification)
     {
         var results = _context.Denonciations
             .Apply(specification.ToSQLExpression<Denonciation, DenonciationSQL>())
             .Skip(offset)
             .Take(limit)
             .AsEnumerable()
-            .Select(driver => driver.ToDomain());
+            .Select(denonciation => denonciation.ToDomain());
 
-        return Task.FromResult((results, _context.Denonciations.Count()));
-
-        /*
-        IEnumerable<Denonciation> result = _context.Denonciations.Where(specification.IsSatisfiedBy);
-        int total = result.Count();
-        result = result.Skip(offset).Take(limit);
-        return Task.FromResult((result, total));
-        */
+        return (results, _context.Denonciations.Count());
     }
 
     public async Task<Denonciation> GetOne(string id)
     {
-        var denonciation = await _context.Denonciations.FirstOrDefaultAsync(denonciation => denonciation.Id == id);
+        DenonciationSQL? denonciation =  _context.Denonciations.FirstOrDefault(denonciation => denonciation.Id == id);
         if (denonciation.IsNullOrDefault())
         {
             return null;
@@ -77,21 +70,21 @@ public class DenonciationRepositorySQL : IDenonciationRepository
         return denonciation.ToDomain();
     }
 
-    public Task<bool> HasAny(Specification<Denonciation> specification)
+    public async Task<bool> HasAny(Specification<Denonciation> specification)
     {
-        return _context.Denonciations
+        return await _context.Denonciations
             .Apply(specification.ToSQLExpression<Denonciation, DenonciationSQL>())
             .AnyAsync();
     }
 
     public async Task<string> SetResponse(string id, Response response)
     {
-        Denonciation? denonciation = await _context.Denonciations.FirstOrDefaultAsync(denonciation => denonciation.Id == id);
+        DenonciationSQL? denonciation =  _context.Denonciations.FirstOrDefault(denonciation => denonciation.Id == id);
         if (denonciation.IsNullOrDefault())
         {
             return null;
         }
-        denonciation.Response = response;
+        denonciation.Response = response.ToSQL();
         await _context.SaveChangesAsync();
         return id;
     }

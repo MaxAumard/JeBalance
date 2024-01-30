@@ -7,15 +7,15 @@ namespace JeBalance.Infrastructure.SQLite.Model;
 public class PersonneSQL : Person
 {
     [Column("Id")]
-    public string Id { get; set; }
+    public new string Id { get; set; } = string.Empty;
     [Column("Prenom")]
-    public string FirstName { get; set; }
+    public new string FirstName { get; set; } = string.Empty;
     [Column("Nom")]
-    public string LastName { get; set; }
+    public new string LastName { get; set; } = string.Empty;
     [Column("Address")]
-    public string Address { get; set; }
+    public new string Address { get; set; } = string.Empty;
     [Column("IsBanned")]
-    public bool IsBanned { get; set; }
+    public new bool IsBanned { get; set; }
     [Column("IsVIP")]
-    public bool IsVIP { get; set; }
+    public new bool IsVIP { get; set; }
 }

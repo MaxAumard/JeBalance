@@ -10,8 +10,8 @@ public static class Extensions
     {
         return new Person(
             person.Id,
-            person.LastName,
             person.FirstName,
+            person.LastName,
             person.Address.ToDomainAddress(),
             person.IsBanned,
             person.IsVIP)
@@ -22,8 +22,8 @@ public static class Extensions
         return new PersonneSQL
         {
             Id = person.Id,
-            LastName = person.FirstName.Value,
-            FirstName = person.LastName.Value,
+            LastName = person.LastName.Value,
+            FirstName = person.FirstName.Value,
             Address = person.Address.ToSQL(),
             IsBanned = person.IsBanned,
             IsVIP = person.IsVIP
@@ -56,7 +56,7 @@ public static class Extensions
             denonciation.Date,
             denonciation.Crime,
             denonciation.Country,
-            denonciation.Response.ToDomainResponse()
+            denonciation.Response?.ToDomainResponse()
             );
     }
 
@@ -70,20 +70,20 @@ public static class Extensions
             Date = denonciation.Date,
             Crime = denonciation.Crime,
             Country = denonciation.Country.Value,
-            Response = denonciation.Response.ToSQL()
+            Response = denonciation?.Response?.ToSQL()
         };
     }
 
-    public static string ToSQL(this Response response)
+    public static string? ToSQL(this Response response)
     {
         if (response == null)
-            return "";
+            return null;
         return response.Date + ";" + response.Retribution + ";" + response.ResponseType;
     }
 
     public static Response? ToDomainResponse(this String response)
     {
-        if (response == "")
+        if (response == null)
             return null;
         string[] composantes = response.Split(";");
         

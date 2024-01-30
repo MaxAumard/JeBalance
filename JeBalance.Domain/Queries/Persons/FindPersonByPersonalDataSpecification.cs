@@ -18,18 +18,17 @@ namespace JeBalance.Domain.Queries.Persons
 
         public FindPersonByPersonalDataSpecification(string firsName, string lastName, Address address)
         {
-            _firstName = firsName;
-            _lastName = lastName;
+            _firstName = firsName.Trim().ToLower();
+            _lastName = lastName.Trim().ToLower();
             _address = address;
         }
 
         public override Expression<Func<Person, bool>> ToExpression()
         {
-            return person => person.FirstName.Equals(_firstName);
-           /* return person => person.FirstName.Equals(_firstName)
-                            && person.LastName.Equals(_lastName) 
-                            && person.Address.Equals(_address);
-           */
+            return person => ((string)person.FirstName).ToLower().Equals(_firstName) 
+                && ((string)person.LastName).ToLower().Equals(_lastName) 
+                //&& person.Address.Equals(_address)
+                ;
         }
     }
 }
