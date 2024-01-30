@@ -1,4 +1,6 @@
-﻿namespace JeBalance.Domain.ValueObjects
+﻿using System.Net;
+
+namespace JeBalance.Domain.ValueObjects
 {
     public class Address
     {

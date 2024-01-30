@@ -30,6 +30,6 @@ internal class DenonciationConfiguration : IEntityTypeConfiguration<Denonciation
             .IsRequired();
 
         builder.Property(denonciation => denonciation.Response)
-            .IsRequired();
+            .IsRequired(false);
     }
 }

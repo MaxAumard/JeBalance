@@ -11,7 +11,7 @@ namespace JeBalance.Domain.Commands.Denonciations
 
         public async Task<string> Handle(RespondCommand command, CancellationToken cancellationToken)
         {
-            return await _repository.SetResponse(command.Id, command.Response) ?? throw new DenonciationNotFoundException(command.Id);
+             return await _repository.SetResponse(command.Id, command.Response) ?? throw new DenonciationNotFoundException(command.Id);
         }
     }
 }
