@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace JeBalanceAdmin.Controllers
 {
-    [Authorize(Roles = "Admin")]
     [ApiController]
     [Route("api/v1/admin")]
     public class AdministrationController : ControllerBase

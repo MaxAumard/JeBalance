@@ -17,7 +17,8 @@ builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStat
 builder.Services.AddSingleton<UserAccountService>();
 builder.Services.AddScoped<DenonciationOutputService>();
 builder.Services.AddScoped<DenonciationInputService>();
-
+builder.Services.AddScoped<InspectionInputService>();
+builder.Services.AddScoped<InspectionOutputService>();
 
 
 var app = builder.Build();

@@ -113,6 +113,7 @@ namespace JeBalance.Denonciations
         {
             throw new NotImplementedException();
         }
+        
 
         public Task<Person> GetOne(string id)
         {
@@ -140,6 +141,21 @@ namespace JeBalance.Denonciations
         }
 
         public Task<string> SetIsVIP(string id, bool isVIP)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<(IEnumerable<Person> Results, int Total)> GetAllVip(int limit, int offset, bool isVip)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<(IEnumerable<Person> Results, int Total)> GetAllBanned(int limit, int offset, bool isBanned)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<string> FindOrCreate(string firstName, string lastName, Address address)
         {
             throw new NotImplementedException();
         }
