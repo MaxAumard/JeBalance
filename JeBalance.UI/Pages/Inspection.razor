@@ -1,0 +1,130 @@
+@page "/inspections"
+@using JeBalance.Inspection.Ressources
+@using JeBalance.UI.Data.Services
+@inject InspectionOutputService InspectionOutputService
+@inject InspectionInputService InspectionInputService
+
+<h2>Inspections</h2>
+
+@if (denonciations != null && denonciations.Any())
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Nom du suspect</th>
+            <th>Adresse</th>
+            <th>Délit</th>
+            <th>Date</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var denonciation in denonciations)
+        {
+            <tr>
+                <td>@denonciation.Suspect.FirstName @denonciation.Suspect.LastName</td>
+                <td>@denonciation.Suspect.Address.Number, @denonciation.Suspect.Address.StreetName, @denonciation.Suspect.Address.PostalCode, @denonciation.Suspect.Address.City</td>
+                <td>@denonciation.Crime</td>
+                <td>@denonciation.Date.ToString("d")</td>
+                <td>
+                    <button class="btn btn-primary" @onclick="() => SelectDenonciation(denonciation)">Répondre</button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div>
+        <button class="btn btn-secondary" disabled="@(currentPage == 1)" @onclick="PreviousPage">Précédent</button>
+        <span>Page @currentPage de @(Math.Ceiling((double)totalDenonciations / 10))</span>
+        <button class="btn btn-secondary" disabled="@(currentPage == Math.Ceiling((double)totalDenonciations / 8))" @onclick="NextPage">Suivant</button>
+    </div>
+    <br/>
+}
+
+@if (selectedDenonciation != null)
+{
+    <h3>Répondre à la dénonciation  du Suspect @selectedDenonciation.Suspect.FirstName @selectedDenonciation.Suspect.LastName</h3>
+    <EditForm Model="@inspectionInput" OnValidSubmit="@HandleUpdate">
+        <div class="form-group">
+            <label for="responseType">Type de réponse:</label>
+            <InputSelect TValue="ResponseType" @bind-Value="inspectionInput.ResponseType" class="form-select">
+                @foreach (var responseType in Enum.GetValues(typeof(ResponseType)))
+                {
+                    <option value="@responseType">@responseType</option>
+                }
+            </InputSelect>
+        </div>
+        <div class="form-group">
+            <label for="retribution">Rétribution:</label>
+            <InputNumber TValue="float" @bind-Value="inspectionInput.Retribution" class="form-control"/>
+        </div>
+        <button type="submit" class="btn btn-primary">Soumettre la réponse</button>
+    </EditForm>
+}
+
+@if (updateSuccessful)
+{
+    <p>Réponse soumise avec succès.</p>
+}
+
+@code {
+    private int currentPage = 1;
+    private DenonciationOutput selectedDenonciation;
+    private InspectionResponse inspectionInput = new InspectionResponse();
+    private bool updateSuccessful = false;
+    private List<DenonciationOutput> denonciations = new List<DenonciationOutput>();
+    private int totalDenonciations = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadInspections();
+    }
+
+    private async Task LoadInspections()
+    {
+        var (items, total) = await InspectionOutputService.GetInspectionsAsync(8, (currentPage - 1) * 8);
+        denonciations = items.ToList();
+        totalDenonciations = total;
+    }
+
+    private void SelectDenonciation(DenonciationOutput denonciation)
+    {
+        selectedDenonciation = denonciation;
+        inspectionInput = new InspectionResponse()
+        {
+        };
+    }
+
+    private async Task HandleUpdate()
+    {
+        updateSuccessful = false;
+        var result = await InspectionInputService.UpdateInspectionAsync(selectedDenonciation.Id, inspectionInput);
+        if (!string.IsNullOrEmpty(result))
+        {
+            // Handle the string result here (could be a success message or an error message)
+            updateSuccessful = true;
+            selectedDenonciation = null;
+        }
+    }
+
+    private async Task PreviousPage()
+    {
+        if (currentPage > 1)
+        {
+            currentPage--;
+            await LoadInspections();
+        }
+    }
+
+    private async Task NextPage()
+    {
+        if (currentPage < Math.Ceiling((double)totalDenonciations / 8))
+        {
+            currentPage++;
+            await LoadInspections();
+        }
+    }
+
+}
