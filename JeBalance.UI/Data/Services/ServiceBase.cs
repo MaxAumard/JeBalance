@@ -90,7 +90,7 @@ public class ServiceBase<SourceType>
         return request;
     }
 
-    public async Task<HttpRequestMessage> MakeUpdateRequest(int id, SourceType data)
+    public async Task<HttpRequestMessage> MakeUpdateRequest(string id, SourceType data)
     {
         var token = await _casp.GetJWT();
 
@@ -181,16 +181,32 @@ public class ServiceBase<SourceType>
         return request;
     }
 
-    public async Task<SourceType[]> SendGetAllPaginatedRequest(HttpRequestMessage request)
+    public async Task<(SourceType[] Items, int Total)> SendGetAllPaginatedRequest(HttpRequestMessage request)
     {
         var client = _clientFactory.CreateClient();
 
         var response = await client.SendAsync(request);
-        if (!response.IsSuccessStatusCode) return default(SourceType[]);
+        if (!response.IsSuccessStatusCode)
+        {
+            return (default, 0);
+        }
 
         using var responseStream = await response.Content.ReadAsStreamAsync();
-        var data = await JsonSerializer.DeserializeAsync<SourceType[]>(responseStream);
-        return data;
+        var jsonResponse = await JsonSerializer.DeserializeAsync<JsonElement>(responseStream);
+
+        if (jsonResponse.ValueKind != JsonValueKind.Object)
+        {
+            return (default, 0);
+        }
+
+        var items = jsonResponse.GetProperty("result").EnumerateArray()
+            .Select(item => JsonSerializer.Deserialize<SourceType>(item.GetRawText()))
+            .Where(item => item != null)
+            .ToArray();
+
+        var total = jsonResponse.GetProperty("total").GetInt32();
+
+        return (items, total);
     }
 
     public async Task<SourceType> SendGetOneRequest(HttpRequestMessage request)
@@ -200,7 +216,7 @@ public class ServiceBase<SourceType>
             var client = _clientFactory.CreateClient();
             var response = await client.SendAsync(request);
             if (!response.IsSuccessStatusCode) return default(SourceType);
-            
+
             using var responseStream = await response.Content.ReadAsStreamAsync();
 
             var data = await JsonSerializer.DeserializeAsync<SourceType>(responseStream);
@@ -225,16 +241,15 @@ public class ServiceBase<SourceType>
         return id;
     }
 
-    public async Task<int> SendUpdateRequest(HttpRequestMessage request)
+    public async Task<string> SendUpdateRequest(HttpRequestMessage request)
     {
         var client = _clientFactory.CreateClient();
-
         var response = await client.SendAsync(request);
-        if (!response.IsSuccessStatusCode) return 0;
+        if (!response.IsSuccessStatusCode) return null;
 
         using var responseStream = await response.Content.ReadAsStreamAsync();
-        var id = await JsonSerializer.DeserializeAsync<int>(responseStream);
-        return id;
+        var result = await JsonSerializer.DeserializeAsync<string>(responseStream);
+        return result;
     }
 
     public async Task<bool> SendDeleteRequest(HttpRequestMessage request)
