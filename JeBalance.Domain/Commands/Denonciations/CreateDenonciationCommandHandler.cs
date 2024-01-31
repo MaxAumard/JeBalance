@@ -1,4 +1,5 @@
-﻿using JeBalance.Domain.Models;
+﻿using JeBalance.Domain.Exceptions;
+using JeBalance.Domain.Models;
 using JeBalance.Domain.Queries.Persons;
 using JeBalance.Domain.Repositories;
 using MediatR;
@@ -27,6 +28,15 @@ namespace JeBalance.Domain.Commands.Denonciations
                     command.InformantAddress
                     ));
             }
+            else
+            {
+                Person informant = await _personRepository.GetOne(informantId);
+                if (informant.IsBanned)
+                {
+                    throw new BannedPersonException(informantId);
+                }
+            }
+
             var suspectId = await _personRepository.GetPerson(new FindPersonByPersonalDataSpecification(command.SuspectFirstName, command.SuspectLastName, command.SuspectAddress));
             if (string.IsNullOrEmpty(suspectId))
             {
@@ -36,7 +46,15 @@ namespace JeBalance.Domain.Commands.Denonciations
                     command.SuspectLastName,
                     command.SuspectAddress
                     ));
-
+            }
+            else
+            {
+                Person suspect = await _personRepository.GetOne(suspectId);
+                if (suspect.IsVIP)
+                {
+                    await _personRepository.SetIsBanned(informantId, true);
+                    throw new BannedPersonException(informantId);
+                }
             }
             Denonciation denonciation = new Denonciation(command.Id, informantId, suspectId, command.Date, command.Crime, command.Country);
             return await _denonciationRepository.Create(denonciation);

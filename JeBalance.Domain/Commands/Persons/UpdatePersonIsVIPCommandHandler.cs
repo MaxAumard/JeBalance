@@ -14,6 +14,5 @@ namespace JeBalance.Domain.Commands.Persons
         {
             return _repository.SetIsVIP(command.PersonId, command.IsVIP);
         }
-
     }
 }

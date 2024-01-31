@@ -3,7 +3,7 @@ using JeBalance.Domain.Models;
 
 namespace JeBalance.Infrastructure.SQLite.Model;
 
-[Table("Personnes")]
+[Table("Person")]
 public class PersonneSQL : Person
 {
     [Column("Id")]

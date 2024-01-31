@@ -29,7 +29,10 @@ namespace JeBalance.Inspection.Controllers
             {
                 var command = new FindUntreatedDenonciationQuery(input.Limit, input.Offset);
                 var response = await _mediator.Send(command);
-                var output = new PaginationOutput<DenonciationOutput>(response.Results.Select(denonciation => GetDenonciationOutput(denonciation).Result), response.Total);
+                var denonciations = response.Results.
+                            Select(denonciation => GetDenonciationOutput(denonciation).Result).
+                            Where(denonciation => !denonciation.Suspect.IsVIP);
+                var output = new PaginationOutput<DenonciationOutput>(denonciations, response.Total);
                 return Ok(output);
 
             }
