@@ -29,7 +29,6 @@ namespace JeBalance.Inspection.Controllers
                 var informant = await _mediator.Send(new GetPersonByIdQuery(denonciation.Informant));
                 var suspect = await _mediator.Send(new GetPersonByIdQuery(denonciation.Suspect));
                 return Ok(new DenonciationOutput(denonciation, informant, suspect));
-
             }
             catch (DenonciationNotFoundException e)
             {
@@ -45,17 +44,24 @@ namespace JeBalance.Inspection.Controllers
         [Route("denonciations")]
         public async Task<IActionResult> CreateDenonciation([FromBody] DenonciationInput input)
         {
-            var command = new CreateDenonciationCommand(
-                input.InformantDatas.FirstName,
-                input.InformantDatas.LastName,
-                input.InformantDatas.Address.ConvertToDomain(),
-                input.SuspectDatas.FirstName,
-                input.SuspectDatas.LastName,
-                input.SuspectDatas.Address.ConvertToDomain(),
-                input.Crime,
-                input.Country);
-            var id = await _mediator.Send(command);
-            return Ok(id);
+            try
+            {              
+                var command = new CreateDenonciationCommand(
+                    input.InformantDatas.FirstName,
+                    input.InformantDatas.LastName,
+                    input.InformantDatas.Address.ConvertToDomain(),
+                    input.SuspectDatas.FirstName,
+                    input.SuspectDatas.LastName,
+                    input.SuspectDatas.Address.ConvertToDomain(),
+                    input.Crime,
+                    input.Country);
+                var id = await _mediator.Send(command);
+                return Ok(id);
+            }
+            catch (BannedPersonException e)
+            {
+                return BadRequest(e.Message);
+            }
         }
             
     }

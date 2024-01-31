@@ -17,7 +17,11 @@ public class Name : SimpleValueObject<string>
 
         var trimmedValue = value.Trim();
 
-        if (!string.IsNullOrEmpty(trimmedValue) && trimmedValue.Length < MIN_LENGTH) throw new ApplicationException($"Name cannot be less than {MIN_LENGTH} character(s)");
+        if (string.IsNullOrEmpty(trimmedValue)) throw new ApplicationException("Name cannot be empty");
+
+        if (trimmedValue.Contains(';')) throw new ApplicationException("Name cannot contains ';' character");
+
+        if (trimmedValue.Length < MIN_LENGTH) throw new ApplicationException($"Name cannot be less than {MIN_LENGTH} character(s)");
 
         if(trimmedValue.Length > MAX_LENGTH) throw new ApplicationException($"Name cannot be more than {MAX_LENGTH} characters");
 

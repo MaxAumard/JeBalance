@@ -11,7 +11,7 @@ internal class PersonConfiguration : IEntityTypeConfiguration<PersonneSQL>
     public void Configure(EntityTypeBuilder<PersonneSQL> builder)
     {
         builder
-            .ToTable("PERSONNES", DatabaseContext.DEFAULT_SCHEMA)
+            .ToTable("PERSON", DatabaseContext.DEFAULT_SCHEMA)
             .HasKey(person => person.Id);
 
         builder.Property(person => person.FirstName)

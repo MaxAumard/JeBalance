@@ -3,12 +3,8 @@ using JeBalance.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using JeBalance.Domain.Contracts;
 using JeBalance.Domain.Repositories;
-using JeBalance.Domain.ValueObjects;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Net;
-using System.Linq;
 using ParkNGo.Infrastructure.SQLServer.Repositories;
+using System.Runtime.CompilerServices;
 
 namespace JeBalance.Infrastructure.SQLite.Repositories;
 
@@ -95,19 +91,18 @@ public class PersonRepositorySQL : IPersonRepository
 
     public async Task<string> SetIsBanned(string id, bool isBanned)
     {
-        PersonneSQL personToUpdate = _context.Personnes.First(person => person.Id == id);   
+        var personToUpdate = _context.Personnes.First(person => person.Id == id);
         personToUpdate.IsBanned = isBanned;
-         _context.Personnes.Update(personToUpdate);
+        await _context.SaveChangesAsync();
         return id;
     }
 
     public async Task<string> SetIsVIP(string id, bool isVIP)
     {
-        PersonneSQL personToUpdate = _context.Personnes.First(person => person.Id == id);
+        var personToUpdate = _context.Personnes.First(person => person.Id == id);
         personToUpdate.IsVIP = isVIP;
-        _context.Personnes.Update(personToUpdate);
+        await _context.SaveChangesAsync();
         return id;
-
     }
 
     public async Task<String> Update(String id, Person person)

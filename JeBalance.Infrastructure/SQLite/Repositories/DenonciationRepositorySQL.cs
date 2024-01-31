@@ -51,13 +51,15 @@ public class DenonciationRepositorySQL : IDenonciationRepository
     public async Task<(IEnumerable<Denonciation> Results, int Total)> Find(int limit, int offset, Specification<Denonciation> specification)
     {
         var results = _context.Denonciations
-            .Apply(specification.ToSQLExpression<Denonciation, DenonciationSQL>())
+            .Apply(specification.ToSQLExpression<Denonciation, DenonciationSQL>());
+        var denonciations = results
+            //.OrderBy(denonciation => denonciation.Date)
             .Skip(offset)
             .Take(limit)
-            .AsEnumerable()
+            .AsEnumerable()          
             .Select(denonciation => denonciation.ToDomain());
-
-        return (results, _context.Denonciations.Count());
+        var totalfound = results.Count();
+        return (denonciations, totalfound);
     }
 
     public async Task<Denonciation> GetOne(string id)
