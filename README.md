@@ -1,140 +1,85 @@
-# ROADMAP
+# Rendu de projet - **JeBalance**
+## Groupe
+- AUMARD Max
+- DA SYLVA Jeremy
+- PASTRES Guillaume
+
+## Démarer le projet
+### Setup
+ - Importer le projet 
+ - Dans le doute update la base de donnée en lancant la dernière migration avec la commande:
+ ```
+  dotnet ef database update --context DatabaseContext
+ ```
+ - A partir de l'interface grapgique Blazor, on peut accéder à différentes pages, chacunes offrant différentes fonctionnalités;
+   - Page Dénonciaiton (Page d'acceuil) -> permet de créer et récupérer une dénonciation sans s'autentifier
+   - Login -> permet à un utilisateur de se connecter et fait apparaître de nouvelles pages selon ses droits d'accès
+   - Page Inspection (réservée aux inspecteurs) -> Permet d'afficher les dénonciations non traitées et d'y répondre
+   - Page Administration (réservé aux administraterus) -> Permet d'afficher la liste des VIP et de donner / retirer le statut de VIP 
+
+   
+
+## Infrastructure "JeBalance"
+- Domain -> code métier (approche DDD)
+- Infrastructure -> ORM pour implémenter les repository du Domain (avec Entity Framework)
+  - stockage des données en base de données SQLite
+- Inspection -> API REST gérant tout le CRUD des dénonciations, le projet contient 2 controllers:
+  - DenonciationController -> Gère la création/ consultation des dénonciaitons sans authentification
+  - InspectionController -> Gère les dénonciaiton non traitées, réservée aux Inspecteurs
+- Admin -> API REST gérant la gestion des VIPS, réservée aux Administarteurs
+- Auth -> Permet de gérer la création des utilisateurs et de leurs droits d'accès
+- UI -> couche présentation, Application Web fait avec le framework Blazor
 
 
+## Données
+### Modèles
+ Nos modèles d'entités sont identifiables par un guid **opaque** et **non prédictible**
 
-# Cahier des charges JeBalance
+#### Person
+  - string Id
+  - Name FirstName
+  - Name LastName
+  - Address Address
+  - bool isVip
+  - bool isBanned
 
-## Concept
+#### Denonciation
+ - string Id
+ - string Informant
+ - string Suspect
+ - DateTimeOffset Date 
+ - enum Crime 
+ - Response Response
 
-Face au problème de l'évasion fiscale et de la dissimulation de revenus, les pouvoirs publics souhaitent développer un réseau de dénonciation citoyenne.
+### ValueObject
 
-Pour inciter les citoyens à participer, l'administration fiscale est prête à rémunérer chaque dénonciateur en fonction du montant récupéré grâce à la dénonciation.
+#### Name
+#### Adresse
+ - int RoadNumber
+ - Name RoadName ( 3 à 15 charactères, ";" interdit)
+ - int PostalCode
+ - Name City
 
-Un nouveau site internet, **jebalance.gouv.fr**, doit permettre à chaque citoyen de dénoncer facilement les cas d'évasion fiscale et de récolter sa part de l'argent récupéré.
+#### Response
+ - float Retribution
+ - enum ResponseType
 
-Cependant, certains *VIP* au dessus de tout soupçon ne doivent pas être la cible de contrôles fiscaux. Le système doit bien évidemment ignorer les dénonciations *calomnieuses* dont elles pourraient faire l'objet.
-
-Votre société a remporté l'appel d'offre des pouvoirs publics et vous êtes chargés de **concevoir** et **développer** l'application.
-
-## Objectifs
-
-jebalance.gouv.fr comportera trois points d'entrée :
-* Une interface Web publique sans authentification
-  * Création des dénonciations
-  * Consultation du statut de la dénonciation
-* Une API interne sécurisée réservée à l'inspection fiscale
-  * Collecte de la liste des dénonciations non traitées
-  * Réponse aux dénonciations
-* Une API secrète sécurisée réservée aux administrateurs de l'application
-  * Administration de la liste des VIP
-
-## Contraintes techniques
-
-L'appel d'offre comporte les contraintes techniques suivantes :
-- L'application doit être écrite en C# et doit s'appuyer sur le framework .NET 6 ou supérieur
-- L'application doit être modulaire afin de pouvoir adapter pour chaque composant :
-  - Le niveau de sécurité
-  - Les ressources matérielles (CPU, bande passante, mémoire...)
-  - La fréquence des mises à jour
-- Le code métier doit respecter les principes de l'approche **DDD**
-- L'architecture technique de chaque composant doit être maitenable et testable
-- Les API doivent être des Web Services respectant l'approche **REST**
-- L'accès aux API sécurisées doit nécessiter un **JWT** signé par l'algorithme **HMACSHA256**
-- La base de données utilisée doit être **SQLite**
-- L'accès à la base doit se faire à traver l'ORM **Entity Framework**
-
-## Vocabulaire commun (en français)
-
-**JeBalance** : l'application dans son ensemble.
-
-**Personne** : individu identifié de manière unique par les élements suivants :
-- Un **Prénom**
-- Un **Nom**
-- Une **Adresse** composée de 
-  - Un **Numéro (de voie)**
-  - Un **Nom de voie**
-  - Un **Code postal**
-  - Un **Nom de commune**
-
-**Dénonciation** : déclaration créée par un *Informateur* non authentifié accusant un *Suspect* de dissimulation de revenus ou d'évasion fiscale.
-
-**Identifiant de dénonciation** : chaîne de caractères qui identifie de manière unique une dénonciation et grâce à laquelle un *Informateur* peut consulter sa *Dénonciation* et la possible *Réponse* associée.
-
-**Informateur** : *Personne* correspondant à un utilisateur non authentifié mais identifié, créateur d'au moins une *Dénonciation*.
+## Respect des consignes
+ - [x] Application **C#** en **dotnet 6.0**
+ - [x] Architecture **modulaires**
+ - [x] Approche **DDD**
+ - [] Vocabulaire en **français** 
+   - non respecté car avoir du code en franglais nous pertubait trop
+ - [x] API **REST**
+ - [x] Base **SQLite** accessible avec l'ORM **Entity Framework**
+ - [x] Accès aux API sécurisées avec un **JWT** signé par **HMACSHA256**
+ - [x] LEs API gérant les inspections et l'inpection sont sécurisées et ont un contrôle d'accès 
   
-**Suspect** : *Personne* accusée par une *Dénonciation* de *Dissimulation de revenus* ou d'*Evasion fiscale*.
+## Problèmes rencontrés
+### 1. Spécification sur les Response et Adress
+  Dù à notre choix de stocker les Adress et les Response dans notre base en un seul string (par concaténation), les spécifications portant sur ces ne fonctionnent pas car elles n'arrivent pas à faire la convertion automatiquement avec le visiteur. 
+  Nous avons donc dû faire certaines implémentations directement dans l'orm, par exemple "CountDeclinedDenonciations", au lieu passer par la méthde "Count" avec une spécification
 
-**Délit** : attribut d'une *Dénonciation* indiqué par l'*Informateur* qui lors de sa création. Les valeurs possibles sont :
-* **DissimulationDeRevenus**
-* **EvasionFiscale**
-
-**Pays d'évasion** : attribut obligatoire d'une *Dénonciation* de type *EvasionFiscale* indiquant dans quel pays le *Suspect* a dissimulé son argent.
-
-**Administration fiscale** : entité capable de consulter la liste des *Dénonciations* sans réponse et de créer des *Réponses* à travers l'API dédiée.
-
-**Réponse (à une Dénonciation)** : retour unique et facultatif effectué sur une *Dénonciation* par l'*Administration fiscale*.
-
-**Type (de Réponse)** : caractérise une *Réponse* donnée par l'*Administration fiscale*. Les types possibles sont :
-* *Confirmation*
-* *Rejet*
-
-**Dénonciation non traitée** : *Dénonciation* qui ne possède pas de *Réponse*.
-
-**Retribution** : attribut obligatoire d'une *Réponse* de type *Confirmation* qui indique le montant en euro versé par l'*Administration fiscale* à l'*Informateur* de la *Dénonciation* confirmée.
-
-**Calomniateur** : *Personne* qui n'est plus autorisée à créer de nouvelles dénonciations en tant qu'*Informateur*.
-
-**VIP** : *Personne* dont qui ne peut pas apparaître en tant que *Suspect* dans la liste des *Dénonciations* retournées à l'*Administration fiscale*.
-
-**Administrateur** : utilisateur spécial pouvant administrer la liste des *VIP*.
-
-## Règles de gestion
-
-Le cahier des charges fourni par les pouvoirs publics comporte les règles listées ci-dessous.
-
-### Création d'une dénonciation
-
-- Les utilisateur doivent passer par l'interface Web sans authentification pour créer les *Dénonciations*.
-- A la fin de la création de la *Dénonciation*, on indique à l'utilisateur l'*Identifiant de la dénonciation*.
-- L'*Identifiant de la dénonciation* doit être opaque et non prédictif.
-
-### Suivi d'une dénonciation
-
-- Un utilisateur peut consulter une *Dénonciation* en utilisant l'*Identifiant de dénonciation* sur l'interface Web sans authentification.
-- La consultation d'une *Dénonciation* doit restituer les élements suivants :
-  - L'horodatage de la *Dénonciation*
-  - Les informations identifiant l'*Informateur*
-  - Les informations identifiant le *Suspect*
-  - Le *Délit*
-  - Si applicable, le *Pays d'évasion*
-  - Si applicable la *Réponse* :
-    - L'horodatage de la *Réponse*
-    - Le *Type de Réponse*
-    - Si applicable, le montant de la *Rétribution*
-
-### Consultation des dénonciations non traitées
-
-- Seule l'*Administration fiscale* peut consulter la liste des *Dénonciations non traitées*.
-- L'*Administration fiscale* peut consulter la liste des *Dénonciations non traitées* en utilisant l'API REST sécurisée dédiée.
-- La liste des *Dénonciations* sans *Réponse* doit être paginée.
-- La liste des *Dénonciations* sans *Réponse* doit comporter l'horodatage de sa création, l'*Informateur*, le *Suspect*, le *Délit* et le *Pays d'évasion* si applicable.
-- La liste des *Dénonciations non traitées* doit être triée par ordre d'horodatage création.
-- Les *Dénonciations* dont le *Suspect* est un *VIP* ne doivent pas être restituées dans la liste.
-
-### Répondre à une dénonciation
-
-- Seule l'*Administration fiscale* peut créer des *Réponses* sur les *Dénonciations*.
-- L'*Administration fiscale* peut créer une *Réponse* sur une *Dénonciations* en utilisant l'API REST sécurisée dédiée.
-- Il n'est pas possible de répondre à une *Dénonciation* qui possède déjà une *Réponse*.
-
-### Administration de la liste des VIP
-
-- Seuls les *Administrateurs* peuvent modifier la liste des *VIP*.
-- Les *Administrateurs* peuvent consulter la liste des *VIP* en utilisant l'API sécurisée dédiée.
-- Les *Administrateurs* peuvent ajouter ou supprimer des *Personnes* à la liste des *VIP* en utilisant l'API sécurisée dédiée.
-
-### Traitement des calomniateurs
-
-- Il n'est pas possible de créer une *Dénonciation* avec un *Informateur* appartenant à la liste des *Calomniateurs*. Si un utilisateur tente de créer une telle *Dénonciation*, l'application lui restitue une message d'erreur lui indiquant qu'il n'est plus autorisé à créer des *Dénonciations*.
-- Tout *Informateur* ayant créé au moins 3 *Dénonciations* ayant reçu une *Réponse* de type *Rejet* est automatiquement ajouté à la liste des *Calomniateurs*.
-- Tout *Informateur* ayant créé au moins une *Dénonciation* dont le *Suspect* faisait partie de la liste des *VIP* au moment de sa création est automatiquement ajouté à la liste des *Calomniateurs*.
+### 2. Gestion des logins
+ La gestion des comptes utilisateurs n'étant pas demandée, nous avons décidé de ne pas implémenter ce système est de juste créer par défaut un compte Inpecteur et un compte Administrateur, pour les utiliseril suffit d'aller sur la page Login de l'application.
+ Pour une évolution future, rajouter un système d'authentification avec login / mot de passe, avec gestion des droits, serait facilement implémentable. Nous avons décidé de ne pas le faire par soucis de temps et le peu de valeur ajoutée par rapport aux consignes.
