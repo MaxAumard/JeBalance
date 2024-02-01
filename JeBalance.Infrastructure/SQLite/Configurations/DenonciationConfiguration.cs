@@ -11,13 +11,13 @@ internal class DenonciationConfiguration : IEntityTypeConfiguration<Denonciation
     public void Configure(EntityTypeBuilder<DenonciationSQL> builder)
     {
         builder
-            .ToTable("Denonciation", DatabaseContext.DEFAULT_SCHEMA)
+            .ToTable("DENONCIATION", DatabaseContext.DEFAULT_SCHEMA)
             .HasKey(denonciation => denonciation.Id);
 
-        builder.Property(denonciation => denonciation.Informant)
+        builder.Property(denonciation => denonciation.InformantId)
             .IsRequired();
 
-        builder.Property(denonciation => denonciation.Suspect)
+        builder.Property(denonciation => denonciation.SuspectId)
             .IsRequired();
 
         builder.Property(denonciation => denonciation.Date)

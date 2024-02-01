@@ -26,8 +26,8 @@ namespace JeBalance.Inspection.Controllers
             try
             {
                 var denonciation = await _mediator.Send(new GetDenonciationByIdQuery(id));
-                var informant = await _mediator.Send(new GetPersonByIdQuery(denonciation.Informant));
-                var suspect = await _mediator.Send(new GetPersonByIdQuery(denonciation.Suspect));
+                var informant = await _mediator.Send(new GetPersonByIdQuery(denonciation.InformantId));
+                var suspect = await _mediator.Send(new GetPersonByIdQuery(denonciation.SuspectId));
                 return Ok(new DenonciationOutput(denonciation, informant, suspect));
             }
             catch (DenonciationNotFoundException e)

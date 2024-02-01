@@ -89,6 +89,16 @@ namespace JeBalance.Denonciations
                 return Task.FromResult("Not Found"); ;
             }
         }
+
+        public Task<int> CountDeclinedDenonciations(string informantId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<(IEnumerable<Denonciation> Results, int Total)> FindUntreatedDenonciations(int limit, int offset)
+        {
+            throw new NotImplementedException();
+        }
     }
     public class PersonRepository : IPersonRepository
     {

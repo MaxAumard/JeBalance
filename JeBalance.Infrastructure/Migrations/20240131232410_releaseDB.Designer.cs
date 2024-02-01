@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JeBalance.Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240131003030_rename_PersonTable")]
-    partial class rename_PersonTable
+    [Migration("20240131232410_releaseDB")]
+    partial class releaseDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,26 +38,30 @@ namespace JeBalance.Infrastructure.Migrations
                         .HasColumnType("TEXT")
                         .HasColumnName("Date");
 
-                    b.Property<string>("Informant")
+                    b.Property<string>("InformantId")
                         .IsRequired()
                         .HasColumnType("TEXT")
-                        .HasColumnName("Informant");
+                        .HasColumnName("fk_Informant");
 
                     b.Property<string>("Response")
                         .HasColumnType("TEXT")
                         .HasColumnName("Response");
 
-                    b.Property<string>("Suspect")
+                    b.Property<string>("SuspectId")
                         .IsRequired()
                         .HasColumnType("TEXT")
-                        .HasColumnName("Suspect");
+                        .HasColumnName("fk_Suspect");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Denonciation", "app");
+                    b.HasIndex("InformantId");
+
+                    b.HasIndex("SuspectId");
+
+                    b.ToTable("DENONCIATION", "app");
                 });
 
-            modelBuilder.Entity("JeBalance.Infrastructure.SQLite.Model.PersonneSQL", b =>
+            modelBuilder.Entity("JeBalance.Infrastructure.SQLite.Model.PersonSQL", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("TEXT")
@@ -89,6 +93,25 @@ namespace JeBalance.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PERSON", "app");
+                });
+
+            modelBuilder.Entity("JeBalance.Infrastructure.SQLite.Model.DenonciationSQL", b =>
+                {
+                    b.HasOne("JeBalance.Infrastructure.SQLite.Model.PersonSQL", "Informant")
+                        .WithMany()
+                        .HasForeignKey("InformantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JeBalance.Infrastructure.SQLite.Model.PersonSQL", "Suspect")
+                        .WithMany()
+                        .HasForeignKey("SuspectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Informant");
+
+                    b.Navigation("Suspect");
                 });
 #pragma warning restore 612, 618
         }

@@ -25,29 +25,20 @@ namespace JeBalance.Inspection.Controllers
         [HttpGet("denonciations")]
         public async Task<IActionResult> UntreatedDenonciations([FromQuery] FindUntreatedDenonciationDtoInput input)
         {
-            try
-            {
-                var command = new FindUntreatedDenonciationQuery(input.Limit, input.Offset);
-                var response = await _mediator.Send(command);
-                var denonciations = response.Results.
-                            Select(denonciation => GetDenonciationOutput(denonciation).Result).
-                            Where(denonciation => !denonciation.Suspect.IsVIP);
-                var output = new PaginationOutput<DenonciationOutput>(denonciations, response.Total);
-                return Ok(output);
-
-            }
-            catch (DenonciationNotFoundException e)
-            {
-                return NotFound(e.Message);
-            }
+            var command = new FindUntreatedDenonciationQuery(input.Limit, input.Offset);
+            var response = await _mediator.Send(command);
+            var denonciations = response.Results.
+                Select(denonciation => GetDenonciationOutput(denonciation).Result);
+            var output = new PaginationOutput<DenonciationOutput>(denonciations, response.Total);
+            return Ok(output);
         }
 
         private async Task<DenonciationOutput> GetDenonciationOutput(Denonciation denonciation)
         {
             try
             {
-                var informant = await _mediator.Send(new GetPersonByIdQuery(denonciation.Informant));
-                var suspect = await _mediator.Send(new GetPersonByIdQuery(denonciation.Suspect));
+                var informant = await _mediator.Send(new GetPersonByIdQuery(denonciation.InformantId));
+                var suspect = await _mediator.Send(new GetPersonByIdQuery(denonciation.SuspectId));
                 return new DenonciationOutput(denonciation, informant, suspect);
             }
             catch (Exception)
@@ -68,6 +59,10 @@ namespace JeBalance.Inspection.Controllers
             catch (DenonciationNotFoundException e)
             {
                 return NotFound(e.Message);
+            }
+            catch (DenonciationAlreadyTreatedException e)
+            {
+                return BadRequest(e.Message);
             }
         }
     }
