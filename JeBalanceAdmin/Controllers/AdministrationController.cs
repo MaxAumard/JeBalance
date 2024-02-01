@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using JeBalance.Domain.Commands.Persons;
 using JeBalance.Domain.Queries.Persons;
 using Microsoft.AspNetCore.Authorization;
+using JeBalance.Administration.Ressources;
 
 namespace JeBalanceAdmin.Controllers
 {
@@ -18,20 +19,24 @@ namespace JeBalanceAdmin.Controllers
         }
 
         [HttpGet("vip")]
-        public async Task<IActionResult> GetVip() 
+        public async Task<IActionResult> GetVip([FromQuery] FindPersonsyVipStatusInput input) 
         {
-            var query = new FindVIPPersonsQuery(0, 100 ,true);
-            var vipPersons = await _mediator.Send(query);
-            return Ok(vipPersons);
+            var query = new FindVIPPersonsQuery(input.Limit, input.Offset, true);
+            var response = await _mediator.Send(query);
+            var persons = response.Results
+                .Select(persons => new PersonOutput(persons));
+            return Ok(new PaginationOutput<PersonOutput>(persons, response.Total));
         }
 
         [HttpGet]
         [Route("non-vip")]
-        public async Task<IActionResult> GetNonVip()
+        public async Task<IActionResult> GetNonVip([FromQuery] FindPersonsyVipStatusInput input)
         {
-            var query = new FindVIPPersonsQuery(0, 100,false);
-            var nonVipPersons = await _mediator.Send(query);
-            return Ok(nonVipPersons);
+            var query = new FindVIPPersonsQuery(input.Limit, input.Offset, false);
+            var response = await _mediator.Send(query);
+            var persons = response.Results
+                .Select(persons => new PersonOutput(persons));
+            return Ok(new PaginationOutput<PersonOutput>(persons, response.Total));
         }
 
         [HttpPost]

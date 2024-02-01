@@ -53,14 +53,15 @@ public class PersonRepositorySQL : IPersonRepository
 
     public async Task<(IEnumerable<Person> Results, int Total)> Find(int limit, int offset, Specification<Person> specification)
     {
-        var results = _context.Persons
-            .Apply(specification.ToSQLExpression<Person, PersonSQL>())
+        var allPersons = _context.Persons
+            .Apply(specification.ToSQLExpression<Person, PersonSQL>());
+        var persons = allPersons
             .Skip(offset)
             .Take(limit)
             .AsEnumerable()
-            .Select(driver => driver.ToDomain());
-
-        return (results, _context.Persons.Count());
+            .Select(denonciation => denonciation.ToDomain());
+        var totalfound = await allPersons.CountAsync();
+        return (persons, totalfound);
     }
 
     public async Task<Person> GetOne(string id)
