@@ -24,7 +24,7 @@ public class PersonRepositoryTests : RepositoryTest
     {
         var person = new Person("12", new Name("albert"), new Name("keke"), new Address(12, new Name("tata"), new PostalCode(11111), new Name("oui")), false, true);
         var result = await _repository.Create(person);
-        Assert.Equal(Context.Personnes.Last().Id, result);
+        Assert.Equal(Context.Persons.Last().Id, result);
     }
 
     [Fact]

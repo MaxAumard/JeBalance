@@ -13,10 +13,13 @@ namespace JeBalance.Domain.Queries.Denonciations
 
         public Task<(IEnumerable<Denonciation> Results, int Total)> Handle(FindUntreatedDenonciationQuery query, CancellationToken cancellationToken)
         {
+            /*
             return _repository.Find(
                 query.Pagination.Limit,
                 query.Pagination.Offset,
                 query.Specification);
+            */
+            return _repository.FindUntreatedDenonciations(query.Pagination.Limit, query.Pagination.Offset);
         }
     }
 }

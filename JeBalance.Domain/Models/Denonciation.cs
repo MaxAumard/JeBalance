@@ -5,8 +5,8 @@ namespace JeBalance.Domain.Models
 {
     public class Denonciation : Entity
     {
-        public string Informant { get; }
-        public string Suspect { get; }
+        public string InformantId { get; }
+        public string SuspectId { get; }
         public DateTimeOffset Date { get; }
         public Crime Crime { get; }
         public Name Country { get; }
@@ -18,8 +18,8 @@ namespace JeBalance.Domain.Models
 
         public Denonciation(string id, string informant, string suspect, DateTimeOffset date, Crime crime, Name country, Response? response) : base(id)
         {
-            Informant = informant;
-            Suspect = suspect;
+            InformantId = informant;
+            SuspectId = suspect;
             Date = date;
             Crime = crime;
             Country = country;
@@ -38,8 +38,8 @@ namespace JeBalance.Domain.Models
 
         public Denonciation(string id, string informant, string suspect, DateTimeOffset date, Crime crime, Name country) : base(id)
         {
-            Informant = informant;
-            Suspect = suspect;
+            InformantId = informant;
+            SuspectId = suspect;
             Date = date;
             Crime = crime;
             Country = country;

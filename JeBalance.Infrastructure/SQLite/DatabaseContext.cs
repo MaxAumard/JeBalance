@@ -9,7 +9,7 @@ namespace JeBalance.Infrastructure.SQLite
     {
         public const string DEFAULT_SCHEMA = "app";
 
-        public DbSet<PersonneSQL> Personnes { get; set; }
+        public DbSet<PersonSQL> Persons { get; set; }
         public DbSet<DenonciationSQL> Denonciations { get; set; }
 
         public DatabaseContext()

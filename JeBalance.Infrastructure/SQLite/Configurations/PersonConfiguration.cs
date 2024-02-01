@@ -6,9 +6,9 @@ using JeBalance.Infrastructure.SQLite;
 
 namespace JeBlance.Infrastructure.SQLServer.Configurations;
 
-internal class PersonConfiguration : IEntityTypeConfiguration<PersonneSQL>
+internal class PersonConfiguration : IEntityTypeConfiguration<PersonSQL>
 {
-    public void Configure(EntityTypeBuilder<PersonneSQL> builder)
+    public void Configure(EntityTypeBuilder<PersonSQL> builder)
     {
         builder
             .ToTable("PERSON", DatabaseContext.DEFAULT_SCHEMA)

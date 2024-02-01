@@ -3,8 +3,7 @@ using JeBalance.Domain.Models;
 
 namespace JeBalance.Infrastructure.SQLite.Model;
 
-[Table("Person")]
-public class PersonneSQL : Person
+public class PersonSQL : Person
 {
     [Column("Id")]
     public new string Id { get; set; } = string.Empty;

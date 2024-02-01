@@ -19,15 +19,15 @@ public class PersonRepositorySQL : IPersonRepository
 
     public Task<int> Count(Specification<Person> specification)
     {
-        return Task.FromResult(_context.Personnes
-            .Apply(specification.ToSQLExpression<Person, PersonneSQL>())
+        return Task.FromResult(_context.Persons
+            .Apply(specification.ToSQLExpression<Person, PersonSQL>())
             .Count());
     }
 
     public async Task<string> Create(Person Personne)
     {
         var PersonneToSave = Personne.ToSQL();
-        await _context.Personnes.AddAsync(PersonneToSave);
+        await _context.Persons.AddAsync(PersonneToSave);
         await _context.SaveChangesAsync();
         return PersonneToSave.Id;
     }
@@ -36,7 +36,7 @@ public class PersonRepositorySQL : IPersonRepository
     {
         try
         {
-            var person = await _context.Personnes.FirstOrDefaultAsync(person => person.Id == id);
+            var person = await _context.Persons.FirstOrDefaultAsync(person => person.Id == id);
 
             if (person == null)
                 return true;
@@ -53,19 +53,19 @@ public class PersonRepositorySQL : IPersonRepository
 
     public async Task<(IEnumerable<Person> Results, int Total)> Find(int limit, int offset, Specification<Person> specification)
     {
-        var results = _context.Personnes
-            .Apply(specification.ToSQLExpression<Person, PersonneSQL>())
+        var results = _context.Persons
+            .Apply(specification.ToSQLExpression<Person, PersonSQL>())
             .Skip(offset)
             .Take(limit)
             .AsEnumerable()
             .Select(driver => driver.ToDomain());
 
-        return (results, _context.Personnes.Count());
+        return (results, _context.Persons.Count());
     }
 
     public async Task<Person> GetOne(string id)
     {
-        var person = await _context.Personnes.FirstOrDefaultAsync(person => person.Id == id);
+        var person = await _context.Persons.FirstOrDefaultAsync(person => person.Id == id);
         if (person.IsNullOrDefault())
         {
             return null;
@@ -75,8 +75,8 @@ public class PersonRepositorySQL : IPersonRepository
 
     public async Task<string> GetPerson(Specification<Person> specification)
     {
-        var person = _context.Personnes
-            .Apply(specification.ToSQLExpression<Person, PersonneSQL>())
+        var person = _context.Persons
+            .Apply(specification.ToSQLExpression<Person, PersonSQL>())
             .Select(driver => driver.ToDomain())
             .FirstOrDefault();
 
@@ -91,7 +91,7 @@ public class PersonRepositorySQL : IPersonRepository
 
     public async Task<string> SetIsBanned(string id, bool isBanned)
     {
-        var personToUpdate = _context.Personnes.First(person => person.Id == id);
+        var personToUpdate = _context.Persons.First(person => person.Id == id);
         personToUpdate.IsBanned = isBanned;
         await _context.SaveChangesAsync();
         return id;
@@ -99,7 +99,7 @@ public class PersonRepositorySQL : IPersonRepository
 
     public async Task<string> SetIsVIP(string id, bool isVIP)
     {
-        var personToUpdate = _context.Personnes.First(person => person.Id == id);
+        var personToUpdate = _context.Persons.First(person => person.Id == id);
         personToUpdate.IsVIP = isVIP;
         await _context.SaveChangesAsync();
         return id;
@@ -107,14 +107,14 @@ public class PersonRepositorySQL : IPersonRepository
 
     public async Task<String> Update(String id, Person person)
     {
-        var personToUpdate = _context.Personnes.First(person => person.Id == id);
+        var personToUpdate = _context.Persons.First(person => person.Id == id);
         personToUpdate.FirstName = person.FirstName.Value;
         personToUpdate.LastName = person.LastName.Value;
         personToUpdate.Address = person.Address.ToSQL();
         personToUpdate.IsBanned = person.IsBanned;
         personToUpdate.IsVIP = person.IsVIP;
 
-        _context.Personnes.Update(personToUpdate);
+        _context.Persons.Update(personToUpdate);
 
         await _context.SaveChangesAsync();
         return id;
