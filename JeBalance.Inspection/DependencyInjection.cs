@@ -15,9 +15,8 @@ namespace JeBalance.Denonciations
 
             return services;
         }
-
-
     }
+
     public class DenonciationRepository : IDenonciationRepository
     {
         private readonly List<Denonciation> _donnees = new();
@@ -35,7 +34,8 @@ namespace JeBalance.Denonciations
         }
 
 
-        public Task<(IEnumerable<Denonciation> Results, int Total)> Find(int limit, int offset, Specification<Denonciation> specification)
+        public Task<(IEnumerable<Denonciation> Results, int Total)> Find(int limit, int offset,
+            Specification<Denonciation> specification)
         {
             IEnumerable<Denonciation> result = _donnees.Where(specification.IsSatisfiedBy);
             int total = result.Count();
@@ -58,10 +58,10 @@ namespace JeBalance.Denonciations
             return Task.FromResult(_donnees.FirstOrDefault(e => e.Id == id) ?? new Denonciation());
         }
 
-        public  Task<string> Create(Denonciation denonciation)
+        public Task<string> Create(Denonciation denonciation)
         {
             _donnees.Add(denonciation);
-            return Task.FromResult(denonciation.Id);               
+            return Task.FromResult(denonciation.Id);
         }
 
         public Task<string> Update(string id, Denonciation T)
@@ -86,7 +86,8 @@ namespace JeBalance.Denonciations
             }
             else
             {
-                return Task.FromResult("Not Found"); ;
+                return Task.FromResult("Not Found");
+                ;
             }
         }
 
@@ -100,6 +101,7 @@ namespace JeBalance.Denonciations
             throw new NotImplementedException();
         }
     }
+
     public class PersonRepository : IPersonRepository
     {
         private readonly List<Person> _donnees = new();
@@ -119,11 +121,12 @@ namespace JeBalance.Denonciations
             throw new NotImplementedException();
         }
 
-        public Task<(IEnumerable<Person> Results, int Total)> Find(int limit, int offset, Specification<Person> specification)
+        public Task<(IEnumerable<Person> Results, int Total)> Find(int limit, int offset,
+            Specification<Person> specification)
         {
             throw new NotImplementedException();
         }
-        
+
 
         public Task<Person> GetOne(string id)
         {

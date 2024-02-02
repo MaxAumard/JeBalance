@@ -27,7 +27,8 @@ namespace JeBalance.Domain.Commands.Denonciations
             }
             else
             {
-                if (denonciation.Response != null) { 
+                if (denonciation.Response != null)
+                {
                     throw new DenonciationAlreadyTreatedException(command.Id);
                 }
                 else
@@ -35,15 +36,17 @@ namespace JeBalance.Domain.Commands.Denonciations
                     var res = await _denonciationRepository.SetResponse(command.Id, command.Response);
                     if (command.Response.ResponseType.Equals(ResponseType.Rejet))
                     {
-                        var nbOfDecline = await _denonciationRepository.CountDeclinedDenonciations(denonciation.InformantId);
+                        var nbOfDecline =
+                            await _denonciationRepository.CountDeclinedDenonciations(denonciation.InformantId);
                         if (nbOfDecline >= 3)
                         {
                             await _personRepository.SetIsBanned(denonciation.InformantId, true);
                         }
                     }
+
                     return res;
                 }
-            }          
+            }
         }
     }
 }

@@ -5,10 +5,8 @@ namespace JeBalance.Inspection.Ressources
 {
     public class ResponseInput
     {
-        [JsonPropertyName("retribution")]
-        public float Retribution { get; set; }
+        [JsonPropertyName("retribution")] public float Retribution { get; set; }
 
-        [JsonPropertyName("responseType")]
-        public ResponseType ResponseType { get; set; }
+        [JsonPropertyName("responseType")] public ResponseType ResponseType { get; set; }
     }
 }

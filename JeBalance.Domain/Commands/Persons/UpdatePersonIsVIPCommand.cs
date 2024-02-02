@@ -8,11 +8,10 @@ namespace JeBalance.Domain.Commands.Persons
 
         public bool IsVIP { get; }
 
-        public UpdatePersonIsVIPCommand (string personId, bool isVIP)
+        public UpdatePersonIsVIPCommand(string personId, bool isVIP)
         {
             PersonId = personId;
             IsVIP = isVIP;
         }
     }
-
 }

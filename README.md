@@ -19,9 +19,16 @@
    - Login -> permet à un utilisateur de se connecter et fait apparaître de nouvelles pages selon ses droits d'accès
    - Page Inspection (réservée aux inspecteurs) -> Permet d'afficher les dénonciations non traitées et d'y répondre
    - Page Administration (réservé aux administrateurs) -> Permet d'afficher la liste des VIP et de donner / retirer le statut de VIP 
-
-  ![ ](https://github.com/MaxAumard/JeBalance/blob/master/static/images/Architecture.png)
+    
+  ![ ](static/images/Architecture.png)
    
+### Utilisation
+- Pour créer une dénonciation, il suffit de remplir le formulaire sur l'onglet Dénoncer
+    - les codes postaux doivent être de 0-5 chiffres positifs
+    - les champs textuels doivent être entre 3 et 15 charactères (les ";" sont interdits)
+- Pour consulter une dénonciation, il suffit de cliquer sur l'onglet Dénonciations et d'entrer l'id de la dénonciation
+- Pour répondre à une dénonciation, il suffit sur l'onglet Inspections de choisir une dénonciation non traitée et de remplir le formulaire
+- Pour gérer les VIP, il suffit de cliquer sur l'onglet "Gérer les VIP" sur la page Administration
 
 ## Infrastructure "JeBalance"
 - Domain -> code métier (approche DDD)
@@ -39,11 +46,14 @@
  - [x] Application **C#** en **dotnet 6.0**
  - [x] Architecture **modulaire**
  - [x] Approche **DDD**
- - [ ] Vocabulaire en **français** -> non respecté car avoir du code en franglais nous pertubait trop
+ - [ ] Vocabulaire en **français** 
+   - non respecté car avoir du code en franglais nous pertubait trop (mais toute interface en français)
  - [x] API **REST**
  - [x] Base **SQLite** accessible avec l'ORM **Entity Framework**
- - [x] Accès aux API sécurisées avec un **JWT** signé par **HMACSHA256**
- - [x] Les API gérant les inspections et l'inpection sont sécurisées et ont un **contrôle d'accès** 
+ - [ ] Accès aux API sécurisées avec un **JWT** signé par **HMACSHA256**
+   - L'**API Auth** est fonctionnelle et renvoie un token avec les roles associés lors d'une requête de login (admin:admin, inspector:inspector pour les comptes)
+   -  **Non implémenté** au niveau des endpoints puisque nous n'avons pas implémenté de système de login dans l'application
+ - [x] Les API gérant les administration et l'inpection sont sécurisées et ont un **contrôle d'accès** 
   
 ## Problèmes rencontrés
 ### 1. Spécification sur les Response et Adress
@@ -54,8 +64,13 @@
  La gestion des comptes utilisateurs n'étant pas demandée, nous avons décidé de ne pas implémenter ce système est de juste créer par défaut un compte Inpecteur et un compte Administrateur, pour les utiliser il suffit d'aller sur la page Login de l'application.
  Pour une évolution future, rajouter un système d'authentification avec login / mot de passe, avec gestion des droits, serait facilement implémentable. Nous avons décidé de ne pas le faire par soucis de temps et le peu de valeur ajoutée par rapport aux consignes.
 
+## Conclusion
+Nous avons réussi à implémenter une application fonctionnelle, avec une architecture modulaire et une approche DDD. Nous pensons que nous avons réussi à respecter les consignes, sauf pour l'implémentation de l'authentification qui n'est pas complète. \
+Remarque : En temps que groupe de 3 alternants, il était difficile de gérer le temps passé sur le projet après nos journées respectives de travail. Mais nous sommes satisfaits du résultat.
 
 
+----------
+## Annexe
 ## Données
 ### Modèles
  Nos modèles d'entités sont identifiables par un guid **opaque** et **non prédictible**

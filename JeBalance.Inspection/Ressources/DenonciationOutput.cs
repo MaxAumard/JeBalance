@@ -5,26 +5,19 @@ namespace JeBalance.Inspection.Ressources
 {
     public class DenonciationOutput
     {
-        [JsonPropertyName("id")]
-        public string Id { get; set; }
+        [JsonPropertyName("id")] public string Id { get; set; }
 
-        [JsonPropertyName("informant")]
-        public PersonOutput Informant { get; set; } 
+        [JsonPropertyName("informant")] public PersonOutput Informant { get; set; }
 
-        [JsonPropertyName("suspect")]
-        public PersonOutput Suspect { get; set; } 
+        [JsonPropertyName("suspect")] public PersonOutput Suspect { get; set; }
 
-        [JsonPropertyName("date")]
-        public DateTimeOffset Date { get; set; }
+        [JsonPropertyName("date")] public DateTimeOffset Date { get; set; }
 
-        [JsonPropertyName("crime")]
-        public Crime Crime { get; set; }
+        [JsonPropertyName("crime")] public Crime Crime { get; set; }
 
-        [JsonPropertyName("country")]
-        public string Country { get; set; }
+        [JsonPropertyName("country")] public string Country { get; set; }
 
-        [JsonPropertyName("response")]
-        public Response? Response { get; set; }
+        [JsonPropertyName("response")] public Response? Response { get; set; }
 
         public DenonciationOutput()
         {

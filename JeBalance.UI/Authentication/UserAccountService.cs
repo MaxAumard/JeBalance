@@ -14,7 +14,6 @@ public class UserAccountService
 
     public async Task<UserSession?> LoginAsync(string username, string password)
     {
-
         var request = MakeRequest(username, password);
         var client = _clientFactory.CreateClient();
         var response = await client.SendAsync(request);

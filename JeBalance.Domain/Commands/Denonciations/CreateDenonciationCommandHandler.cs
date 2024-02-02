@@ -11,14 +11,18 @@ namespace JeBalance.Domain.Commands.Denonciations
         private readonly IDenonciationRepository _denonciationRepository;
         private readonly IPersonRepository _personRepository;
 
-        public CreateDenonciationCommandHandler(IDenonciationRepository denonciationRepository, IPersonRepository personRepository) {
+        public CreateDenonciationCommandHandler(IDenonciationRepository denonciationRepository,
+            IPersonRepository personRepository)
+        {
             _denonciationRepository = denonciationRepository;
             _personRepository = personRepository;
         }
 
         public async Task<string> Handle(CreateDenonciationCommand command, CancellationToken cancellationToken)
         {
-            var informantId = await _personRepository.GetPerson(new FindPersonByPersonalDataSpecification(command.InformantFirstName, command.InformantLastName, command.InformantAddress));
+            var informantId = await _personRepository.GetPerson(
+                new FindPersonByPersonalDataSpecification(command.InformantFirstName, command.InformantLastName,
+                    command.InformantAddress));
             if (string.IsNullOrEmpty(informantId))
             {
                 informantId = await _personRepository.Create(new Person(
@@ -26,7 +30,7 @@ namespace JeBalance.Domain.Commands.Denonciations
                     command.InformantFirstName,
                     command.InformantLastName,
                     command.InformantAddress
-                    ));
+                ));
             }
             else
             {
@@ -37,7 +41,9 @@ namespace JeBalance.Domain.Commands.Denonciations
                 }
             }
 
-            var suspectId = await _personRepository.GetPerson(new FindPersonByPersonalDataSpecification(command.SuspectFirstName, command.SuspectLastName, command.SuspectAddress));
+            var suspectId = await _personRepository.GetPerson(
+                new FindPersonByPersonalDataSpecification(command.SuspectFirstName, command.SuspectLastName,
+                    command.SuspectAddress));
             if (string.IsNullOrEmpty(suspectId))
             {
                 suspectId = await _personRepository.Create(new Person(
@@ -45,7 +51,7 @@ namespace JeBalance.Domain.Commands.Denonciations
                     command.SuspectFirstName,
                     command.SuspectLastName,
                     command.SuspectAddress
-                    ));
+                ));
             }
             else
             {
@@ -56,7 +62,9 @@ namespace JeBalance.Domain.Commands.Denonciations
                     throw new BannedPersonException(informantId);
                 }
             }
-            Denonciation denonciation = new Denonciation(command.Id, informantId, suspectId, command.Date, command.Crime, command.Country);
+
+            Denonciation denonciation = new Denonciation(command.Id, informantId, suspectId, command.Date,
+                command.Crime, command.Country);
             return await _denonciationRepository.Create(denonciation);
         }
     }

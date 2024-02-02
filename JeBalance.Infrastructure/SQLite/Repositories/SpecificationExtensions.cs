@@ -14,7 +14,6 @@ public static class SpecificationExtensions
         return Expression.Lambda<Func<InfraType, bool>>(
             expression.Body.Replace(expression.Parameters[0], param),
             param);
-
     }
 
     private static Expression Replace(
@@ -32,19 +31,22 @@ public static class SpecificationExtensions
         return query.Where(predicate);
     }
 
-    public static bool IsNullOrDefault<T>(this T value) 
+    public static bool IsNullOrDefault<T>(this T value)
     {
         return value == null || EqualityComparer<T>.Default.Equals(value, default);
     }
 }
+
 internal class ReplaceVisitor : ExpressionVisitor
 {
     private readonly Expression _from, _to;
+
     public ReplaceVisitor(Expression from, Expression to)
     {
         _from = from;
         _to = to;
     }
+
     public override Expression Visit(Expression node)
     {
         return node == _from ? _to : base.Visit(node);

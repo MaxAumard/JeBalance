@@ -51,7 +51,8 @@ public class PersonRepositorySQL : IPersonRepository
         }
     }
 
-    public async Task<(IEnumerable<Person> Results, int Total)> Find(int limit, int offset, Specification<Person> specification)
+    public async Task<(IEnumerable<Person> Results, int Total)> Find(int limit, int offset,
+        Specification<Person> specification)
     {
         var allPersons = _context.Persons
             .Apply(specification.ToSQLExpression<Person, PersonSQL>());
@@ -71,6 +72,7 @@ public class PersonRepositorySQL : IPersonRepository
         {
             return null;
         }
+
         return person.ToDomain();
     }
 

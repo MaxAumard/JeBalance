@@ -4,12 +4,12 @@ namespace JeBalance.Administration.Ressources
 {
     public abstract class PaginationInput
     {
-        [JsonPropertyName("limit")]
-        public int Limit { get; set; }
+        [JsonPropertyName("limit")] public int Limit { get; set; }
 
-        [JsonPropertyName("offset")]
-        public int Offset { get; set; }
+        [JsonPropertyName("offset")] public int Offset { get; set; }
 
-        public PaginationInput() { }
+        public PaginationInput()
+        {
+        }
     }
 }

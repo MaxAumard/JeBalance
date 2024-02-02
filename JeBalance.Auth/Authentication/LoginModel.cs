@@ -1,12 +1,11 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace JeBalance.Administration.Authentication;
 
 public class LoginModel
 {
-    [Required(ErrorMessage = "User Name is required")]
-    public string? Username { get; set; }
+    [JsonPropertyName("username")] public string? Username { get; set; }
 
-    [Required(ErrorMessage = "Password is required")]
-    public string? Password { get; set; }
+    [JsonPropertyName("password")] public string? Password { get; set; }
 }

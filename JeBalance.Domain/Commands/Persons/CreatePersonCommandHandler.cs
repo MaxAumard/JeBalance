@@ -17,6 +17,6 @@ public class CreatePersonCommandHandler : IRequestHandler<CreatePersonCommand, s
 
     public async Task<string> Handle(CreatePersonCommand command, CancellationToken cancellationToken)
     {
-         return await _personRepository.Create(command.Person);
+        return await _personRepository.Create(command.Person);
     }
 }

@@ -19,7 +19,7 @@ namespace JeBalanceAdmin.Controllers
         }
 
         [HttpGet("vip")]
-        public async Task<IActionResult> GetVip([FromQuery] FindPersonsyVipStatusInput input) 
+        public async Task<IActionResult> GetVip([FromQuery] FindPersonsyVipStatusInput input)
         {
             var query = new FindVIPPersonsQuery(input.Limit, input.Offset, true);
             var response = await _mediator.Send(query);
@@ -41,7 +41,7 @@ namespace JeBalanceAdmin.Controllers
 
         [HttpPut]
         [Route("vip/{id}")]
-        public async Task<IActionResult> SetVip([FromRoute] string id, [FromQuery] bool isVIP) 
+        public async Task<IActionResult> SetVip([FromRoute] string id, [FromQuery] bool isVIP)
         {
             var command = new UpdatePersonIsVIPCommand(id, isVIP);
             var idPerson = await _mediator.Send(command);
@@ -49,4 +49,3 @@ namespace JeBalanceAdmin.Controllers
         }
     }
 }
-

@@ -3,7 +3,6 @@ using MediatR;
 
 namespace JeBalance.Domain.Commands.Persons
 {
-
     public class UpdatePersonIsVIPCommandHandler : IRequestHandler<UpdatePersonIsVIPCommand, string>
     {
         private readonly IPersonRepository _repository;

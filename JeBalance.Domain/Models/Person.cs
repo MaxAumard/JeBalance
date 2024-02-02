@@ -11,6 +11,7 @@ namespace JeBalance.Domain.Models
         public bool IsBanned { get; }
 
         public bool IsVIP { get; }
+
         public Person() : base(Guid.NewGuid().ToString())
         {
         }
@@ -31,8 +32,9 @@ namespace JeBalance.Domain.Models
             address,
             isBanned,
             isVIP
-            ) 
-        { }
+        )
+        {
+        }
 
         public Person(string id, string firstName, string lastName, Address address) : this(
             id,
@@ -41,8 +43,8 @@ namespace JeBalance.Domain.Models
             address,
             false,
             false
-            )
-        { }
-
+        )
+        {
+        }
     }
 }

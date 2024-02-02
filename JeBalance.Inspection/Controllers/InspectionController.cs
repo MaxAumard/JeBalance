@@ -21,14 +21,13 @@ namespace JeBalance.Inspection.Controllers
             _mediator = mediator;
         }
 
-        
+
         [HttpGet("denonciations")]
         public async Task<IActionResult> UntreatedDenonciations([FromQuery] FindUntreatedDenonciationDtoInput input)
         {
             var command = new FindUntreatedDenonciationQuery(input.Limit, input.Offset);
             var response = await _mediator.Send(command);
-            var denonciations = response.Results.
-                Select(denonciation => GetDenonciationOutput(denonciation).Result);
+            var denonciations = response.Results.Select(denonciation => GetDenonciationOutput(denonciation).Result);
             var output = new PaginationOutput<DenonciationOutput>(denonciations, response.Total);
             return Ok(output);
         }

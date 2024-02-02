@@ -10,7 +10,5 @@ namespace JeBalance.Domain
 
             return services;
         }
-
-
     }
 }

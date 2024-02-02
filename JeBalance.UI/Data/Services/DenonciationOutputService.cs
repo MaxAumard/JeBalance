@@ -24,5 +24,4 @@ public class DenonciationOutputService : ServiceBase<DenonciationOutput>
         var denonciation = await SendGetOneRequest(request);
         return denonciation;
     }
-    
 }

@@ -1,4 +1,5 @@
 namespace JeBalance.Domain.Models;
+
 public enum Status
 {
     NONE = 0,

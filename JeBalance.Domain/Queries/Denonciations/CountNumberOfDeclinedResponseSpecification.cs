@@ -20,7 +20,8 @@ namespace JeBalance.Domain.Queries.Denonciations
 
         public override Expression<Func<Denonciation, bool>> ToExpression()
         {
-            return denonciation => denonciation.InformantId.Equals(_informantId) && (denonciation.Response != null && denonciation.Response.ResponseType.Equals(ResponseType.Rejet));
+            return denonciation => denonciation.InformantId.Equals(_informantId) && (denonciation.Response != null &&
+                denonciation.Response.ResponseType.Equals(ResponseType.Rejet));
         }
     }
 }

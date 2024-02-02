@@ -5,18 +5,12 @@ namespace JeBalance.Administration.Ressources
 {
     public class PersonOutput
     {
-        [JsonPropertyName("id")]
-        public string Id { get; set; } 
-        [JsonPropertyName("firstName")]
-        public string FirstName { get; set; }
-        [JsonPropertyName("lastName")]
-        public string LastName { get; set; }
-        [JsonPropertyName("address")]
-        public AddressOutput Address { get; set; }
-        [JsonPropertyName("isBanned")]
-        public bool IsBanned { get; set; }
-        [JsonPropertyName("isVIP")]
-        public bool IsVIP { get; set; }
+        [JsonPropertyName("id")] public string Id { get; set; }
+        [JsonPropertyName("firstName")] public string FirstName { get; set; }
+        [JsonPropertyName("lastName")] public string LastName { get; set; }
+        [JsonPropertyName("address")] public AddressOutput Address { get; set; }
+        [JsonPropertyName("isBanned")] public bool IsBanned { get; set; }
+        [JsonPropertyName("isVIP")] public bool IsVIP { get; set; }
 
         public PersonOutput()
         {

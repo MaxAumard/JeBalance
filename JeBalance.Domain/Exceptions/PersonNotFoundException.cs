@@ -9,11 +9,9 @@ namespace JeBalance.Domain.Exceptions
     [Serializable]
     public class PersonNotFoundException : Exception
     {
-
         public PersonNotFoundException(string id) :
             base($"Person not found for Id: {id}")
         {
-
         }
     }
 }

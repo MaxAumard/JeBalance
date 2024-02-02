@@ -6,11 +6,13 @@ namespace JeBalance.Domain.Commands.Persons
 {
     public class CreatePersonCommand : IRequest<string>
     {
-        public Person Person { get;}
+        public Person Person { get; }
 
-        public CreatePersonCommand(string firstName, string lastName, int number, string streetName, int postalCode, string city)
+        public CreatePersonCommand(string firstName, string lastName, int number, string streetName, int postalCode,
+            string city)
         {
-            Person = new Person(Guid.NewGuid().ToString(), firstName, lastName, new Address(number, streetName, postalCode, city));
+            Person = new Person(Guid.NewGuid().ToString(), firstName, lastName,
+                new Address(number, streetName, postalCode, city));
         }
     }
 }

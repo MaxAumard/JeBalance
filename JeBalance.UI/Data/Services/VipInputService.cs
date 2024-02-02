@@ -16,17 +16,12 @@ public class VipInputService : ServiceBase<PersonOutput>
         : base(clientFactory, (CustomAuthenticationStateProvider)authStateProvider, BaseUrl, Controller)
     {
     }
-    
+
     public async Task<string> AddVipAsync(PersonOutput pers, bool isVip = true)
     {
-        var request = await MakeUpdateRequest(pers.Id, pers, new KeyValuePair<string, string>("isVIP", isVip.ToString()));
+        var request =
+            await MakeUpdateRequest(pers.Id, pers, new KeyValuePair<string, string>("isVIP", isVip.ToString()));
         var id = await SendAddRequest(request);
         return id;
     }
-    
-    
-    
-    
-    
-    
 }

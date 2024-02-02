@@ -5,7 +5,7 @@ using MediatR;
 
 namespace JeBalance.Domain.Queries.Denonciations
 {
-    public class GetDenonciationByIdQueryHandler: IRequestHandler<GetDenonciationByIdQuery, Denonciation>
+    public class GetDenonciationByIdQueryHandler : IRequestHandler<GetDenonciationByIdQuery, Denonciation>
     {
         private readonly IDenonciationRepository _repository;
 

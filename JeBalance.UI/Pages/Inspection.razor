@@ -45,7 +45,7 @@
 
 @if (selectedDenonciation != null)
 {
-    <h3>Répondre à la dénonciation  du Suspect @selectedDenonciation.Suspect.FirstName @selectedDenonciation.Suspect.LastName</h3>
+    <h3>Répondre à la dénonciation du Suspect @selectedDenonciation.Suspect.FirstName @selectedDenonciation.Suspect.LastName</h3>
     <EditForm Model="@inspectionInput" OnValidSubmit="@HandleUpdate">
         <div class="form-group">
             <label for="responseType">Type de réponse:</label>

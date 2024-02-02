@@ -39,13 +39,13 @@ namespace JeBalance.Inspection.Controllers
                 return NotFound(e.Message);
             }
         }
-        
+
         [HttpPost]
         [Route("denonciations")]
         public async Task<IActionResult> CreateDenonciation([FromBody] DenonciationInput input)
         {
             try
-            {              
+            {
                 var command = new CreateDenonciationCommand(
                     input.InformantDatas.FirstName,
                     input.InformantDatas.LastName,
@@ -63,6 +63,5 @@ namespace JeBalance.Inspection.Controllers
                 return BadRequest(e.Message);
             }
         }
-            
     }
 }

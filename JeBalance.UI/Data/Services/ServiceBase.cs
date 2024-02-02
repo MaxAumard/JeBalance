@@ -91,7 +91,8 @@ public class ServiceBase<SourceType>
         return request;
     }
 
-    public async Task<HttpRequestMessage> MakeUpdateRequest(string id, SourceType data, KeyValuePair<string, string>? filter= null)
+    public async Task<HttpRequestMessage> MakeUpdateRequest(string id, SourceType data,
+        KeyValuePair<string, string>? filter = null)
     {
         var token = await _casp.GetJWT();
 
@@ -200,7 +201,7 @@ public class ServiceBase<SourceType>
 
         using var responseStream = await response.Content.ReadAsStreamAsync();
         Console.WriteLine(responseStream);
-        
+
         var jsonResponse = await JsonSerializer.DeserializeAsync<JsonElement>(responseStream);
 
         if (jsonResponse.ValueKind != JsonValueKind.Object)
@@ -244,6 +245,8 @@ public class ServiceBase<SourceType>
 
         var response = await client.SendAsync(request);
         if (!response.IsSuccessStatusCode) return string.Empty;
+        if (response.Equals(StatusCodes.Status400BadRequest))
+            throw new Exception("Erreur lors de l'ajout de la dénonciation");
 
         using var responseStream = await response.Content.ReadAsStreamAsync();
         var id = await JsonSerializer.DeserializeAsync<string>(responseStream);
