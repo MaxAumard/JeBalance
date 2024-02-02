@@ -11,17 +11,19 @@ public class ServiceBase<SourceType>
     private IHttpClientFactory _clientFactory;
     private CustomAuthenticationStateProvider _casp;
 
-    private const string BaseURL = "https://localhost:7279/api/v1/";
+    private string BaseURL;
     private string Controller;
     private string Endpoint => $"{BaseURL}{Controller}";
 
     public ServiceBase(
         IHttpClientFactory clientFactory,
         CustomAuthenticationStateProvider casp,
+        string baseUrl,
         string controller)
     {
         _clientFactory = clientFactory;
         _casp = casp;
+        BaseURL = baseUrl;
         Controller = controller;
     }
 
@@ -45,7 +47,6 @@ public class ServiceBase<SourceType>
         var request = new HttpRequestMessage(
             HttpMethod.Get,
             new Uri(QueryHelpers.AddQueryString(Endpoint, param)));
-
         request.Headers.Add("Accept", "application/json");
         request.Headers.Add("User-Agent", "JeBalance");
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -90,13 +91,19 @@ public class ServiceBase<SourceType>
         return request;
     }
 
-    public async Task<HttpRequestMessage> MakeUpdateRequest(string id, SourceType data)
+    public async Task<HttpRequestMessage> MakeUpdateRequest(string id, SourceType data, KeyValuePair<string, string>? filter= null)
     {
         var token = await _casp.GetJWT();
 
+        var param = new Dictionary<string, string>();
+        if (filter.HasValue)
+        {
+            param.Add(filter.Value.Key, filter.Value.Value);
+        }
+
         var request = new HttpRequestMessage(
             HttpMethod.Put,
-            $"{Endpoint}/{id}");
+            new Uri(QueryHelpers.AddQueryString($"{Endpoint}/{id}", param)));
 
         var httpContent = new StringContent(
             JsonSerializer.Serialize(data),
@@ -192,6 +199,8 @@ public class ServiceBase<SourceType>
         }
 
         using var responseStream = await response.Content.ReadAsStreamAsync();
+        Console.WriteLine(responseStream);
+        
         var jsonResponse = await JsonSerializer.DeserializeAsync<JsonElement>(responseStream);
 
         if (jsonResponse.ValueKind != JsonValueKind.Object)

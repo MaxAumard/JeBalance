@@ -1,0 +1,156 @@
+@page "/admin/vip-management"
+@using JeBalance.Inspection.Ressources
+@using JeBalance.UI.Data.Services
+@inject VipOutputService VipService
+@inject NonVipOutputService NonVipService
+@inject VipInputService VipInputService
+
+<h2>Gestion des utilisateurs VIP</h2>
+
+<div class="d-flex justify-content-between">
+    <div class="flex-fill">
+        <h3>Utilisateurs Non-VIP</h3>
+        @if (nonVipPersons != null && nonVipPersons.Length > 0)
+        {
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>Adresse</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var person in nonVipPersons)
+                {
+                    <tr>
+                        <td>@person.FirstName</td>
+                        <td>@person.LastName</td>
+                        <td>@($"{person.Address.Number}, {person.Address.StreetName}, {person.Address.PostalCode}, {person.Address.City}")</td>
+                        <td>
+                            <button class="btn btn-success" @onclick="() => UpdateVipStatus(person, true)">Attribuer le statut VIP</button>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+            <div>
+                <button class="btn btn-secondary" disabled="@(currentNonVipPage == 1)" @onclick="() => ChangeNonVipPage(currentNonVipPage - 1)">Précédent</button>
+                <span>Page @currentNonVipPage de @(Math.Ceiling((double)totalNonVipPersons / pageSize))</span>
+                <button class="btn btn-secondary" disabled="@(currentNonVipPage >= Math.Ceiling((double)totalNonVipPersons / pageSize))" @onclick="() => ChangeNonVipPage(currentNonVipPage + 1)">Suivant</button>
+            </div>
+        }
+    </div>
+
+    <div class="flex-fill">
+        <h3>Utilisateurs VIP</h3>
+        @if (vipPersons != null && vipPersons.Length > 0)
+        {
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>Adresse</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var person in vipPersons)
+                {
+                    <tr>
+                        <td>@person.FirstName</td>
+                        <td>@person.LastName</td>
+                        <td>@($"{person.Address.Number}, {person.Address.StreetName}, {person.Address.PostalCode}, {person.Address.City}")</td>
+                        <td>
+                            <button class="btn btn-warning" @onclick="() => UpdateVipStatus(person, false)">Retirer le statut VIP</button>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+            <div>
+                <button class="btn btn-secondary" disabled="@(currentVipPage == 1)" @onclick="() => ChangeVipPage(currentVipPage - 1)">Précédent</button>
+                <span>Page @currentVipPage de @(Math.Ceiling((double)totalVipPersons / pageSize))</span>
+                <button class="btn btn-secondary" disabled="@(currentVipPage >= Math.Ceiling((double)totalVipPersons / pageSize))" @onclick="() => ChangeVipPage(currentVipPage + 1)">Suivant</button>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    // Your existing code here
+}
+
+@code {
+    private PersonOutput[] vipPersons;
+    private PersonOutput[] nonVipPersons;
+    private int totalVipPersons;
+    private int totalNonVipPersons;
+    private int currentVipPage = 1;
+    private int currentNonVipPage = 1;
+    private const int pageSize = 10;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadVipPersons();
+        await LoadNonVipPersons();
+    }
+
+    private async Task LoadVipPersons()
+    {
+        var vipResult = await VipService.GetVipAsync(pageSize, (currentVipPage - 1) * pageSize);
+        vipPersons = vipResult.Items;
+        totalVipPersons = vipResult.Total;
+    }
+
+    private async Task LoadNonVipPersons()
+    {
+        var nonVipResult = await NonVipService.GetNonVipAsync(pageSize, (currentNonVipPage - 1) * pageSize);
+        nonVipPersons = nonVipResult.Items;
+        totalNonVipPersons = nonVipResult.Total;
+    }
+
+    private async Task ChangeVipPage(int page)
+    {
+        currentVipPage = page;
+        await LoadVipPersons();
+    }
+
+    private async Task ChangeNonVipPage(int page)
+    {
+        currentNonVipPage = page;
+        await LoadNonVipPersons();
+    }
+
+    private async Task UpdateVipStatus(PersonOutput person, bool isVip)
+    {
+        await VipInputService.AddVipAsync(person, isVip);
+        await RefreshData();
+    }
+
+    private async Task RefreshData()
+    {
+        await LoadVipPersons();
+        await LoadNonVipPersons();
+        await AdjustPaginationIfNeeded();
+    }
+
+    private async Task AdjustPaginationIfNeeded()
+    {
+        if (vipPersons.Length == 0 && currentVipPage > 1)
+        {
+            currentVipPage--;
+        }
+
+        if (nonVipPersons.Length == 0 && currentNonVipPage > 1)
+        {
+            currentNonVipPage--;
+        }
+
+        await LoadVipPersons();
+        await LoadNonVipPersons();
+    }
+
+}
