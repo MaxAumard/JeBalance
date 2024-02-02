@@ -9,14 +9,15 @@ public static class Extensions
     public static Person ToDomain(this PersonSQL person)
     {
         return new Person(
-            person.Id,
-            person.FirstName,
-            person.LastName,
-            person.Address.ToDomainAddress(),
-            person.IsBanned,
-            person.IsVIP)
+                person.Id,
+                person.FirstName,
+                person.LastName,
+                person.Address.ToDomainAddress(),
+                person.IsBanned,
+                person.IsVIP)
             ;
     }
+
     public static PersonSQL ToSQL(this Person person)
     {
         return new PersonSQL
@@ -33,7 +34,7 @@ public static class Extensions
     public static Address ToDomainAddress(this String address)
     {
         string[] composantes = address.Split(";");
-        
+
         return new Address(
             int.Parse(composantes[0]),
             new Name(composantes[1]),
@@ -43,7 +44,8 @@ public static class Extensions
 
     public static string ToSQL(this Address address)
     {
-        return address.Number + ";" + address.StreetName.Value + ";" + address.PostalCode.Value + ";" + address.City.Value;
+        return address.Number + ";" + address.StreetName.Value + ";" + address.PostalCode.Value + ";" +
+               address.City.Value;
     }
 
     //partie pour les denonciations
@@ -57,7 +59,7 @@ public static class Extensions
             denonciation.Crime,
             denonciation.Country,
             denonciation.Response?.ToDomainResponse()
-            );
+        );
     }
 
     public static DenonciationSQL ToSQL(this Denonciation denonciation)
@@ -86,11 +88,11 @@ public static class Extensions
         if (response == null)
             return null;
         string[] composantes = response.Split(";");
-        
+
         return new Response(
             DateTimeOffset.Parse(composantes[0]),
             int.Parse(composantes[1]),
             (ResponseType)Enum.Parse(typeof(ResponseType), composantes[2])
-        ) ;
+        );
     }
 }

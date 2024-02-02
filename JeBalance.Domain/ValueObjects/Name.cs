@@ -13,7 +13,7 @@ public class Name : SimpleValueObject<string>
 
     public override string Validate(string value)
     {
-        if(value == null) throw new ApplicationException("Name cannot be null");
+        if (value == null) throw new ApplicationException("Name cannot be null");
 
         var trimmedValue = value.Trim();
 
@@ -21,9 +21,11 @@ public class Name : SimpleValueObject<string>
 
         if (trimmedValue.Contains(';')) throw new ApplicationException("Name cannot contains ';' character");
 
-        if (trimmedValue.Length < MIN_LENGTH) throw new ApplicationException($"Name cannot be less than {MIN_LENGTH} character(s)");
+        if (trimmedValue.Length < MIN_LENGTH)
+            throw new ApplicationException($"Name cannot be less than {MIN_LENGTH} character(s)");
 
-        if(trimmedValue.Length > MAX_LENGTH) throw new ApplicationException($"Name cannot be more than {MAX_LENGTH} characters");
+        if (trimmedValue.Length > MAX_LENGTH)
+            throw new ApplicationException($"Name cannot be more than {MAX_LENGTH} characters");
 
         return trimmedValue;
     }
@@ -40,5 +42,4 @@ public class Name : SimpleValueObject<string>
 
     public static implicit operator string(Name name) => name.Value;
     public static implicit operator Name(string value) => new(value);
-
 }

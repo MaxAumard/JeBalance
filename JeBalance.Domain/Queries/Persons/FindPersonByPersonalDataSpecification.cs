@@ -10,7 +10,7 @@ using JeBalance.Domain.ValueObjects;
 
 namespace JeBalance.Domain.Queries.Persons
 {
-    public class FindPersonByPersonalDataSpecification: Specification<Person>
+    public class FindPersonByPersonalDataSpecification : Specification<Person>
     {
         private readonly Name _firstName;
         private readonly Name _lastName;
@@ -25,8 +25,8 @@ namespace JeBalance.Domain.Queries.Persons
 
         public override Expression<Func<Person, bool>> ToExpression()
         {
-            return person => ((string)person.FirstName).ToLower().Equals(_firstName) 
-                && ((string)person.LastName).ToLower().Equals(_lastName) 
+            return person => ((string)person.FirstName).ToLower().Equals(_firstName)
+                             && ((string)person.LastName).ToLower().Equals(_lastName)
                 //&& person.Address.Equals(_address)
                 ;
         }

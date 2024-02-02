@@ -16,12 +16,19 @@ public class DenonciationInputService : ServiceBase<DenonciationInput>
         : base(clientFactory, (CustomAuthenticationStateProvider)authStateProvider, BaseUrl, Controller)
     {
     }
-    
-    
+
+
     public async Task<string> AddDenonciationAsync(DenonciationInput denonciation)
     {
-        var request = await MakeAddRequest(denonciation);
-        var id = await SendAddRequest(request);
-        return id;
+        try
+        {
+            var request = await MakeAddRequest(denonciation);
+            var id = await SendAddRequest(request);
+            return id;
+        }
+        catch (Exception e)
+        {
+            throw;
+        }
     }
 }

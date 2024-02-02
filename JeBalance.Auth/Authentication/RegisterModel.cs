@@ -13,19 +13,19 @@ public class RegisterModel
 
     [Required(ErrorMessage = "Number is required")]
     public int Number { get; set; }
-    
+
     [Required(ErrorMessage = "StreetName is required")]
     public string? StreetName { get; set; }
-    
+
     [Required(ErrorMessage = "PostalCode is required")]
     public int PostalCode { get; set; }
-    
+
     [Required(ErrorMessage = "City is required")]
     public string? City { get; set; }
-    
+
     [Required(ErrorMessage = "User Name is required")]
     public string? Username { get; set; }
-    
+
     [Required(ErrorMessage = "Password is required")]
     public string? Password { get; set; }
 }

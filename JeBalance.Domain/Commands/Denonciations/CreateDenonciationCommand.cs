@@ -14,10 +14,11 @@ namespace JeBalance.Domain.Commands.Denonciations
         public string SuspectLastName { get; }
         public Address SuspectAddress { get; }
         public DateTimeOffset Date { get; }
-        public Crime Crime { get;}
+        public Crime Crime { get; }
         public string? Country { get; }
 
-        public CreateDenonciationCommand(string informantFirstName, string informantLastName, Address informantAddress, string suspectFirstName, string suspectLastName, Address suspectAddress, Crime crime, string country)
+        public CreateDenonciationCommand(string informantFirstName, string informantLastName, Address informantAddress,
+            string suspectFirstName, string suspectLastName, Address suspectAddress, Crime crime, string country)
         {
             Id = Guid.NewGuid().ToString();
             InformantFirstName = informantFirstName;

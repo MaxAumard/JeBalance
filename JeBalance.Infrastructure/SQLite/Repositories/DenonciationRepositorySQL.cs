@@ -16,8 +16,8 @@ public class DenonciationRepositorySQL : IDenonciationRepository
         _context = databaseContext;
     }
 
-    public  Task<int> Count(Specification<Denonciation> specification)
-    { 
+    public Task<int> Count(Specification<Denonciation> specification)
+    {
         return Task.FromResult(_context.Denonciations
             .Apply(specification.ToSQLExpression<Denonciation, DenonciationSQL>())
             .Count());
@@ -25,10 +25,9 @@ public class DenonciationRepositorySQL : IDenonciationRepository
 
     public Task<int> CountDeclinedDenonciations(string informantId)
     {
-
         return Task.FromResult(_context.Denonciations
             .Where(d => d.InformantId == informantId
-            && !string.IsNullOrEmpty(d.Response) && d.Response.Contains(ResponseType.Rejet.ToString()))
+                        && !string.IsNullOrEmpty(d.Response) && d.Response.Contains(ResponseType.Rejet.ToString()))
             .Count());
     }
 
@@ -59,14 +58,15 @@ public class DenonciationRepositorySQL : IDenonciationRepository
         }
     }
 
-    public async Task<(IEnumerable<Denonciation> Results, int Total)> Find(int limit, int offset, Specification<Denonciation> specification)
-    {    
+    public async Task<(IEnumerable<Denonciation> Results, int Total)> Find(int limit, int offset,
+        Specification<Denonciation> specification)
+    {
         var allDenonciations = _context.Denonciations
             .Apply(specification.ToSQLExpression<Denonciation, DenonciationSQL>());
         var denonciations = allDenonciations
             .Skip(offset)
             .Take(limit)
-            .AsEnumerable()          
+            .AsEnumerable()
             .Select(denonciation => denonciation.ToDomain());
         var totalfound = await allDenonciations.CountAsync();
         return (denonciations, totalfound);
@@ -95,11 +95,12 @@ public class DenonciationRepositorySQL : IDenonciationRepository
 
     public async Task<Denonciation> GetOne(string id)
     {
-        DenonciationSQL? denonciation =  _context.Denonciations.FirstOrDefault(denonciation => denonciation.Id == id);
+        DenonciationSQL? denonciation = _context.Denonciations.FirstOrDefault(denonciation => denonciation.Id == id);
         if (denonciation.IsNullOrDefault())
         {
             return null;
         }
+
         return denonciation.ToDomain();
     }
 
@@ -112,11 +113,12 @@ public class DenonciationRepositorySQL : IDenonciationRepository
 
     public async Task<string> SetResponse(string id, Response response)
     {
-        DenonciationSQL? denonciation =  _context.Denonciations.FirstOrDefault(denonciation => denonciation.Id == id);
+        DenonciationSQL? denonciation = _context.Denonciations.FirstOrDefault(denonciation => denonciation.Id == id);
         if (denonciation.IsNullOrDefault())
         {
             return null;
         }
+
         denonciation.Response = response.ToSQL();
         await _context.SaveChangesAsync();
 

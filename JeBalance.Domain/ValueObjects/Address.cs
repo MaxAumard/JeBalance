@@ -4,7 +4,7 @@ namespace JeBalance.Domain.ValueObjects
 {
     public class Address
     {
-        public int  Number { get; }
+        public int Number { get; }
         public Name StreetName { get; }
         public PostalCode PostalCode { get; }
         public Name City { get; }
@@ -12,6 +12,7 @@ namespace JeBalance.Domain.ValueObjects
         public Address()
         {
         }
+
         public Address(int number, Name streetName, PostalCode postalCode, Name city)
         {
             Number = number;
@@ -20,12 +21,13 @@ namespace JeBalance.Domain.ValueObjects
             City = city;
         }
 
-        public Address(int number, string streetName, int postalCode, string city) : this (
+        public Address(int number, string streetName, int postalCode, string city) : this(
             number,
             new Name(streetName),
             new PostalCode(postalCode),
             new Name(city))
-        { }
+        {
+        }
 
         public override bool Equals(object? obj)
         {

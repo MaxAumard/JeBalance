@@ -14,6 +14,7 @@ using Xunit;
 public class DenonciationRepositoryTests : RepositoryTest
 {
     private readonly DenonciationRepositorySQL _repository;
+
     public DenonciationRepositoryTests() : base()
     {
         _repository = new DenonciationRepositorySQL(Context);
@@ -29,7 +30,7 @@ public class DenonciationRepositoryTests : RepositoryTest
 
     [Fact]
     public async Task ShouldDelete()
-    {   
+    {
         var denonciation = new Denonciation("12", "12", "12", DateTimeOffset.Now, Crime.DissimulationDeRevenus, "122");
         await _repository.Create(denonciation);
         var result = await _repository.Delete(denonciation.Id);
@@ -44,5 +45,4 @@ public class DenonciationRepositoryTests : RepositoryTest
         var result = await _repository.Update(denonciation.Id, denonciation);
         Assert.Equal(denonciation.Id, result);
     }
-    
 }

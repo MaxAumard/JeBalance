@@ -4,7 +4,7 @@ using JeBalance.Domain.Models;
 
 namespace JeBalance.Domain.Queries.Denonciations
 {
-    public class FindUntreatedDenonciationSpecification: Specification<Denonciation>
+    public class FindUntreatedDenonciationSpecification : Specification<Denonciation>
     {
         public override Expression<Func<Denonciation, bool>> ToExpression()
         {

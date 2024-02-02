@@ -4,7 +4,8 @@ using MediatR;
 
 namespace JeBalance.Domain.Queries.Persons;
 
-public class GetBannedPersonsQueryHandler : IRequestHandler<GetBannedPersonsQuery, (IEnumerable<Person> Results, int Total)>
+public class
+    GetBannedPersonsQueryHandler : IRequestHandler<GetBannedPersonsQuery, (IEnumerable<Person> Results, int Total)>
 {
     private readonly IPersonRepository _repository;
 
@@ -13,7 +14,8 @@ public class GetBannedPersonsQueryHandler : IRequestHandler<GetBannedPersonsQuer
         _repository = repository;
     }
 
-    public Task<(IEnumerable<Person> Results, int Total)> Handle(GetBannedPersonsQuery query, CancellationToken cancellationToken)
+    public Task<(IEnumerable<Person> Results, int Total)> Handle(GetBannedPersonsQuery query,
+        CancellationToken cancellationToken)
     {
         return _repository.Find(
             query.Pagination.Limit,

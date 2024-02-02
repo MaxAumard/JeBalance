@@ -14,9 +14,9 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
         var services = builder.Services;
 
-        // Add services to the container.
 
-        // For Entity Framework
+        services.AddScoped<JwtService>();
+
         services.AddDbContext<AuthDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("localdb")));
         services.AddDbContext<DatabaseContext>(options =>
@@ -55,7 +55,6 @@ public class Program
 
 
         services.AddControllers();
-
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(c =>
         {

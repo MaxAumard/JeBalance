@@ -12,9 +12,10 @@ public class FindVIPPersonsQueryHandler : IRequestHandler<FindVIPPersonsQuery, (
     {
         _repository = personRepository;
     }
-    
 
-    public Task<(IEnumerable<Person> Results, int Total)> Handle(FindVIPPersonsQuery query, CancellationToken cancellationToken)
+
+    public Task<(IEnumerable<Person> Results, int Total)> Handle(FindVIPPersonsQuery query,
+        CancellationToken cancellationToken)
     {
         return _repository.Find(
             query.Pagination.Limit,
