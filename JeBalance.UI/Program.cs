@@ -19,7 +19,9 @@ builder.Services.AddScoped<DenonciationOutputService>();
 builder.Services.AddScoped<DenonciationInputService>();
 builder.Services.AddScoped<InspectionInputService>();
 builder.Services.AddScoped<InspectionOutputService>();
-
+builder.Services.AddScoped<NonVipOutputService>();
+builder.Services.AddScoped<VipInputService>();
+builder.Services.AddScoped<VipOutputService>();
 
 var app = builder.Build();
 

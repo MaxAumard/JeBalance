@@ -39,7 +39,7 @@ namespace JeBalanceAdmin.Controllers
             return Ok(new PaginationOutput<PersonOutput>(persons, response.Total));
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("vip/{id}")]
         public async Task<IActionResult> SetVip([FromRoute] string id, [FromQuery] bool isVIP) 
         {

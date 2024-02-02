@@ -6,12 +6,13 @@ namespace JeBalance.UI.Data.Services;
 
 public class NonVipOutputService: ServiceBase<PersonOutput>
 {
-    private const string Controller = "admin/vip";
+    private const string BaseUrl = "https://localhost:7232/api/v1/";
+    private const string Controller = "admin/non-vip";
 
     public NonVipOutputService(
         IHttpClientFactory clientFactory,
         AuthenticationStateProvider authStateProvider)
-        : base(clientFactory, (CustomAuthenticationStateProvider)authStateProvider, Controller)
+        : base(clientFactory, (CustomAuthenticationStateProvider)authStateProvider, BaseUrl, Controller)
     {
     }
     
